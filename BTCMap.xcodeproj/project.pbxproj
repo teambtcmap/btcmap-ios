@@ -9,21 +9,21 @@
 /* Begin PBXBuildFile section */
 		AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914CD28E37F4600D9F34E /* AppDelegate.swift */; };
 		AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */; };
-		AD6914D228E37F4600D9F34E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914D128E37F4600D9F34E /* ViewController.swift */; };
-		AD6914D528E37F4600D9F34E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD6914D328E37F4600D9F34E /* Main.storyboard */; };
 		AD6914D728E37F4800D9F34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD6914D628E37F4800D9F34E /* Assets.xcassets */; };
 		AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */; };
+		AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914E728E3814F00D9F34E /* MapViewController.swift */; };
+		AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD6914E828E3814F00D9F34E /* MapViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AD6914CA28E37F4600D9F34E /* BTCMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BTCMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD6914CD28E37F4600D9F34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AD6914D128E37F4600D9F34E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AD6914D428E37F4600D9F34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD6914D628E37F4800D9F34E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD6914D928E37F4800D9F34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD6914DB28E37F4800D9F34E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD6914E728E3814F00D9F34E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		AD6914E828E3814F00D9F34E /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +56,63 @@
 		AD6914CC28E37F4600D9F34E /* BTCMap */ = {
 			isa = PBXGroup;
 			children = (
-				AD6914CD28E37F4600D9F34E /* AppDelegate.swift */,
-				AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */,
-				AD6914D128E37F4600D9F34E /* ViewController.swift */,
-				AD6914D328E37F4600D9F34E /* Main.storyboard */,
-				AD6914D628E37F4800D9F34E /* Assets.xcassets */,
-				AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */,
-				AD6914DB28E37F4800D9F34E /* Info.plist */,
+				AD6914E128E380B000D9F34E /* Sources */,
+				AD6914E228E380CA00D9F34E /* Resources */,
+				AD6914E328E380D300D9F34E /* Others */,
 			);
 			path = BTCMap;
+			sourceTree = "<group>";
+		};
+		AD6914E128E380B000D9F34E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AD6914E428E380E300D9F34E /* Models */,
+				AD6914E528E380E800D9F34E /* Views & Controllers */,
+				AD6914CD28E37F4600D9F34E /* AppDelegate.swift */,
+				AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		AD6914E228E380CA00D9F34E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AD6914D628E37F4800D9F34E /* Assets.xcassets */,
+				AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		AD6914E328E380D300D9F34E /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				AD6914DB28E37F4800D9F34E /* Info.plist */,
+			);
+			name = Others;
+			sourceTree = "<group>";
+		};
+		AD6914E428E380E300D9F34E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		AD6914E528E380E800D9F34E /* Views & Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AD6914E628E3813B00D9F34E /* Map */,
+			);
+			name = "Views & Controllers";
+			sourceTree = "<group>";
+		};
+		AD6914E628E3813B00D9F34E /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				AD6914E728E3814F00D9F34E /* MapViewController.swift */,
+				AD6914E828E3814F00D9F34E /* MapViewController.xib */,
+			);
+			name = Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,8 +174,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
+				AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */,
 				AD6914D728E37F4800D9F34E /* Assets.xcassets in Resources */,
-				AD6914D528E37F4600D9F34E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,8 +186,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD6914D228E37F4600D9F34E /* ViewController.swift in Sources */,
 				AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */,
+				AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,14 +195,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AD6914D328E37F4600D9F34E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AD6914D428E37F4600D9F34E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,7 +332,6 @@
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -300,7 +339,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app.BTCMap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -320,7 +359,6 @@
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -328,7 +366,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app.BTCMap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
