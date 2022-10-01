@@ -19,7 +19,7 @@ class ElementAnnotation: NSObject, MKAnnotation {
     }
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     private var elements: Elements!
@@ -69,31 +69,70 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? ElementAnnotation else { return }
+        
+        if let elementVC = presentedViewController as? ElementViewController {
+            elementVC.element = annotation.element
+            return
+        }
+        
         let elementVC = ElementViewController()
         elementVC.element = annotation.element
         if let sheet = elementVC.sheetPresentationController {
+            sheet.delegate = self
             sheet.prefersGrabberVisible = true
             sheet.detents = [.medium(), .large()]
             sheet.largestUndimmedDetentIdentifier = .medium
+            
         }
         present(elementVC, animated: true)
     }
     
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        guard let annotation = view.annotation as? ElementAnnotation else { return }
+        guard let elementVC = presentedViewController as? ElementViewController else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            if elementVC.element.id == annotation.element.id {
+                self.dismiss(animated: true)
+            }
+        }
+    }
+    
+    private var elementEmojis: [String: String] = [:]
+    
+    private func emoji(for element: API.Element) -> String? {
+        if let emoji = elementEmojis[element.id] {
+            return emoji
+        }
+        let emoji = ElementMarkerEmoji.emoji(for: element)
+        elementEmojis[element.id] = emoji
+        return emoji
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ElementAnnotation {
-            let marker = MKMarkerAnnotationView()
-            marker.annotation = annotation
-            marker.glyphText = ElementMarkerEmoji.emoji(for: annotation.element)
+            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MKMarkerAnnotationView
+            marker.markerTintColor = #colorLiteral(red: 1, green: 0.555871129, blue: 0, alpha: 1)
+            marker.glyphText = emoji(for: annotation.element)
+            marker.displayPriority = .required
             return marker
         }
         return nil
     }
     
+    // MARK: - UISheetPresentationControllerDelegate
+    
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        if let annotation = mapView.selectedAnnotations.first {
+            mapView.deselectAnnotation(annotation, animated: true)
+        }
+    }
     
     // MARK: - UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
         setupElements()
         CLLocationManager().requestWhenInUseAuthorization()
     }
