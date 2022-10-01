@@ -2,6 +2,12 @@
 <h2 align="center"><b>BTC Map</b></h2>
 <h4 align="center">See where you can spend your bitcoins</h4>
 
+## Build
+
+### Initial elements
+
+Run `elements.sh` to download initial elements to `elements.json`.
+
 ## Support
 
 bc1qng60mcufjnmz6330gze5yt4m6enzra7lywns2d
