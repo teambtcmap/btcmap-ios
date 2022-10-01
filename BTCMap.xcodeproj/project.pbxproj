@@ -13,6 +13,14 @@
 		AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */; };
 		AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914E728E3814F00D9F34E /* MapViewController.swift */; };
 		AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD6914E828E3814F00D9F34E /* MapViewController.xib */; };
+		AD7E331428E8278D004B1DFE /* REST.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331328E8278D004B1DFE /* REST.swift */; };
+		AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD7E331528E831A6004B1DFE /* Localizable.strings */; };
+		AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331828E831C2004B1DFE /* Localizable.swift */; };
+		AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B92B28E4B29400B558D4 /* ElementViewController.swift */; };
+		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
+		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
+		AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* Elements.swift */; };
+		AD96B94828E6CAB500B558D4 /* elements.json in Resources */ = {isa = PBXBuildFile; fileRef = AD96B94728E6CAB500B558D4 /* elements.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +32,14 @@
 		AD6914DB28E37F4800D9F34E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD6914E728E3814F00D9F34E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		AD6914E828E3814F00D9F34E /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		AD7E331328E8278D004B1DFE /* REST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REST.swift; sourceTree = "<group>"; };
+		AD7E331528E831A6004B1DFE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		AD7E331828E831C2004B1DFE /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		AD96B92B28E4B29400B558D4 /* ElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementViewController.swift; sourceTree = "<group>"; };
+		AD96B92C28E4B29400B558D4 /* ElementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ElementViewController.xib; sourceTree = "<group>"; };
+		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		AD96B93328E4BC7400B558D4 /* Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elements.swift; sourceTree = "<group>"; };
+		AD96B94728E6CAB500B558D4 /* elements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = elements.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +82,7 @@
 		AD6914E128E380B000D9F34E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AD7E331728E831B4004B1DFE /* Helpers */,
 				AD6914E428E380E300D9F34E /* Models */,
 				AD6914E528E380E800D9F34E /* Views & Controllers */,
 				AD6914CD28E37F4600D9F34E /* AppDelegate.swift */,
@@ -77,8 +94,10 @@
 		AD6914E228E380CA00D9F34E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AD7E331528E831A6004B1DFE /* Localizable.strings */,
 				AD6914D628E37F4800D9F34E /* Assets.xcassets */,
 				AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */,
+				AD96B94728E6CAB500B558D4 /* elements.json */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -94,6 +113,9 @@
 		AD6914E428E380E300D9F34E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AD7E331328E8278D004B1DFE /* REST.swift */,
+				AD96B93128E4BB7100B558D4 /* API.swift */,
+				AD96B93328E4BC7400B558D4 /* Elements.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -102,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				AD6914E628E3813B00D9F34E /* Map */,
+				AD96B92A28E4B28600B558D4 /* Element */,
 			);
 			name = "Views & Controllers";
 			sourceTree = "<group>";
@@ -113,6 +136,23 @@
 				AD6914E828E3814F00D9F34E /* MapViewController.xib */,
 			);
 			name = Map;
+			sourceTree = "<group>";
+		};
+		AD7E331728E831B4004B1DFE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E331828E831C2004B1DFE /* Localizable.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		AD96B92A28E4B28600B558D4 /* Element */ = {
+			isa = PBXGroup;
+			children = (
+				AD96B92B28E4B29400B558D4 /* ElementViewController.swift */,
+				AD96B92C28E4B29400B558D4 /* ElementViewController.xib */,
+			);
+			name = Element;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,7 +214,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
+				AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */,
 				AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */,
+				AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */,
+				AD96B94828E6CAB500B558D4 /* elements.json in Resources */,
 				AD6914D728E37F4800D9F34E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,9 +229,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */,
 				AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */,
 				AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */,
+				AD7E331428E8278D004B1DFE /* REST.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
+				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
+				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
+				AD96B93228E4BB7100B558D4 /* API.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,10 +378,14 @@
 				DEVELOPMENT_TEAM = P8BYXEZ6KH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
+				INFOPLIST_KEY_NSLocationUsageDescription = "To show your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To show your location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -357,10 +409,14 @@
 				DEVELOPMENT_TEAM = P8BYXEZ6KH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
+				INFOPLIST_KEY_NSLocationUsageDescription = "To show your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To show your location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

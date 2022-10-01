@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  BTCMap
+//  BTC Map
 //
 //  Created by Vitaly Berg on 9/28/22.
 //

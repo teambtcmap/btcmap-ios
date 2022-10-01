@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="BTCMap" customModuleProvider="target">
             <connections>
+                <outlet property="mapView" destination="AYQ-Gk-QVG" id="4Xz-I1-9Ru"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,17 +20,32 @@
             <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AYQ-Gk-QVG">
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AYQ-Gk-QVG">
                     <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                     <standardMapConfiguration key="preferredConfiguration"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Eud-Ri-PWK"/>
+                    </connections>
                 </mapView>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BCf-OM-PAc">
+                    <rect key="frame" x="0.0" y="0.0" width="390" height="47"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Sr9-8w-hf9">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="47"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="regular"/>
+                </visualEffectView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="BCf-OM-PAc" secondAttribute="trailing" id="4K6-yZ-Cwg"/>
                 <constraint firstAttribute="bottom" secondItem="AYQ-Gk-QVG" secondAttribute="bottom" id="BlQ-4Y-OwK"/>
                 <constraint firstItem="AYQ-Gk-QVG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UBT-Vy-8Bh"/>
                 <constraint firstAttribute="trailing" secondItem="AYQ-Gk-QVG" secondAttribute="trailing" id="YX6-pC-WKb"/>
+                <constraint firstItem="BCf-OM-PAc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aHM-Vn-WxK"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="BCf-OM-PAc" secondAttribute="bottom" id="hd7-MI-6gg"/>
+                <constraint firstItem="BCf-OM-PAc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="is1-S0-0dS"/>
                 <constraint firstItem="AYQ-Gk-QVG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qvJ-sK-BuA"/>
             </constraints>
             <point key="canvasLocation" x="140" y="20.616113744075829"/>
