@@ -4,9 +4,13 @@
 
 ## Build
 
-### Initial elements
+### Initial Elements
 
 Run `elements.sh` to download initial elements to `elements.json`.
+
+## Elements Statistics
+
+Run `elements.js` to calculate statistics about elements and tags.
 
 ## Support
 
