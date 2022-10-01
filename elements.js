@@ -24,7 +24,8 @@ const tagsToGrab = [
   'healthcare',
   'craft',
   'leisure',
-  'office'
+  'office',
+  'place'
 ]
 
 function fillKeys(obj, keys) {
