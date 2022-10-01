@@ -17,6 +17,7 @@
 		AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD7E331528E831A6004B1DFE /* Localizable.strings */; };
 		AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331828E831C2004B1DFE /* Localizable.swift */; };
 		AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */; };
+		AD7E331E28E8D2CF004B1DFE /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */; };
 		AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B92B28E4B29400B558D4 /* ElementViewController.swift */; };
 		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
@@ -37,6 +38,7 @@
 		AD7E331528E831A6004B1DFE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		AD7E331828E831C2004B1DFE /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementMarkerEmoji.swift; sourceTree = "<group>"; };
+		AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledLabel.swift; sourceTree = "<group>"; };
 		AD96B92B28E4B29400B558D4 /* ElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementViewController.swift; sourceTree = "<group>"; };
 		AD96B92C28E4B29400B558D4 /* ElementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ElementViewController.xib; sourceTree = "<group>"; };
 		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		AD6914E528E380E800D9F34E /* Views & Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AD7E331C28E8D275004B1DFE /* Common */,
 				AD6914E628E3813B00D9F34E /* Map */,
 				AD96B92A28E4B28600B558D4 /* Element */,
 			);
@@ -147,6 +150,14 @@
 				AD7E331828E831C2004B1DFE /* Localizable.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		AD7E331C28E8D275004B1DFE /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 		AD96B92A28E4B28600B558D4 /* Element */ = {
@@ -241,6 +252,7 @@
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
 				AD96B93228E4BB7100B558D4 /* API.swift in Sources */,
+				AD7E331E28E8D2CF004B1DFE /* StyledLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
