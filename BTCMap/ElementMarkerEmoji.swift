@@ -135,51 +135,105 @@ struct ElementMarkerEmoji {
         "artwork": "🖼",
         "information": "ℹ️",
     ]
+    static let healthcare = [
+        "dentist": "🦷",
+        "doctor": "👨‍⚕️",
+        "alternative": "🌿",
+        "clinic": "🩻",
+        "pharmacy": "💊",
+        "psychotherapist:": "👨‍⚕️",
+        "hospital": "🏥",
+        "physiotherapist": "👨‍⚕️",
+        "counselling": "👨‍⚕️",
+        "optometrist": "👁",
+        "sample_collection": "🩸",
+        "cosmetic_surgery": "🫦",
+        "therapist": "👨‍⚕️"
+    ]
+    static let craft = [
+        "photographer": "📸",
+        "electronics_repair": "👨‍🔧",
+        "electrician": "👨‍🔧",
+        "painter": "👨‍🎨",
+        "carpenter": "🪚",
+        "sculptor": "👨‍🎨",
+        "plumber": "🪠",
+        "jeweller": "💎",
+        "glaziery": "🪟",
+        "shoemaker": "👞"
+    ]
+    static let company = [
+        "transport": "🛤",
+        "farm": "👨‍🌾"
+    ]
+    static let amenity = [
+        "restaurant": "👨‍🍳",
+        "atm": "🏧",
+        "cafe": "👨‍🍳",
+        "bar": "🍸",
+        "bureau_de_change": "💹",
+        "fast_food": "🍟",
+        "bank": "🏦",
+        "dentist": "🦷",
+        "pub": "🍺",
+        "fuel": "⛽️",
+        "doctros": "👨‍⚕️",
+        "pharmacy": "💊",
+        "taxi": "🚕",
+        "clinic": "🩻",
+        "car_rental": "🚙",
+        "school": "🏫",
+        "veterinary": "😿",
+        "ice_cream": "🍦",
+        "hospital": "🏥",
+        "boat_rental": "⛵️",
+        "money_transfer": "💸",
+        "marketplace": "🛍",
+        "arts_centre": "🖼",
+        "college": "🏫",
+        "coworking_space": "👨‍💻",
+        "car_wash": "🧽",
+        "university": "🎓",
+        "spa": "🧖‍♂️",
+        "post_office": "🏤",
+        "swingerclub": "🍆",
+        "cinema": "📽",
+        "bicycle_rental": "🚲",
+        "theatre": "🎭",
+        "recycling": "♻️",
+        "library": "📚",
+        "parking": "🅿️",
+        "police": "👮‍♂️",
+        "casino": "🎰",
+        "notary": "📜",
+        "dancing_school": "💃",
+        "stripclub": "👯‍♀️",
+        "nightclub": "🪩",
+        "motorcycle_rental": "🛵",
+        "payment_terminal": "🧾",
+        "charging_station": "🔌",
+        "training": "🏋️‍♂️",
+        "bitcoin_office": "฿",
+        "office": "🏢",
+        "language_school": "🔤"
+    ]
+    static let place = [
+        "farm": "👨‍🌾"
+    ]
+    static let leisure = [
+        "park": "🌳"
+    ]
+    static let building = [
+        "farm": "👨‍🌾",
+        "church": "⛪️"
+    ]
     
     static func emoji(for element: API.Element) -> String? {
-        if let amenity = element.data.tags["amenity"] {
-            if amenity == "restaurant" || amenity == "cafe" || amenity == "fast_food" {
-                if let cuisine = element.data.tags["cuisine"] {
-                    if let emoji = lookup(cuisine, in: Self.cuisine) {
-                        return emoji
-                    }
-                }
-                return "👨‍🍳"
-            }
-            
-            switch amenity {
-            case "restaurant": return "👨‍🍳"
-            case "atm": return "🏧" // 💵 💴 💶 💷 💳
-            case "cafe": return "👨‍🍳"
-            case "bar": return "🍸" // 🍾 🥂 🍻 🍷 🍺 🥃 🍸 🍹 🍶
-            case "bureau_de_change": return "💹" // 💱 💹
-            case "fast_food": return "🍕" // 🍕 🍔 🌮 🍟 🌭
-            case "bank": return "🏦"
-            case "dentist": return "🦷"
-            case "pub": return "🍺"
-            case "fuel": return "⛽️"
-            case "doctros": return "👨‍⚕️" // 🩺 🩻 🥼 👩‍⚕️ 🧑‍⚕️ 👨‍⚕️
-            case "pharmacy": return "💊" // 💉 💊
-            case "taxi": return "🚕" // 🚖 🚕
-            case "clinic": return "🩺" // 🏥
-            case "car_rental": return "🚙" // 🚗 🚙 🏎 🚘
-            case "school": return "🏫" // 🏫👩‍🏫🧑‍🏫👨‍🏫
-            case "spa": return "🧖‍♂️"
-            case "cinema": return "📽" // 🎥🎞📽🎦
-            case "bicycle_rental": return "🚲" // 🚴‍♀️🚴🚴‍♂️🚲🚵‍♀️🚵🚵‍♂️
-            case "theatre": return "🎭"
-            case "recycling": return "♻️"
-            case "spa,_sauna": return "🧖‍♂️" // 🧖‍♀️🧖🧖‍♂️
-            case "library": return "📚"
-            case "parking": return "🅿️"
-            case "police": return "👮‍♂️" // 🚨 🚔 👮‍♀️ 👮 👮‍♂️ 🚓
-            case "casino": return "🎰"
-            default:
-                return nil
-            }
+        if let cuisine = element.data.tags["cuisine"] {
+            return lookup(cuisine, in: Self.cuisine) ?? "👨‍🍳"
         }
         if let shop = element.data.tags["shop"] {
-            return lookup(shop, in: Self.shop)
+            return lookup(shop, in: Self.shop) ?? "🛍"
         }
         if let sport = element.data.tags["sport"] {
             return lookup(sport, in: Self.sport)
@@ -187,8 +241,23 @@ struct ElementMarkerEmoji {
         if let tourism = element.data.tags["tourism"] {
             return lookup(tourism, in: Self.tourism)
         }
-        if let cuisine = element.data.tags["cuisine"] {
-            return lookup(cuisine, in: Self.cuisine)
+        if let healthcare = element.data.tags["healthcare"] {
+            return lookup(healthcare, in: Self.healthcare) ?? "⚕️"
+        }
+        if let craft = element.data.tags["craft"] {
+            return lookup(craft, in: Self.craft)
+        }
+        if let amenity = element.data.tags["amenity"] {
+            return lookup(amenity, in: Self.amenity)
+        }
+        if let place = element.data.tags["place"] {
+            return lookup(place, in: Self.place)
+        }
+        if let leisure = element.data.tags["leisure"] {
+            return lookup(leisure, in: Self.leisure)
+        }
+        if let building = element.data.tags["building"] {
+            return lookup(building, in: Self.building)
         }
         return nil
     }
