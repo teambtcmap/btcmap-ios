@@ -80,9 +80,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let marker = MKMarkerAnnotationView()
-        marker.annotation = annotation
-        return marker
+        if let annotation = annotation as? ElementAnnotation {
+            let marker = MKMarkerAnnotationView()
+            marker.annotation = annotation
+            marker.glyphText = ElementMarkerEmoji.emoji(for: annotation.element)
+            return marker
+        }
+        return nil
     }
     
     

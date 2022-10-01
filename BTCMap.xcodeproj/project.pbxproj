@@ -16,6 +16,7 @@
 		AD7E331428E8278D004B1DFE /* REST.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331328E8278D004B1DFE /* REST.swift */; };
 		AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD7E331528E831A6004B1DFE /* Localizable.strings */; };
 		AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331828E831C2004B1DFE /* Localizable.swift */; };
+		AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */; };
 		AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B92B28E4B29400B558D4 /* ElementViewController.swift */; };
 		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
@@ -35,6 +36,7 @@
 		AD7E331328E8278D004B1DFE /* REST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REST.swift; sourceTree = "<group>"; };
 		AD7E331528E831A6004B1DFE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		AD7E331828E831C2004B1DFE /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementMarkerEmoji.swift; sourceTree = "<group>"; };
 		AD96B92B28E4B29400B558D4 /* ElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementViewController.swift; sourceTree = "<group>"; };
 		AD96B92C28E4B29400B558D4 /* ElementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ElementViewController.xib; sourceTree = "<group>"; };
 		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				AD7E331328E8278D004B1DFE /* REST.swift */,
 				AD96B93128E4BB7100B558D4 /* API.swift */,
 				AD96B93328E4BC7400B558D4 /* Elements.swift */,
+				AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */,
 				AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */,
 				AD7E331428E8278D004B1DFE /* REST.swift in Sources */,
+				AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
