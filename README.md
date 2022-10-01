@@ -12,7 +12,7 @@ Run `elements.sh` to download initial elements to `elements.json`.
 
 bc1qng60mcufjnmz6330gze5yt4m6enzra7lywns2d
 
-<img src="app/src/main/res/drawable-nodpi/btc_address.png" width="273">
+<img src="https://github.com/teambtcmap/btcmap-android/raw/master/app/src/main/res/drawable-nodpi/btc_address.png" width="273">
 
 ## FAQ
 
