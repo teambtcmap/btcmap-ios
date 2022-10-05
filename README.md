@@ -14,9 +14,7 @@ Run `elements.js` to calculate statistics about elements and tags.
 
 ## Support
 
-bc1qng60mcufjnmz6330gze5yt4m6enzra7lywns2d
-
-<img src="https://github.com/teambtcmap/btcmap-android/raw/master/app/src/main/res/drawable-nodpi/btc_address.png" width="273">
+[btcmap.org/support-us](https://btcmap.org/support-us)
 
 ## FAQ
 
@@ -34,7 +32,7 @@ Absolutely, you are very welcome to do that. This is a good place to start:
 
 ### BTC Map shows a place which doesn't exist, how can I delete it?
 
-You can delete such places from Open Street Map and BTC Map will pick up all your changes within 24 hours
+You can delete such places from Open Street Map and BTC Map will pick up all your changes within 10 minutes.
 
 ### I've found a place on BTC Map but it doesn't accept bitcoins
 
