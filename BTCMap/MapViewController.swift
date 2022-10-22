@@ -15,7 +15,7 @@ class ElementAnnotation: NSObject, MKAnnotation {
     
     init(element: API.Element) {
         self.element = element
-        self.coordinate = .init(latitude: element.data.lat!, longitude: element.data.lon!)
+        self.coordinate = .init(latitude: element.osmJson.lat!, longitude: element.osmJson.lon!)
     }
 }
 
@@ -39,13 +39,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             var annotationsToRemove: [ElementAnnotation] = []
             
             for element in elements {
-                if element.deletedAt != nil {
+                if !element.deletedAt.isEmpty {
                     if let annotation = annotations[element.id] {
                         annotationsToRemove.append(annotation)
                         annotations.removeValue(forKey: element.id)
                     }
                 } else {
-                    if element.data.lat != nil, element.data.lon != nil {
+                    if element.osmJson.lat != nil, element.osmJson.lon != nil {
                         if let annotation = annotations[element.id] {
                             annotationsToRemove.append(annotation)
                         }

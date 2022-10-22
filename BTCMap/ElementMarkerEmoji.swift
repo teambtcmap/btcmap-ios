@@ -229,36 +229,39 @@ struct ElementMarkerEmoji {
     ]
     
     static func emoji(for element: API.Element) -> String? {
-        if let cuisine = element.data.tags["cuisine"] {
+        guard let tags = element.osmJson.tags else { return nil }
+        
+        if let cuisine = tags["cuisine"] {
             return lookup(cuisine, in: Self.cuisine) ?? "👨‍🍳"
         }
-        if let shop = element.data.tags["shop"] {
+        if let shop = tags["shop"] {
             return lookup(shop, in: Self.shop) ?? "🛍"
         }
-        if let sport = element.data.tags["sport"] {
+        if let sport = tags["sport"] {
             return lookup(sport, in: Self.sport)
         }
-        if let tourism = element.data.tags["tourism"] {
+        if let tourism = tags["tourism"] {
             return lookup(tourism, in: Self.tourism)
         }
-        if let healthcare = element.data.tags["healthcare"] {
+        if let healthcare = tags["healthcare"] {
             return lookup(healthcare, in: Self.healthcare) ?? "⚕️"
         }
-        if let craft = element.data.tags["craft"] {
+        if let craft = tags["craft"] {
             return lookup(craft, in: Self.craft)
         }
-        if let amenity = element.data.tags["amenity"] {
+        if let amenity = tags["amenity"] {
             return lookup(amenity, in: Self.amenity)
         }
-        if let place = element.data.tags["place"] {
+        if let place = tags["place"] {
             return lookup(place, in: Self.place)
         }
-        if let leisure = element.data.tags["leisure"] {
+        if let leisure = tags["leisure"] {
             return lookup(leisure, in: Self.leisure)
         }
-        if let building = element.data.tags["building"] {
+        if let building = tags["building"] {
             return lookup(building, in: Self.building)
         }
+        
         return nil
     }
     

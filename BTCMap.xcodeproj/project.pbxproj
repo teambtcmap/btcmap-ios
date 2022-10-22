@@ -18,6 +18,8 @@
 		AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331828E831C2004B1DFE /* Localizable.swift */; };
 		AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */; };
 		AD7E331E28E8D2CF004B1DFE /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */; };
+		AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8193EF28F2C7ED00CAB29C /* ElementDetailsItemView.swift */; };
+		AD8193F228F2C84400CAB29C /* ElementDetailsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD8193F128F2C84400CAB29C /* ElementDetailsItemView.xib */; };
 		AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B92B28E4B29400B558D4 /* ElementViewController.swift */; };
 		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
@@ -39,6 +41,8 @@
 		AD7E331828E831C2004B1DFE /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementMarkerEmoji.swift; sourceTree = "<group>"; };
 		AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledLabel.swift; sourceTree = "<group>"; };
+		AD8193EF28F2C7ED00CAB29C /* ElementDetailsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDetailsItemView.swift; sourceTree = "<group>"; };
+		AD8193F128F2C84400CAB29C /* ElementDetailsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ElementDetailsItemView.xib; sourceTree = "<group>"; };
 		AD96B92B28E4B29400B558D4 /* ElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementViewController.swift; sourceTree = "<group>"; };
 		AD96B92C28E4B29400B558D4 /* ElementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ElementViewController.xib; sourceTree = "<group>"; };
 		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -160,9 +164,19 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		AD8193EE28F2C7D400CAB29C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AD8193EF28F2C7ED00CAB29C /* ElementDetailsItemView.swift */,
+				AD8193F128F2C84400CAB29C /* ElementDetailsItemView.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		AD96B92A28E4B28600B558D4 /* Element */ = {
 			isa = PBXGroup;
 			children = (
+				AD8193EE28F2C7D400CAB29C /* Views */,
 				AD96B92B28E4B29400B558D4 /* ElementViewController.swift */,
 				AD96B92C28E4B29400B558D4 /* ElementViewController.xib */,
 			);
@@ -229,6 +243,7 @@
 			files = (
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
 				AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */,
+				AD8193F228F2C84400CAB29C /* ElementDetailsItemView.xib in Resources */,
 				AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */,
 				AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */,
 				AD96B94828E6CAB500B558D4 /* elements.json in Resources */,
@@ -249,6 +264,7 @@
 				AD7E331428E8278D004B1DFE /* REST.swift in Sources */,
 				AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
+				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
 				AD96B93228E4BB7100B558D4 /* API.swift in Sources */,
@@ -395,6 +411,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationUsageDescription = "To show your location";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To show your location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -426,6 +443,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationUsageDescription = "To show your location";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To show your location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

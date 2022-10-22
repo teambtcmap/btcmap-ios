@@ -15,7 +15,7 @@ class API {
     typealias Completion<Response> = (Result<Response, Error>) -> Void
     
     struct Element: Identifiable, Equatable, Codable {
-        struct Data: Identifiable, Equatable, Codable {
+        struct OsmJson: Identifiable, Equatable, Codable {
             struct Point: Equatable, Codable {
                 let lat: Double
                 let lon: Double
@@ -32,19 +32,19 @@ class API {
             
             struct Member: Equatable, Codable {
                 let ref: Int64
-                let type: DataType
+                let type: OsmType
                 let role: String
                 let geometry: Geometry?
             }
             
             let id: Int64
-            let type: DataType
-            let uid: Int
-            let user: String
-            let timestamp: Date
-            let version: Int
-            let changeset: Int64
-            let tags: [String: String]
+            let type: OsmType
+            let uid: Int?
+            let user: String?
+            let timestamp: Date?
+            let version: Int?
+            let changeset: Int64?
+            let tags: [String: String]?
             let lat: Double?
             let lon: Double?
             let geometry: Geometry?
@@ -53,24 +53,24 @@ class API {
             let members: [Member]?
         }
         
-        enum DataType: String, Codable {
+        enum OsmType: String, Codable {
             case node
             case way
             case relation
         }
         
         let id: String
-        let data: Data
-        let createdAt: Date
-        let updatedAt: Date
-        let deletedAt: Date?
+        let osmJson: OsmJson
+        let createdAt: String
+        let updatedAt: String
+        let deletedAt: String
     }
     
     func elements(completion: @escaping Completion<[Element]>) {
-        rest.get("elements", completion: completion)
+        rest.get("v2/elements", completion: completion)
     }
     
-    func elementsSince(_ since: Date, completion: @escaping Completion<[Element]>) {
-        rest.get("elements", query: ["created_or_updated_since": ISO8601DateFormatter().string(from: since)], completion: completion)
+    func elementsSince(_ since: String, completion: @escaping Completion<[Element]>) {
+        rest.get("v2/elements", query: ["updated_since": since], completion: completion)
     }
 }

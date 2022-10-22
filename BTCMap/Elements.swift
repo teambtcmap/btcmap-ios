@@ -39,10 +39,10 @@ class Elements {
                 NotificationCenter.default.post(name: Self.changed, object: self, userInfo: [
                     Self.elements: elements
                 ])
-                self.checkSince()
+                self.queue.async { self.checkSince() }
             }
         } catch {
-            logger.fault("Failed start")
+            logger.fault("Failed start with error: \(error as NSError)")
         }
     }
     
@@ -71,7 +71,8 @@ class Elements {
     
     private func checkSince() {
         logger.log("Start checking created and changed elements")
-        guard elements.isEmpty else { return }
+        let elements = self.elements
+        guard !elements.isEmpty else { return }
         var since = elements[0].updatedAt
         for i in 1..<elements.count {
             if elements[i].updatedAt > since {
@@ -84,6 +85,7 @@ class Elements {
             switch result {
             case .success(let elements):
                 self.logger.log("Loaded created and changed elements: \(elements.count)")
+                guard !elements.isEmpty else { return }
                 var currentElements = self.elements
                 self.queue.async {
                     let elementsId = elements.reduce(into: Set<String>()) { $0.insert($1.id) }
