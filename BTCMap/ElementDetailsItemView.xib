@@ -14,29 +14,56 @@
             <rect key="frame" x="0.0" y="0.0" width="390" height="386"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ctd-6J-w3N">
-                    <rect key="frame" x="16" y="12" width="358" height="314"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ctd-6J-w3N" userLabel="Title Label">
+                    <rect key="frame" x="16" y="12" width="358" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" systemColor="secondaryLabelColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMU-Ls-PJ8" userLabel="Value Label">
+                    <rect key="frame" x="16" y="32" width="358" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zPe-c0-2wn" userLabel="Separator View">
+                    <rect key="frame" x="16" y="385" width="374" height="1"/>
+                    <color key="backgroundColor" systemColor="separatorColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="2H2-aQ-Sr7"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Ctd-6J-w3N" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="253-3e-4ei"/>
+                <constraint firstAttribute="trailing" secondItem="zPe-c0-2wn" secondAttribute="trailing" id="8lJ-xh-gMO"/>
                 <constraint firstItem="Ctd-6J-w3N" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="B4t-X6-LSc"/>
                 <constraint firstAttribute="trailing" secondItem="Ctd-6J-w3N" secondAttribute="trailing" constant="16" id="Lsb-3f-P9H"/>
-                <constraint firstAttribute="bottom" secondItem="Ctd-6J-w3N" secondAttribute="bottom" constant="60" id="dU6-67-sYX"/>
+                <constraint firstAttribute="bottom" secondItem="zPe-c0-2wn" secondAttribute="bottom" id="Vy9-eL-1mt"/>
+                <constraint firstAttribute="bottom" secondItem="qMU-Ls-PJ8" secondAttribute="bottom" constant="14" id="XWP-Ye-5Pf"/>
+                <constraint firstItem="qMU-Ls-PJ8" firstAttribute="top" secondItem="Ctd-6J-w3N" secondAttribute="bottom" constant="4" id="bMb-Oy-3Xm"/>
+                <constraint firstItem="qMU-Ls-PJ8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="jNz-jB-wnT"/>
+                <constraint firstItem="zPe-c0-2wn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="mtO-oP-Mez"/>
+                <constraint firstAttribute="trailing" secondItem="qMU-Ls-PJ8" secondAttribute="trailing" constant="16" id="zhk-G5-acf"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="separatorHeightConstraint" destination="2H2-aQ-Sr7" id="ed8-5C-GUr"/>
+                <outlet property="separatorView" destination="zPe-c0-2wn" id="9me-hl-wZg"/>
+                <outlet property="titleLabel" destination="Ctd-6J-w3N" id="gGk-Ny-eEf"/>
+                <outlet property="valueLabel" destination="qMU-Ls-PJ8" id="PIR-Qf-jrR"/>
+            </connections>
             <point key="canvasLocation" x="87.692307692307693" y="85.308056872037909"/>
         </view>
     </objects>
     <resources>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

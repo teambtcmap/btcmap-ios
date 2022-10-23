@@ -43,7 +43,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K4I-J0-JeB" userLabel="Header View">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="128"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ms-nA-kqX" userLabel="Title Label" customClass="StyledLabel" customModule="BTCMap" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ms-nA-kqX" userLabel="Title Label" customClass="StyledLabel" customModule="BTCMap" customModuleProvider="target">
                                                     <rect key="frame" x="18" y="18" width="354" height="92"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                                     <nil key="textColor"/>

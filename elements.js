@@ -51,16 +51,16 @@ function fillKeys(obj, keys) {
 for (const element of elements) {
   fillKeys(element, keys)
 
-  const type = element.data.type
+  const type = element.osm_json.type
   types.set(type, (types.get(type) ?? 0) + 1)
 
   if (type === 'node') {
-    for (const tag in element.data.tags) {
+    for (const tag in element.osm_json.tags) {
       tags.set(tag, (tags.get(tag) ?? 0) + 1)
 
       if (tagsToGrab.includes(tag)) {
         if (!grabbedTags[tag]) grabbedTags[tag] = new Map()
-        const value = element.data.tags[tag]
+        const value = element.osm_json.tags[tag]
         grabbedTags[tag].set(value, (grabbedTags[tag].get(value) ?? 0) + 1)
       }
     }

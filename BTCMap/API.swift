@@ -7,6 +7,7 @@
 
 import Foundation
 
+// API Documentation: https://github.com/teambtcmap/btcmap-api/wiki
 class API {
     let rest: REST = .init(base: URL(string: "https://api.btcmap.org/")!)
     var encoder: JSONEncoder { rest.encoder }
