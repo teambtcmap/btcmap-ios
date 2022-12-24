@@ -58,7 +58,7 @@ class ElementViewController: UIViewController {
             if let phone = element.osmJson.tags?["phone"] {
                 details.append(("Phone", phone))
             }
-            if let website = element.osmJson.tags?["website"] {
+            if let website = element.osmJson.tags?["contact:website"] {
                 details.append(("Website", website))
             }
             if let facebook = element.osmJson.tags?["contact:facebook"] {
