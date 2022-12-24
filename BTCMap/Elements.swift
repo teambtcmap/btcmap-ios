@@ -59,7 +59,6 @@ class Elements {
         }
     }
     
-    // TODO: FIX - This isn't working
     private func storeElements(_ elements: [API.Element]) throws {
         guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
         let elementsURL = libraryURL.appendingPathComponent("elements.json")
