@@ -71,7 +71,11 @@ class API {
         rest.get("v2/elements", completion: completion)
     }
     
-    func elementsSince(_ since: String, completion: @escaping Completion<[Element]>) {
-        rest.get("v2/elements", query: ["updated_since": since], completion: completion)
+    func elements(_ since: String?, completion: @escaping Completion<[Element]>) {
+        let query: REST.Query? = {
+            guard let since = since else { return nil }
+            return ["updated_since": since]
+        }()
+        rest.get("v2/elements", query: query, completion: completion)
     }
 }
