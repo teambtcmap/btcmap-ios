@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Changed to SwiftUI ElementView")
 class ElementViewController: UIViewController {
     var element: API.Element! {
         didSet {

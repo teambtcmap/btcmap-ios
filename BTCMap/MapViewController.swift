@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import SwiftUI
 
 class ElementAnnotation: NSObject, MKAnnotation {
     let element: API.Element
@@ -19,7 +20,7 @@ class ElementAnnotation: NSObject, MKAnnotation {
     }
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate {    
     @IBOutlet weak var mapView: MKMapView!
     private var locationManager = CLLocationManager()
     
@@ -68,27 +69,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     // MARK: - MKMapViewDelegate
     
+    // TODO: Move this presentation to Home view
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? ElementAnnotation else { return }
         
-        if let elementVC = presentedViewController as? ElementViewController {
-            elementVC.element = annotation.element
-            return
-        }
-        
-        let elementVC = ElementViewController()
-        elementVC.element = annotation.element
-        if let sheet = elementVC.sheetPresentationController {
+        let elementViewModel = ElementViewModel(element: annotation.element)
+        let elementDetailHostedVC = UIHostingController(rootView: ElementView(elementViewModel: elementViewModel))
+        if let sheet = elementDetailHostedVC.sheetPresentationController {
             sheet.delegate = self
             sheet.prefersGrabberVisible = true
             sheet.detents = [.medium(), .large()]
             sheet.largestUndimmedDetentIdentifier = .medium
             
         }
-        present(elementVC, animated: true)
+        present(elementDetailHostedVC, animated: true)
     }
     
-    
+    // TODO: Move this logic to Home view - broken with switch to SwiftUI
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         guard let annotation = view.annotation as? ElementAnnotation else { return }
         guard let elementVC = presentedViewController as? ElementViewController else { return }

@@ -24,8 +24,11 @@
 		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
 		AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* Elements.swift */; };
-		AD96B94828E6CAB500B558D4 /* elements.json in Resources */ = {isa = PBXBuildFile; fileRef = AD96B94728E6CAB500B558D4 /* elements.json */; };
 		B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */; };
+		B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA82956BA4D007C2D0A /* ElementView.swift */; };
+		B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAA29573EFB007C2D0A /* Home.swift */; };
+		B1AFEEAD29573F93007C2D0A /* MapViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAC29573F93007C2D0A /* MapViewControllerWrapper.swift */; };
+		B1AFEEAF295742FB007C2D0A /* ElementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,10 @@
 		AD96B93328E4BC7400B558D4 /* Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elements.swift; sourceTree = "<group>"; };
 		B1AFEEA4295213B6007C2D0A /* elements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = elements.json; sourceTree = SOURCE_ROOT; };
 		B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+BTCMap.swift"; sourceTree = "<group>"; };
+		B1AFEEA82956BA4D007C2D0A /* ElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementView.swift; sourceTree = "<group>"; };
+		B1AFEEAA29573EFB007C2D0A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		B1AFEEAC29573F93007C2D0A /* MapViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerWrapper.swift; sourceTree = "<group>"; };
+		B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +101,7 @@
 			children = (
 				AD7E331728E831B4004B1DFE /* Helpers */,
 				AD6914E428E380E300D9F34E /* Models */,
-				AD6914E528E380E800D9F34E /* Views & Controllers */,
+				AD6914E528E380E800D9F34E /* Views & ViewModels */,
 				AD6914CD28E37F4600D9F34E /* AppDelegate.swift */,
 				AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */,
 			);
@@ -131,14 +138,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		AD6914E528E380E800D9F34E /* Views & Controllers */ = {
+		AD6914E528E380E800D9F34E /* Views & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				AD7E331C28E8D275004B1DFE /* Common */,
 				AD6914E628E3813B00D9F34E /* Map */,
 				AD96B92A28E4B28600B558D4 /* Element */,
+				B1AFEEAA29573EFB007C2D0A /* Home.swift */,
 			);
-			name = "Views & Controllers";
+			name = "Views & ViewModels";
 			sourceTree = "<group>";
 		};
 		AD6914E628E3813B00D9F34E /* Map */ = {
@@ -146,6 +154,7 @@
 			children = (
 				AD6914E728E3814F00D9F34E /* MapViewController.swift */,
 				AD6914E828E3814F00D9F34E /* MapViewController.xib */,
+				B1AFEEAC29573F93007C2D0A /* MapViewControllerWrapper.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -170,8 +179,9 @@
 		AD8193EE28F2C7D400CAB29C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AD8193EF28F2C7ED00CAB29C /* ElementDetailsItemView.swift */,
-				AD8193F128F2C84400CAB29C /* ElementDetailsItemView.xib */,
+				B1AFEEB02957476A007C2D0A /* Deprecated */,
+				B1AFEEA82956BA4D007C2D0A /* ElementView.swift */,
+				B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -180,10 +190,19 @@
 			isa = PBXGroup;
 			children = (
 				AD8193EE28F2C7D400CAB29C /* Views */,
-				AD96B92B28E4B29400B558D4 /* ElementViewController.swift */,
-				AD96B92C28E4B29400B558D4 /* ElementViewController.xib */,
 			);
 			name = Element;
+			sourceTree = "<group>";
+		};
+		B1AFEEB02957476A007C2D0A /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				AD96B92B28E4B29400B558D4 /* ElementViewController.swift */,
+				AD96B92C28E4B29400B558D4 /* ElementViewController.xib */,
+				AD8193EF28F2C7ED00CAB29C /* ElementDetailsItemView.swift */,
+				AD8193F128F2C84400CAB29C /* ElementDetailsItemView.xib */,
+			);
+			name = Deprecated;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,7 +265,6 @@
 			files = (
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
 				AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */,
-				B1AFEEA5295213B6007C2D0A /* elements.json in Resources */,
 				AD8193F228F2C84400CAB29C /* ElementDetailsItemView.xib in Resources */,
 				AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */,
 				AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */,
@@ -261,16 +279,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */,
 				AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */,
 				AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */,
 				B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */,
 				AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */,
 				AD7E331428E8278D004B1DFE /* REST.swift in Sources */,
+				B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */,
+				B1AFEEAF295742FB007C2D0A /* ElementViewModel.swift in Sources */,
 				AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
+				B1AFEEAD29573F93007C2D0A /* MapViewControllerWrapper.swift in Sources */,
 				AD96B93228E4BB7100B558D4 /* API.swift in Sources */,
 				AD7E331E28E8D2CF004B1DFE /* StyledLabel.swift in Sources */,
 			);

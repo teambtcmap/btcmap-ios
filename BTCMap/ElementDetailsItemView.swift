@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Changed to SwiftUI ElementView")
 class ElementDetailsItemView: UIControl {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
