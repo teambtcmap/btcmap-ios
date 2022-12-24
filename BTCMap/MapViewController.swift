@@ -115,7 +115,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             marker.markerTintColor = #colorLiteral(red: 1, green: 0.555871129, blue: 0, alpha: 1)
             marker.glyphText = emoji(for: annotation.element)
             marker.displayPriority = .required
+            marker.clusteringIdentifier = "element"
             return marker
+        }
+        else if let cluster = annotation as? MKClusterAnnotation {
+            let markerAnnotationView = MKMarkerAnnotationView()
+            markerAnnotationView.glyphText = String(cluster.memberAnnotations.count)
+            markerAnnotationView.markerTintColor = UIColor.BTCMap_LightTeal
+            markerAnnotationView.canShowCallout = false
+
+            return markerAnnotationView
         }
         return nil
     }
