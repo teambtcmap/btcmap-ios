@@ -19,8 +19,9 @@ class ElementAnnotation: NSObject, MKAnnotation {
     }
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    private var locationManager = CLLocationManager()
     
     private var elements: Elements!
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
@@ -123,12 +124,40 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             markerAnnotationView.glyphText = String(cluster.memberAnnotations.count)
             markerAnnotationView.markerTintColor = UIColor.BTCMap_LightTeal
             markerAnnotationView.canShowCallout = false
-
             return markerAnnotationView
         }
         return nil
     }
+
+    // MARK: - MapView Geometry
     
+    private func centerMapOnUserLocation(for mapView: MKMapView) {
+        guard let location = mapView.userLocation.location else { return }
+        
+        let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    // MARK: - CLLocationManager Delegate
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+        default:
+            mapView.showsUserLocation = false
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        // TODO: Implement
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        centerMapOnUserLocation(for: mapView)
+    }
+    
+
     // MARK: - UISheetPresentationControllerDelegate
     
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
@@ -141,8 +170,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
+
         setupElements()
-        CLLocationManager().requestWhenInUseAuthorization()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        locationManager.requestLocation()
+    }
+    
+    // MARK: - Actions
+    @IBAction func didTapUserLocationButton(_ sender: Any) {
+        centerMapOnUserLocation(for: mapView)
     }
 }
