@@ -112,7 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ElementAnnotation {
             let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MKMarkerAnnotationView
-            marker.markerTintColor = #colorLiteral(red: 1, green: 0.555871129, blue: 0, alpha: 1)
+            marker.markerTintColor = UIColor.BTCMap_LightTeal
             marker.glyphText = emoji(for: annotation.element)
             marker.displayPriority = .required
             marker.clusteringIdentifier = "element"
