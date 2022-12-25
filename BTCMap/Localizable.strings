@@ -20,3 +20,18 @@
 "email" = "Email";
 "facebook" = "Facebook";
 "opening_hours" = "Opening Hours";
+
+// OPTIONS VIEW
+"add_place" = "Add place";
+"communities" = "Communities";
+"trends" = "Trends";
+"top_supertaggers" = "Top supertaggers";
+"latest_changes" = "Latest changes";
+"settings" = "Settings";
+
+// DONATE
+"donate" = "Donate";
+"donate_headline" = "Help us improve BTC Map";
+"copy_lnurl" = "Copy LNURL";
+"copy_btc_address" = "Copy Address";
+"pay" = "Pay";

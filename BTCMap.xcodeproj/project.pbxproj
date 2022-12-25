@@ -25,7 +25,6 @@
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
 		AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* Elements.swift */; };
 		B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F309F2957789900926E4F /* BorderButtonStyle.swift */; };
-		B17F30A32957C25700926E4F /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A22957C25700926E4F /* BoundingBox.swift */; };
 		B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A42957CA2000926E4F /* OptionsView.swift */; };
 		B17F30A72957CB4300926E4F /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A62957CB4300926E4F /* DonateView.swift */; };
 		B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A82957CBD000926E4F /* RoundedPillButton.swift */; };
@@ -63,6 +62,9 @@
 		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		AD96B93328E4BC7400B558D4 /* Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elements.swift; sourceTree = "<group>"; };
 		B17F309F2957789900926E4F /* BorderButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderButtonStyle.swift; sourceTree = "<group>"; };
+		B17F30A42957CA2000926E4F /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
+		B17F30A62957CB4300926E4F /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
+		B17F30A82957CBD000926E4F /* RoundedPillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPillButton.swift; sourceTree = "<group>"; };
 		B17F30AB2958FCE900926E4F /* String+URLEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+URLEncode.swift"; sourceTree = "<group>"; };
 		B1AFEEA4295213B6007C2D0A /* elements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = elements.json; sourceTree = SOURCE_ROOT; };
 		B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+BTCMap.swift"; sourceTree = "<group>"; };
@@ -203,6 +205,8 @@
 				B1AFEEB02957476A007C2D0A /* Deprecated */,
 				B1AFEEA82956BA4D007C2D0A /* ElementView.swift */,
 				B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */,
+				B17F30A42957CA2000926E4F /* OptionsView.swift */,
+				B17F30A62957CB4300926E4F /* DonateView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -335,6 +339,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */,
+				B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */,
+				B17F30A72957CB4300926E4F /* DonateView.swift in Sources */,
 				AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */,
 				AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */,
 				B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */,
@@ -345,6 +351,7 @@
 				AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */,
 				B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
+				B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
 				B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
