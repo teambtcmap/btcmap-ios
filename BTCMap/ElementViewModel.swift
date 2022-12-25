@@ -7,13 +7,67 @@
 
 import Foundation
 
-struct ElementViewModel {
-    typealias ElementTitle = String
-    typealias ElementValue = String
-    typealias ElementDetail = (ElementTitle, ElementValue)
+enum ElementDetailType {
+    case address
+    case phone
+    case website
+    case email
+    case facebook
+    case openingHours
+    
+    var displayTitle: String {
+        switch self {
+        case .address: return "address".localized.capitalized
+        case .phone: return "phone".localized.capitalized
+        case .website: return "website".localized.capitalized
+        case .email: return "email".localized.capitalized
+        case .facebook: return "facebook".localized.capitalized
+        case .openingHours: return "opening_hours".localized.capitalized
+        }
+    }
+    
+    var displayIconSystemName: String {
+        switch self {
+        case .address: return "map.fill"
+        case .phone: return "phone.fill"
+        case .website: return "globe.americas.fill"
+        case .email: return "envelope.fill"
+        case .facebook: return "globe"
+        case .openingHours: return "clock.fill"
+        }
+    }
+}
 
+struct ElementViewModel {
+    typealias ElementDetailValue = String
+    typealias ElementDetail = (type: ElementDetailType, value: ElementDetailValue)
+    
     let element: API.Element
     
+    // MARK: - Links
+    var verifyLink: URL? {
+        guard let name = element.osmJson.tags?["name"],
+              let lat = element.osmJson.lat,
+              let lon = element.osmJson.lon,
+              let url = "https://btcmap.org/verify-location?&name=\(name)&lat=\(lat)&long=\(lon)&\(element.osmJson.type.rawValue)=\(element.osmJson.id)".urlEncoded() else { return nil }
+        
+        return URL(string: url)
+    }
+    
+    var superTaggerManualLink: URL = URL(string: "https://github.com/teambtcmap/btcmap-data/wiki/Tagging-Instructions")!
+    var viewOnOSMLink: URL? {
+        let id = element.id.replacingOccurrences(of: ":", with: "/")
+        let string = "https://www.openstreetmap.org/\(id)"
+        return URL(string: string)
+    }
+    var ediotOnOSMLink: URL? {
+        let id = element.id.replacingOccurrences(of: ":", with: "=")
+        let string = "https://www.openstreetmap.org/edit?\(id)"
+        return URL(string: string)
+    }
+    
+    
+    // MARK: - Details (Tags)
     var elementDetails: [ElementDetail] {
         var details = [ElementDetail]()
         
@@ -40,20 +94,20 @@ struct ElementViewModel {
         }
         
         if !address.isEmpty {
-            details.append(("Address", address))
+            details.append((ElementDetailType.address, address))
         }
         
         if let phone = element.osmJson.tags?["phone"] {
-            details.append(("Phone", phone))
+            details.append((ElementDetailType.phone, phone))
         }
         if let website = element.osmJson.tags?["contact:website"] {
-            details.append(("Website", website))
+            details.append((ElementDetailType.website, website))
         }
         if let facebook = element.osmJson.tags?["contact:facebook"] {
-            details.append(("Facebook", facebook))
+            details.append((ElementDetailType.facebook, facebook))
         }
-        if let facebook = element.osmJson.tags?["opening_hours"] {
-            details.append(("Opening Hours", facebook))
+        if let openingHours = element.osmJson.tags?["opening_hours"] {
+            details.append((ElementDetailType.openingHours, openingHours))
         }
         
         return details
