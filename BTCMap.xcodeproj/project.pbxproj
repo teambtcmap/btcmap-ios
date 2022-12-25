@@ -24,11 +24,21 @@
 		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
 		AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* Elements.swift */; };
+		B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F309F2957789900926E4F /* BorderButtonStyle.swift */; };
+		B17F30A32957C25700926E4F /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A22957C25700926E4F /* BoundingBox.swift */; };
+		B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A42957CA2000926E4F /* OptionsView.swift */; };
+		B17F30A72957CB4300926E4F /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A62957CB4300926E4F /* DonateView.swift */; };
+		B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A82957CBD000926E4F /* RoundedPillButton.swift */; };
 		B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */; };
 		B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA82956BA4D007C2D0A /* ElementView.swift */; };
 		B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAA29573EFB007C2D0A /* Home.swift */; };
 		B1AFEEAD29573F93007C2D0A /* MapViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAC29573F93007C2D0A /* MapViewControllerWrapper.swift */; };
 		B1AFEEAF295742FB007C2D0A /* ElementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */; };
+		B1AFEEB3295747D8007C2D0A /* mock_element.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEB2295747D8007C2D0A /* mock_element.json */; };
+		B1AFEEB529574FE7007C2D0A /* mock_event.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEB429574FE7007C2D0A /* mock_event.json */; };
+		B1AFEEB729575004007C2D0A /* mock_user.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEB629575004007C2D0A /* mock_user.json */; };
+		B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEBA29575036007C2D0A /* mock_area.json */; };
+		B1AFEEBD29575053007C2D0A /* mock_report.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEBC29575053007C2D0A /* mock_report.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +125,7 @@
 				AD6914D628E37F4800D9F34E /* Assets.xcassets */,
 				AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */,
 				B1AFEEA4295213B6007C2D0A /* elements.json */,
+				B1AFEEB1295747AD007C2D0A /* Mocks */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -205,6 +216,18 @@
 			name = Deprecated;
 			sourceTree = "<group>";
 		};
+		B1AFEEB1295747AD007C2D0A /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B1AFEEB2295747D8007C2D0A /* mock_element.json */,
+				B1AFEEB429574FE7007C2D0A /* mock_event.json */,
+				B1AFEEB629575004007C2D0A /* mock_user.json */,
+				B1AFEEBA29575036007C2D0A /* mock_area.json */,
+				B1AFEEBC29575053007C2D0A /* mock_report.json */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -263,9 +286,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1AFEEB729575004007C2D0A /* mock_user.json in Resources */,
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
+				B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */,
 				AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */,
+				B1AFEEB529574FE7007C2D0A /* mock_event.json in Resources */,
 				AD8193F228F2C84400CAB29C /* ElementDetailsItemView.xib in Resources */,
+				B1AFEEB3295747D8007C2D0A /* mock_element.json in Resources */,
+				B1AFEEBD29575053007C2D0A /* mock_report.json in Resources */,
 				AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */,
 				AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */,
 				AD6914D728E37F4800D9F34E /* Assets.xcassets in Resources */,

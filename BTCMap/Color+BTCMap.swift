@@ -7,6 +7,18 @@
 
 import Foundation
 import UIKit
+import SwiftUI
+
+extension Color {
+    static var BTCMap_Green: Color { Color(UIColor.BTCMap_Green) }
+    static var BTCMap_LightTeal: Color { Color(UIColor.BTCMap_LightTeal) }
+    static var BTCMap_DarkBlue: Color { Color(UIColor.BTCMap_DarkBlue) }
+    static var BTCMap_Links: Color { Color(UIColor.BTCMap_Links) }
+    static var BTCMap_Background: Color { Color(UIColor.BTCMap_Background) }
+    static var BTCMap_Heading: Color { Color(UIColor.BTCMap_Heading) }
+    static var BTCMap_Body: Color { Color(UIColor.BTCMap_Body) }
+}
+
 
 extension UIColor {
     public convenience init?(hex: String) {
