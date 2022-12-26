@@ -69,10 +69,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     // MARK: - MKMapViewDelegate
     
-    // TODO: Move this presentation to Home view
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? ElementAnnotation else { return }
         
+        // deselect current annotationView if different
+        if let elementVC = presentedViewController as? UIHostingController<ElementView>,
+           elementVC.rootView.elementViewModel.element.id != annotation.element.id {
+            self.dismiss(animated: true)
+        }
+        
+        // show new annotationView
         let elementViewModel = ElementViewModel(element: annotation.element)
         let elementDetailHostedVC = UIHostingController(rootView: ElementView(elementViewModel: elementViewModel))
         if let sheet = elementDetailHostedVC.sheetPresentationController {
@@ -85,12 +91,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         present(elementDetailHostedVC, animated: true)
     }
     
-    // TODO: Move this logic to Home view - broken with switch to SwiftUI
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         guard let annotation = view.annotation as? ElementAnnotation else { return }
-        guard let elementVC = presentedViewController as? ElementViewController else { return }
+        guard let elementVC = presentedViewController as? UIHostingController<ElementView> else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            if elementVC.element.id == annotation.element.id {
+            if elementVC.rootView.elementViewModel.element.id  == annotation.element.id {
                 self.dismiss(animated: true)
             }
         }
