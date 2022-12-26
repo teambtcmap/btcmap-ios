@@ -18,7 +18,7 @@ struct ElementView: View {
             
             // MARK: - Title, Options Button
             HStack {
-                Text(elementViewModel.element.osmJson.tags?["name"] ?? "")
+                Text(elementViewModel.name)
                     .font(.title)
                     .padding()
                 Spacer()
@@ -26,8 +26,11 @@ struct ElementView: View {
                     showingOptions = true
                 }) {
                     Image(systemName: "ellipsis")
+                        .foregroundColor(.black)
                 }
-                .confirmationDialog("Options", isPresented: $showingOptions, titleVisibility: .hidden) {
+                .rotationEffect(.degrees(90))
+
+                .confirmationDialog("", isPresented: $showingOptions, titleVisibility: .hidden) {
                     Button("supertagger_manual".localized) {
                         openURL(elementViewModel.superTaggerManualLink)
                     }
@@ -37,7 +40,7 @@ struct ElementView: View {
                             openURL(url)
                         }
                     }
-                  
+                    
                     if let url = elementViewModel.ediotOnOSMLink {
                         Button("edit_on_osm".localized) {
                             openURL(url)
@@ -79,7 +82,7 @@ struct ElementView: View {
                                 .font(.headline)
                         }
                         .padding(.bottom, 0)
-                         
+                        
                         let url: URL? = {
                             switch detail.type {
                             case .phone:
@@ -95,16 +98,14 @@ struct ElementView: View {
                             default: return nil
                             }
                         }()
-                        
-                        let _ = print("[LINK] url: \(url)")
-                            
+                                                
                         if let url = url {
                             Link("\(detail.value)", destination: url)
                         } else {
                             Text(detail.value)
                                 .font(.subheadline)
                         }
-                     
+                        
                     }
                     .padding(.bottom, 10)
                     .padding(.horizontal)

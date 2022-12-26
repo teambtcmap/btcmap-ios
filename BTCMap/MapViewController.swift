@@ -173,6 +173,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
 
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
 
+        userLocationButton.layer.cornerRadius = 10
+        
         setupElements()
     }
     
@@ -182,7 +184,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         locationManager.requestLocation()
     }
     
-    // MARK: - Actions
+    // MARK: - User Location Button
+    @IBOutlet weak var userLocationButton: UIButton!
     @IBAction func didTapUserLocationButton(_ sender: Any) {
         centerMapOnUserLocation(for: mapView)
     }

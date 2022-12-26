@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="BTCMap" customModuleProvider="target">
             <connections>
                 <outlet property="mapView" destination="AYQ-Gk-QVG" id="4Xz-I1-9Ru"/>
+                <outlet property="userLocationButton" destination="rvd-Hg-0Rn" id="igL-ap-g3Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -37,20 +38,14 @@
                     </view>
                     <blurEffect style="regular"/>
                 </visualEffectView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rvd-Hg-0Rn" userLabel="UserLocationButton">
-                    <rect key="frame" x="304" y="750" width="54" height="31"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rvd-Hg-0Rn" userLabel="UserLocationButton">
+                    <rect key="frame" x="312" y="742" width="48" height="48"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain">
-                        <attributedString key="attributedTitle">
-                            <fragment content="LOC">
-                                <attributes>
-                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
+                    <buttonConfiguration key="configuration" style="plain" image="user_location" cornerStyle="capsule">
+                        <attributedString key="attributedTitle"/>
+                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
                     <connections>
                         <action selector="didTapUserLocationButton:" destination="-1" eventType="touchUpInside" id="3hj-Qz-dI7"/>
@@ -65,6 +60,8 @@
                 <constraint firstItem="AYQ-Gk-QVG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UBT-Vy-8Bh"/>
                 <constraint firstAttribute="trailing" secondItem="AYQ-Gk-QVG" secondAttribute="trailing" id="YX6-pC-WKb"/>
                 <constraint firstItem="BCf-OM-PAc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aHM-Vn-WxK"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rvd-Hg-0Rn" secondAttribute="trailing" constant="30" id="dgZ-pG-NYb"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rvd-Hg-0Rn" secondAttribute="bottom" constant="20" id="foG-Yz-VtB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="BCf-OM-PAc" secondAttribute="bottom" id="hd7-MI-6gg"/>
                 <constraint firstItem="BCf-OM-PAc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="is1-S0-0dS"/>
                 <constraint firstItem="AYQ-Gk-QVG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qvJ-sK-BuA"/>
@@ -73,6 +70,7 @@
         </view>
     </objects>
     <resources>
+        <image name="user_location" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

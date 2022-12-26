@@ -68,6 +68,8 @@ struct ElementViewModel {
     
     
     // MARK: - Details (Tags)
+    var name: String { element.osmJson.tags?["name"] ?? "" }
+    
     var elementDetails: [ElementDetail] {
         var details = [ElementDetail]()
         

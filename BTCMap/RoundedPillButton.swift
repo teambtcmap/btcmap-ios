@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct RoundedPillButton: ButtonStyle {
+    let foregroundColor: Color
+    let radius: Double
+    let padding: Double
+    
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .padding()
-            .foregroundColor(Color.BTCMap_LightTeal)
-            .background(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .padding(padding)
+            .foregroundColor(foregroundColor)
+            .background(RoundedRectangle(cornerRadius: radius, style: .continuous))
     }
 }

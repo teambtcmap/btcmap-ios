@@ -20,7 +20,7 @@ struct OptionsView: View {
                 Button(action: {
                     showingDonate = true
                 }) {
-                    Image(systemName: "moon")  // TODO: Change
+                    Image("btc_logo")
                         .foregroundColor(.white)
                 }
             }
@@ -32,6 +32,8 @@ struct OptionsView: View {
                 Image(systemName: "ellipsis")
                     .foregroundColor(.white)
             }
+            .rotationEffect(.degrees(90))
+
             .confirmationDialog("Options", isPresented: $showingOptions, titleVisibility: .hidden) {
                 Button("add_place".localized) {
                     openURL(URL(string: "https://btcmap.org/add-location")!)
@@ -63,9 +65,9 @@ struct OptionsView: View {
                 Button("OK", role: .cancel) { }
             }
         }
-        .padding(16)
-        .background(Color.black.opacity(0.8))
-        .cornerRadius(24)
+        .padding(14)
+        .background(Color.black.opacity(0.7))
+        .cornerRadius(28)
     }
 }
 

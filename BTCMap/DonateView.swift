@@ -6,43 +6,63 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct DonateView: View {
+    @Environment(\.openURL) var openURL
+    
+    let btc = "bc1qyyr7g9tew6sfa57mv2r6rvgj2ucakcmqnqzqjj"
+    let ln = "LNURL1DP68GURN8GHJ7ERZXVUXVER9X4SNYTNY9EMX7MR5V9NK2CTSWQHXJME0D3H82UNVWQHKZURF9AMRZTMVDE6HYMP0XYA8GEF9"
+    
     var body: some View {
         VStack {
             Text("donate_headline".localized)
                 .font(.title2)
             
-            HStack {
-                Button(action: {
-                    // TODO: Deeplink wallet
-                }) {
-                    Text("pay".localized)
-                }
-                .buttonStyle(RoundedPillButton())
-                
-                Button(action: {
-                    // TODO: Copy address
-                }) {
-                    Text("copy_btc_address".localized) 
-                }
-                .buttonStyle(RoundedPillButton())
-            }
+            Image("btc_address")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 240, height: 240)
             
             HStack {
                 Button(action: {
-                    // TODO: Deeplink wallet
+                    openURL(URL(string: "bitcoin:\(btc)")!)
                 }) {
                     Text("pay".localized)
+                        .foregroundColor(.white)
                 }
-                .buttonStyle(RoundedPillButton())
-
+                .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
+                
                 Button(action: {
-                    // TODO: Copy address
+                    UIPasteboard.general.setValue(btc, forPasteboardType: UTType.plainText.identifier)
+                }) {
+                    Text("copy_btc_address".localized)
+                        .foregroundColor(.white)
+                }
+                .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
+            }
+            
+            Image("lnurl")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 240, height: 240)
+            
+            HStack {
+                Button(action: {
+                    openURL(URL(string: "lightning:\(ln)")!)
+                }) {
+                    Text("pay".localized)
+                        .foregroundColor(.white)
+                }
+                .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
+                
+                Button(action: {
+                    UIPasteboard.general.setValue(ln, forPasteboardType: UTType.plainText.identifier)
                 }) {
                     Text("copy_lnurl".localized)
+                        .foregroundColor(.white)
                 }
-                .buttonStyle(RoundedPillButton())
+                .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
             }
         }
         .navigationTitle("donate".localized)
