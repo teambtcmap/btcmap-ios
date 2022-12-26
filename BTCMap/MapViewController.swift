@@ -114,19 +114,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ElementAnnotation {
-            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MKMarkerAnnotationView
-            marker.markerTintColor = UIColor.BTCMap_LightTeal
+            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! FlatAnnotationView
             marker.glyphText = emoji(for: annotation.element)
-            marker.displayPriority = .required
+            marker.displayPriority = .defaultHigh
             marker.clusteringIdentifier = "element"
             return marker
         }
         else if let cluster = annotation as? MKClusterAnnotation {
-            let markerAnnotationView = MKMarkerAnnotationView()
-            markerAnnotationView.glyphText = String(cluster.memberAnnotations.count)
-            markerAnnotationView.markerTintColor = UIColor.BTCMap_LightTeal
-            markerAnnotationView.canShowCallout = false
-            return markerAnnotationView
+            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster", for: cluster) as! CircleAnnotationView
+            marker.glyphText = String(cluster.memberAnnotations.count)
+            return marker
         }
         return nil
     }
@@ -176,7 +173,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
 
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
+        mapView.register(FlatAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
+        mapView.register(CircleAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
 
         userLocationButton.layer.cornerRadius = 10
         
