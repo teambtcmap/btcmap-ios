@@ -26,7 +26,7 @@ struct ElementView: View {
                     showingOptions = true
                 }) {
                     Image(systemName: "ellipsis")
-                        .foregroundColor(.black)
+                        .foregroundColor(.white)
                 }
                 .rotationEffect(.degrees(90))
 
