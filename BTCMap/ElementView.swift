@@ -65,7 +65,7 @@ struct ElementView: View {
                 }) {
                     Text("verify".localized.uppercased())
                 }
-                .buttonStyle(BorderButtonStyle(foregroundColor: Color.BTCMap_Green, strokeColor: Color.gray.opacity(0.5), padding: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)))
+                .buttonStyle(BorderButtonStyle(foregroundColor: .white, strokeColor: Color.gray.opacity(0.5), padding: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)))
             }
             .padding(.bottom, 18)
             .padding(.horizontal)
@@ -87,13 +87,10 @@ struct ElementView: View {
                             switch detail.type {
                             case .phone:
                                 // TODO: phone url not resolving
-                                let _ = print("[LINK] phone: \(detail.value)")
                                 return URL(string: "tel:\(detail.value)")
                             case .website:
-                                let _ = print("[LINK] website: \(detail.value)")
                                 return URL(string: "\(detail.value)")
-                            case .email:
-                                let _ = print("[LINK] email: \(detail.value)")
+                            case .email:                      
                                 return URL(string: "mailto:\(detail.value)")
                             default: return nil
                             }

@@ -29,7 +29,6 @@ struct DonateView: View {
                     openURL(URL(string: "bitcoin:\(btc)")!)
                 }) {
                     Text("pay".localized)
-                        .foregroundColor(.white)
                 }
                 .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
                 
@@ -37,7 +36,6 @@ struct DonateView: View {
                     UIPasteboard.general.setValue(btc, forPasteboardType: UTType.plainText.identifier)
                 }) {
                     Text("copy_btc_address".localized)
-                        .foregroundColor(.white)
                 }
                 .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
             }
@@ -52,7 +50,6 @@ struct DonateView: View {
                     openURL(URL(string: "lightning:\(ln)")!)
                 }) {
                     Text("pay".localized)
-                        .foregroundColor(.white)
                 }
                 .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
                 
@@ -60,7 +57,6 @@ struct DonateView: View {
                     UIPasteboard.general.setValue(ln, forPasteboardType: UTType.plainText.identifier)
                 }) {
                     Text("copy_lnurl".localized)
-                        .foregroundColor(.white)
                 }
                 .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
             }
