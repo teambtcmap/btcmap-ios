@@ -95,25 +95,25 @@ class API {
     }
     
     // MARK: - Area
-    struct Area: Codable {
+    struct Area: Codable, Hashable, Equatable {
         let id: String
         let tags: Tags
         let createdAt: String
         let updatedAt: String
         let deletedAt: String
-
+        
         struct Tags: Codable {
-            let boxEast: Double
-            let boxNorth: Double
-            let boxSouth: Double
-            let boxWest: Double          
-            let discord: String
-            let twitter: String
-            let website: String
-            let iconSquare: String
+            let boxEast: Double?
+            let boxNorth: Double?
+            let boxSouth: Double?
+            let boxWest: Double?
+            let discord: String?
+            let twitter: String?
+            let website: String?
+            let iconSquare: String?
             let name: String
             let type: String
-
+            
             private enum CodingKeys: String, CodingKey {
                 case boxEast = "box:east"
                 case boxNorth = "box:north"
@@ -126,8 +126,38 @@ class API {
                 case name
                 case type
             }
+            
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                // NOTE: This complexity is because sometimes boxEast, boxNorth, etc were returning as Strings in the Json
+                boxEast = try? (try? container.decode(Double.self, forKey: .boxEast)) ?? Double(try container.decode(String.self, forKey: .boxEast))
+                boxNorth = try? (try? container.decode(Double.self, forKey: .boxNorth)) ?? Double(try container.decode(String.self, forKey: .boxNorth))
+                boxSouth = try? (try? container.decode(Double.self, forKey: .boxSouth)) ?? Double(try container.decode(String.self, forKey: .boxSouth))
+                boxWest = try? (try? container.decode(Double.self, forKey: .boxWest)) ?? Double(try container.decode(String.self, forKey: .boxWest))
+                discord = try container.decodeIfPresent(String.self, forKey: .discord)
+                twitter = try container.decodeIfPresent(String.self, forKey: .twitter)
+                website = try container.decodeIfPresent(String.self, forKey: .website)
+                iconSquare = try container.decodeIfPresent(String.self, forKey: .iconSquare)
+                name = try container.decode(String.self, forKey: .name)
+                type = try container.decode(String.self, forKey: .type)
+            }
         }
         
+        // MARK: Getters
+        var iconUrl: URL? { URL(string: tags.iconSquare ?? "") }
+        var name: String { tags.name }
+        var type: String { tags.type }
+        
+        // MARK: Hashable
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
+        
+        static func == (lhs: Area, rhs: Area) -> Bool {
+            return lhs.id == rhs.id
+        }
+        
+        // MARK: Mock
         static var mock: Area? {
             guard let fileURL = Bundle.main.url(forResource: "mock_area", withExtension: "json") else {
                 assertionFailure(); return nil }
@@ -139,7 +169,11 @@ class API {
             }
         }
     }
-
+    
+    func areas(completion: @escaping Completion<[Area]>) {
+        rest.get("v2/areas", completion: completion)
+    }
+    
     //MARK: - Event
     struct Event: Identifiable, Equatable, Codable {
         let id: Int

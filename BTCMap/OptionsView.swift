@@ -10,6 +10,7 @@ import SwiftUI
 struct OptionsView: View {
     @Environment(\.openURL) var openURL
     @State private var showingOptions = false
+    @State private var showingCommunities = false
     @State private var showingDonate = false
     @State private var showingNotImplementedAlert = false
     
@@ -38,22 +39,29 @@ struct OptionsView: View {
                 Button("add_place".localized) {
                     openURL(URL(string: "https://btcmap.org/add-location")!)
                 }
-                Button("communities".localized) {
-                    // TODO: Implement
-                    showingNotImplementedAlert = true
+                
+                // TODO: CommunitiesView Link not workibng
+                NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) {
+                    Button("communities".localized) {
+                        showingCommunities = true
+                    }
                 }
+                
                 Button("trends".localized) {
                     // TODO: Implement
                     showingNotImplementedAlert = true
                 }
+                
                 Button("top_supertaggers".localized) {
                     // TODO: Implement
                     showingNotImplementedAlert = true
                 }
+                
                 Button("latest_changes".localized) {
                     // TODO: Implement
                     showingNotImplementedAlert = true
                 }
+                
                 Button("settings".localized) {
                     // TODO: Implement
                     showingNotImplementedAlert = true
