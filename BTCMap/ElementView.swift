@@ -54,6 +54,7 @@ struct ElementView: View {
                 HStack {
                     Image(systemName: "checkmark.seal.fill")
                     Text(elementViewModel.verifyText)
+                        .lineLimit(2)
                         .font(.subheadline)
                 }
                 Spacer()
@@ -76,7 +77,11 @@ struct ElementView: View {
                 ForEach(details, id: \.0) { detail in
                     VStack(alignment: .leading) {
                         HStack {
-                            Image(systemName: detail.type.displayIconSystemName)
+                            if let systemName = detail.type.displayIconSystemName {
+                                Image(systemName: systemName).renderingMode(.template).colorMultiply(.white)
+                            } else if let customName = detail.type.displayIconCustomName {
+                                Image(customName).renderingMode(.template).colorMultiply(.white)
+                            }
                             Text(detail.type.displayTitle)
                                 .font(.headline)
                         }

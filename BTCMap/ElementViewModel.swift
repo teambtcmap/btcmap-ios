@@ -13,6 +13,7 @@ enum ElementDetailType {
     case website
     case email
     case facebook
+    case twitter
     case openingHours
     
     var displayTitle: String {
@@ -22,18 +23,28 @@ enum ElementDetailType {
         case .website: return "website".localized.capitalized
         case .email: return "email".localized.capitalized
         case .facebook: return "facebook".localized.capitalized
+        case .twitter: return "twitter".localized.capitalized
         case .openingHours: return "opening_hours".localized.capitalized
         }
     }
     
-    var displayIconSystemName: String {
+    var displayIconSystemName: String? {
         switch self {
         case .address: return "map.fill"
         case .phone: return "phone.fill"
         case .website: return "globe.americas.fill"
         case .email: return "envelope.fill"
-        case .facebook: return "globe"
+        case .facebook: return nil
+        case .twitter: return nil
         case .openingHours: return "clock.fill"
+        }
+    }
+    
+    var displayIconCustomName: String? {
+        switch self {
+        case .facebook: return "facebook"
+        case .twitter: return "twitter"
+        default: return nil
         }
     }
 }
@@ -149,6 +160,7 @@ struct ElementViewModel {
                 .trimmingCharacters(in: ["/"])
             details.append((ElementDetailType.website, website))
         }
+
         if var twitter = tags?["contact:twitter"] {
             twitter = twitter
                 .replacingOccurrences(of: "https://twitter.com/", with: "")
