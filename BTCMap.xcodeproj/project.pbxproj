@@ -31,9 +31,11 @@
 		B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30AB2958FCE900926E4F /* String+URLEncode.swift */; };
 		B17F30AE2959530300926E4F /* CommunitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30AD2959530300926E4F /* CommunitiesView.swift */; };
 		B17F30B02959536000926E4F /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */; };
-		B17F30B4295A599200926E4F /* FlatAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B3295A599200926E4F /* FlatAnnotationView.swift */; };
+		B17F30B4295A599200926E4F /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B3295A599200926E4F /* MapAnnotationView.swift */; };
 		B17F30B6295A5C1300926E4F /* String+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B5295A5C1300926E4F /* String+UIImage.swift */; };
-		B17F30B8295A644300926E4F /* CircleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B7295A644300926E4F /* CircleAnnotationView.swift */; };
+		B17F30BA2963061900926E4F /* ElementSystemImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B92963061900926E4F /* ElementSystemImages.swift */; };
+		B17F30BD2963196800926E4F /* CircleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BC2963196800926E4F /* CircleAnnotationView.swift */; };
+		B17F30BF296319B700926E4F /* MarkerAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */; };
 		B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */; };
 		B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA82956BA4D007C2D0A /* ElementView.swift */; };
 		B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAA29573EFB007C2D0A /* Home.swift */; };
@@ -73,9 +75,11 @@
 		B17F30AB2958FCE900926E4F /* String+URLEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+URLEncode.swift"; sourceTree = "<group>"; };
 		B17F30AD2959530300926E4F /* CommunitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesView.swift; sourceTree = "<group>"; };
 		B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
-		B17F30B3295A599200926E4F /* FlatAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatAnnotationView.swift; sourceTree = "<group>"; };
+		B17F30B3295A599200926E4F /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		B17F30B5295A5C1300926E4F /* String+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+UIImage.swift"; sourceTree = "<group>"; };
-		B17F30B7295A644300926E4F /* CircleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationView.swift; sourceTree = "<group>"; };
+		B17F30B92963061900926E4F /* ElementSystemImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementSystemImages.swift; sourceTree = "<group>"; };
+		B17F30BC2963196800926E4F /* CircleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationView.swift; sourceTree = "<group>"; };
+		B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerAnnotationView.swift; sourceTree = "<group>"; };
 		B1AFEEA4295213B6007C2D0A /* elements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = elements.json; sourceTree = SOURCE_ROOT; };
 		B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+BTCMap.swift"; sourceTree = "<group>"; };
 		B1AFEEA82956BA4D007C2D0A /* ElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementView.swift; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 				AD96B93128E4BB7100B558D4 /* API.swift */,
 				AD96B93328E4BC7400B558D4 /* Elements.swift */,
 				AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */,
+				B17F30B92963061900926E4F /* ElementSystemImages.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -183,11 +188,10 @@
 		AD6914E628E3813B00D9F34E /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				B17F30BB2963194700926E4F /* AnnotationViews */,
 				AD6914E728E3814F00D9F34E /* MapViewController.swift */,
 				AD6914E828E3814F00D9F34E /* MapViewController.xib */,
 				B1AFEEAC29573F93007C2D0A /* MapViewControllerWrapper.swift */,
-				B17F30B3295A599200926E4F /* FlatAnnotationView.swift */,
-				B17F30B7295A644300926E4F /* CircleAnnotationView.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -249,6 +253,16 @@
 				B17F30A82957CBD000926E4F /* RoundedPillButton.swift */,
 			);
 			name = SwiftUI;
+			sourceTree = "<group>";
+		};
+		B17F30BB2963194700926E4F /* AnnotationViews */ = {
+			isa = PBXGroup;
+			children = (
+				B17F30B3295A599200926E4F /* MapAnnotationView.swift */,
+				B17F30BC2963196800926E4F /* CircleAnnotationView.swift */,
+				B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */,
+			);
+			name = AnnotationViews;
 			sourceTree = "<group>";
 		};
 		B1AFEEB02957476A007C2D0A /* Deprecated */ = {
@@ -353,7 +367,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B17F30B4295A599200926E4F /* FlatAnnotationView.swift in Sources */,
+				B17F30B4295A599200926E4F /* MapAnnotationView.swift in Sources */,
 				B17F30AE2959530300926E4F /* CommunitiesView.swift in Sources */,
 				B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */,
 				B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */,
@@ -364,7 +378,7 @@
 				B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */,
 				AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */,
 				AD7E331428E8278D004B1DFE /* REST.swift in Sources */,
-				B17F30B8295A644300926E4F /* CircleAnnotationView.swift in Sources */,
+				B17F30BD2963196800926E4F /* CircleAnnotationView.swift in Sources */,
 				B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */,
 				B1AFEEAF295742FB007C2D0A /* ElementViewModel.swift in Sources */,
 				AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */,
@@ -377,6 +391,8 @@
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
 				B17F30B02959536000926E4F /* CommunitiesViewModel.swift in Sources */,
 				B1AFEEAD29573F93007C2D0A /* MapViewControllerWrapper.swift in Sources */,
+				B17F30BA2963061900926E4F /* ElementSystemImages.swift in Sources */,
+				B17F30BF296319B700926E4F /* MarkerAnnotationView.swift in Sources */,
 				AD96B93228E4BB7100B558D4 /* API.swift in Sources */,
 				AD7E331E28E8D2CF004B1DFE /* StyledLabel.swift in Sources */,
 			);

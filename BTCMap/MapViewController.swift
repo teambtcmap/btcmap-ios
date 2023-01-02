@@ -101,21 +101,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         }
     }
     
-    private var elementEmojis: [String: String] = [:]
+    private var elementImages: [String: UIImage] = [:]
     
-    private func emoji(for element: API.Element) -> String? {
-        if let emoji = elementEmojis[element.id] {
-            return emoji
+    private func image(for element: API.Element) -> UIImage? {
+        if let image = elementImages[element.id] {
+            return image
         }
-        let emoji = ElementMarkerEmoji.emoji(for: element)
-        elementEmojis[element.id] = emoji
-        return emoji
+        let image = ElementSystemImages.systemImage(for: element)
+        elementImages[element.id] = image
+        return image
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ElementAnnotation {
-            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! FlatAnnotationView
-            marker.glyphText = emoji(for: annotation.element)
+            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MarkerAnnotationView
+            marker.glyphImage = image(for: annotation.element)
             marker.displayPriority = .defaultHigh
             marker.clusteringIdentifier = "element"
             return marker
@@ -173,7 +173,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
 
-        mapView.register(FlatAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
+        mapView.register(MarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
         mapView.register(CircleAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
 
         userLocationButton.layer.cornerRadius = 10
