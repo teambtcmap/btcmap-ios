@@ -43,11 +43,8 @@ struct OptionsView: View {
                     openURL(URL(string: "https://btcmap.org/add-location")!)
                 }
                 
-                // TODO: CommunitiesView Link not workibng
-                NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) {
-                    Button("communities".localized) {
-                        showingCommunities = true
-                    }
+                Button("communities".localized) {
+                    showingCommunities = true
                 }
                 
                 Button("trends".localized) {
@@ -70,11 +67,12 @@ struct OptionsView: View {
                     showingNotImplementedAlert = true
                 }
             }
-            
             // TODO: Temp
             .alert("Not yet implemented.", isPresented: $showingNotImplementedAlert) {
                 Button("OK", role: .cancel) { }
             }
+            
+            NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) { }
         }
         .padding(14)
         .background(Color.black.opacity(0.7))
