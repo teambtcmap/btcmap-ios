@@ -21,6 +21,8 @@ struct Home: View {
                     .offset(x: -20, y: 30)
                     .overlay(Color.clear)
             }
+            .navigationBarHidden(true).navigationBarTitle("")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

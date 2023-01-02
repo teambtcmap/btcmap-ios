@@ -177,6 +177,10 @@
 		AD6914E528E380E800D9F34E /* Views & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B17F30A62957CB4300926E4F /* DonateView.swift */,
+				B17F30AD2959530300926E4F /* CommunitiesView.swift */,
+				B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */,
+				B17F30A42957CA2000926E4F /* OptionsView.swift */,
 				AD7E331C28E8D275004B1DFE /* Common */,
 				AD6914E628E3813B00D9F34E /* Map */,
 				AD96B92A28E4B28600B558D4 /* Element */,
@@ -222,10 +226,6 @@
 				B1AFEEB02957476A007C2D0A /* Deprecated */,
 				B1AFEEA82956BA4D007C2D0A /* ElementView.swift */,
 				B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */,
-				B17F30A42957CA2000926E4F /* OptionsView.swift */,
-				B17F30A62957CB4300926E4F /* DonateView.swift */,
-				B17F30AD2959530300926E4F /* CommunitiesView.swift */,
-				B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";

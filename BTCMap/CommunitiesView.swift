@@ -37,6 +37,7 @@ struct CommunitiesView: View {
             }
             .listStyle(.plain)
         }
+        .navigationBarHidden(false)
         .navigationTitle("communities".localized)
     }
 }

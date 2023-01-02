@@ -15,60 +15,63 @@ struct DonateView: View {
     let ln = "LNURL1DP68GURN8GHJ7ERZXVUXVER9X4SNYTNY9EMX7MR5V9NK2CTSWQHXJME0D3H82UNVWQHKZURF9AMRZTMVDE6HYMP0XYA8GEF9"
     
     var body: some View {
-        VStack {
-            Text("donate_headline".localized)
-                .font(.title2)
-            
-            Image("btc_address")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 240, height: 240)
-            
-            HStack {
-                Button(action: {
-                    openURL(URL(string: "bitcoin:\(btc)")!)
-                }) {
-                    Text("pay".localized)
-                }
-                .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
-                .padding(.trailing, 10)
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack {
+                Text("donate_headline".localized)
+                    .font(.title2)
                 
-                Button(action: {
-                    UIPasteboard.general.setValue(btc, forPasteboardType: UTType.plainText.identifier)
-                }) {
-                    Text("copy_btc_address".localized)
+                Image("btc_address")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 240, height: 240)
+                
+                HStack {
+                    Button(action: {
+                        openURL(URL(string: "bitcoin:\(btc)")!)
+                    }) {
+                        Text("pay".localized)
+                    }
+                    .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
+                    .padding(.trailing, 10)
+                    
+                    Button(action: {
+                        UIPasteboard.general.setValue(btc, forPasteboardType: UTType.plainText.identifier)
+                    }) {
+                        Text("copy_btc_address".localized)
+                    }
+                    .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
+                    .padding(.trailing, 10)
                 }
-                .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
-                .padding(.trailing, 10)
+                .padding(.top, 10)
+                .padding(.bottom, 10)
+                
+                Image("lnurl")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 240, height: 240)
+                
+                HStack {
+                    Button(action: {
+                        openURL(URL(string: "lightning:\(ln)")!)
+                    }) {
+                        Text("pay".localized)
+                    }
+                    .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
+                    .padding(.trailing, 10)
+                    
+                    Button(action: {
+                        UIPasteboard.general.setValue(ln, forPasteboardType: UTType.plainText.identifier)
+                    }) {
+                        Text("copy_lnurl".localized)
+                    }
+                    .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
+                    .padding(.trailing, 10)
+                }
+                .padding(.top, 10)
+                .padding(.bottom, 10)
             }
-            .padding(.top, 10)
-            .padding(.bottom, 10)
-            
-            Image("lnurl")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 240, height: 240)
-            
-            HStack {
-                Button(action: {
-                    openURL(URL(string: "lightning:\(ln)")!)
-                }) {
-                    Text("pay".localized)
-                }
-                .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
-                .padding(.trailing, 10)
-
-                Button(action: {
-                    UIPasteboard.general.setValue(ln, forPasteboardType: UTType.plainText.identifier)
-                }) {
-                    Text("copy_lnurl".localized)
-                }
-                .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
-                .padding(.trailing, 10)
-            }
-            .padding(.top, 10)
-            .padding(.bottom, 10)
         }
+        .navigationBarHidden(false)
         .navigationTitle("donate".localized)
     }
 }
