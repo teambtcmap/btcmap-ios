@@ -44,6 +44,21 @@ currency:BTC
 payment:bitcoin
 ```
 
+## TODO
+
+### ELEMENT DETAIL MODAL
+- [ ] Finish adding rows to match Android. For sure Instagram and Pouch, need to verify what else
+- [ ] Phone number parsing isn't working for all formats. Can mimic Android repo implementation
+
+### MAIN OPTIONS BUTTON
+- [ ] All of the options in the main options button are NOT implemented. Communities Main is partially implemented, but unfinished
+
+### REFACTOR
+- [ ] Initial startup logic (initial loading of Elements) could use a refactor. Local vs Remote persistence is a bit mixed up
+
+### TESTS
+- [ ] There are currently no tests. Start with API mocks
+
 ---
 
 ![Untitled](https://user-images.githubusercontent.com/85003930/194117128-2f96bafd-2379-407a-a584-6c03396a42cc.png)
