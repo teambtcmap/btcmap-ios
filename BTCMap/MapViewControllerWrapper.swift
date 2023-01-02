@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 struct MapViewControllerWrapper: UIViewControllerRepresentable {
+    let mapViewController = MapViewController()
+    
     func makeUIViewController(context: UIViewControllerRepresentableContext<MapViewControllerWrapper>) -> UIViewController {
-        // Return an instance of your UIKit view controller here
-        let viewController = MapViewController()
-        return viewController
+        return mapViewController
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<MapViewControllerWrapper>) {

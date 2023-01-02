@@ -14,11 +14,14 @@ struct OptionsView: View {
     @State private var showingDonate = false
     @State private var showingNotImplementedAlert = false
     
+    var dismissElementView: (() -> Void)?
+    
     var body: some View {
         HStack {
             // MARK: - Donate Button
             NavigationLink(destination: DonateView(), isActive: $showingDonate) {
                 Button(action: {
+                    dismissElementView?()
                     showingDonate = true
                 }) {
                     Image("btc_logo")
@@ -28,13 +31,13 @@ struct OptionsView: View {
             
             // MARK: - Options Button
             Button(action: {
+                dismissElementView?()
                 showingOptions = true
             }) {
                 Image(systemName: "ellipsis")
                     .foregroundColor(.white)
             }
             .rotationEffect(.degrees(90))
-
             .confirmationDialog("Options", isPresented: $showingOptions, titleVisibility: .hidden) {
                 Button("add_place".localized) {
                     openURL(URL(string: "https://btcmap.org/add-location")!)
