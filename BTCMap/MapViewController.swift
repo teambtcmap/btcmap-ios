@@ -185,6 +185,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
 
         userLocationButton.layer.cornerRadius = 10
         
+        // TODO: Disabling temporarily because MapKit makes this difficult to move from it's top right position, which overlaps search bar
+        mapView.showsCompass = false
+        
         setupElements()
     }
     
