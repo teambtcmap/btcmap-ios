@@ -13,6 +13,7 @@
 "view_on_osm" = "View on OSM";
 "edit_on_osm" = "Edit on OSM";
 "edit_tags" = "Edit tags";
+"tags" = "Tags";
 
 "address" = "Address";
 "phone" = "Phone";

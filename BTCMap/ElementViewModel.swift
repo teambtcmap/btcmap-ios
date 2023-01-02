@@ -176,4 +176,12 @@ struct ElementViewModel {
         
         return details
     }
+    
+    var prettyPrintTags: String? {
+        guard let tags = tags,
+              let data = try? JSONSerialization.data(withJSONObject: tags, options: .prettyPrinted),
+              let string = String(data: data, encoding: .utf8) else { return nil }
+            
+        return string
+    }
 }

@@ -112,6 +112,24 @@ struct ElementView: View {
                     .padding(.horizontal)
                 }
             }
+            
+            Spacer(minLength: 50)
+
+            // MARK: - Tags JSON Dump
+            if let tags = elementViewModel.prettyPrintTags {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Image(systemName: "list.bullet.circle.fill")
+                        Text("tags".localized.uppercased())
+                            .fontWeight(.bold)
+                            .font(.subheadline)
+                    }
+                    Text(tags)
+                        .font(.system(size: 12))
+                }
+                .padding(.horizontal)
+            }
+            
         }
         .padding()
         .alignmentGuide(.top) { _ in 0 }
