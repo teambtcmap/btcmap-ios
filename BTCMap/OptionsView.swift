@@ -43,29 +43,30 @@ struct OptionsView: View {
                     openURL(URL(string: "https://btcmap.org/add-location")!)
                 }
                 
-                Button("communities".localized) {
-                    showingCommunities = true
-                }
-                
-                Button("trends".localized) {
-                    // TODO: Implement
-                    showingNotImplementedAlert = true
-                }
-                
-                Button("top_supertaggers".localized) {
-                    // TODO: Implement
-                    showingNotImplementedAlert = true
-                }
-                
-                Button("latest_changes".localized) {
-                    // TODO: Implement
-                    showingNotImplementedAlert = true
-                }
-                
-                Button("settings".localized) {
-                    // TODO: Implement
-                    showingNotImplementedAlert = true
-                }
+                // TODO: Hide for now until implemented
+//                Button("communities".localized) {
+//                    showingCommunities = true
+//                }
+//
+//                Button("trends".localized) {
+//                    // TODO: Implement
+//                    showingNotImplementedAlert = true
+//                }
+//
+//                Button("top_supertaggers".localized) {
+//                    // TODO: Implement
+//                    showingNotImplementedAlert = true
+//                }
+//
+//                Button("latest_changes".localized) {
+//                    // TODO: Implement
+//                    showingNotImplementedAlert = true
+//                }
+//
+//                Button("settings".localized) {
+//                    // TODO: Implement
+//                    showingNotImplementedAlert = true
+//                }
             }
             // TODO: Temp
             .alert("Not yet implemented.", isPresented: $showingNotImplementedAlert) {
