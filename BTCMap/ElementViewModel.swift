@@ -140,8 +140,20 @@ struct ElementViewModel {
         if let phone = tags?["phone"] {
             details.append((ElementDetailType.phone, phone))
         }
-        if let website = tags?["contact:website"] {
+        if var website = tags?["website"] ?? tags?["contact:website"] {
+            website = website
+                .replacingOccurrences(of: "https://www.", with: "")
+                .replacingOccurrences(of: "http://www.", with: "")
+                .replacingOccurrences(of: "https://", with: "")
+                .replacingOccurrences(of: "http://", with: "")
+                .trimmingCharacters(in: ["/"])
             details.append((ElementDetailType.website, website))
+        }
+        if var twitter = tags?["contact:twitter"] {
+            twitter = twitter
+                .replacingOccurrences(of: "https://twitter.com/", with: "")
+                .trimmingCharacters(in: ["@"])
+            details.append((ElementDetailType.twitter, twitter))
         }
         if let facebook = tags?["contact:facebook"] {
             details.append((ElementDetailType.facebook, facebook))
