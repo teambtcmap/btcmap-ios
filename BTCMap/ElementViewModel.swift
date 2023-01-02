@@ -43,10 +43,11 @@ struct ElementViewModel {
     typealias ElementDetail = (type: ElementDetailType, value: ElementDetailValue)
     
     let element: API.Element
+    var tags: [String: String]? { element.osmJson.tags }
     
     // MARK: - Links
     var verifyLink: URL? {
-        guard let name = element.osmJson.tags?["name"],
+        guard let name = tags?["name"],
               let lat = element.osmJson.lat,
               let lon = element.osmJson.lon,
               let url = "https://btcmap.org/verify-location?&name=\(name)&lat=\(lat)&long=\(lon)&\(element.osmJson.type.rawValue)=\(element.osmJson.id)".urlEncoded() else { return nil }
@@ -66,31 +67,68 @@ struct ElementViewModel {
         return URL(string: string)
     }
     
+    // MARK: - Verify
+    private var surveyDates: [String] {
+        var surveyDates = [String]()
+
+        if let date = tags?["survey:date"] {
+            surveyDates.append(date)
+        }
+
+        if let date = tags?["check_date"] {
+            surveyDates.append(date)
+        }
+
+        if let date = tags?["check_date:currency:XBT"] {
+            surveyDates.append(date)
+        }
+        
+        return surveyDates
+    }
+    
+    var isVerified: Bool { !surveyDates.isEmpty }
+    
+    var notVerifiedText: String { return "not_verified_by_supertaggers".localized }
+    
+    var verifyText: String {
+        guard !surveyDates.isEmpty,
+              let max = surveyDates.max() else {
+            return notVerifiedText }
+                    
+        // NOTE: These dates come back as a simple string in formate `2022-11-22`. So need to massage to work for DateFormatter.
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let date = formatter.date(from: max) else {
+            return notVerifiedText }
+        
+        formatter.dateFormat = "dd/MM/yyyy"
+        return formatter.string(from: date)
+    }
     
     // MARK: - Details (Tags)
-    var name: String { element.osmJson.tags?["name"] ?? "" }
+    var name: String { tags?["name"] ?? "" }
     
     var elementDetails: [ElementDetail] {
         var details = [ElementDetail]()
         
         var address = ""
         
-        if let houseNumber = element.osmJson.tags?["addr:housenumber"] {
+        if let houseNumber = tags?["addr:housenumber"] {
             address += houseNumber
         }
-        if let street = element.osmJson.tags?["addr:street"] {
+        if let street = tags?["addr:street"] {
             if !address.isEmpty { address += " " }
             address += street
         }
-        if let city = element.osmJson.tags?["addr:city"] {
+        if let city = tags?["addr:city"] {
             if !address.isEmpty { address += ", " }
             address += city
         }
-        if let state = element.osmJson.tags?["addr:state"] {
+        if let state = tags?["addr:state"] {
             if !address.isEmpty { address += ", " }
             address += state
         }
-        if let postcode = element.osmJson.tags?["addr:postcode"] {
+        if let postcode = tags?["addr:postcode"] {
             if !address.isEmpty { address += ", " }
             address += postcode
         }
@@ -99,16 +137,16 @@ struct ElementViewModel {
             details.append((ElementDetailType.address, address))
         }
         
-        if let phone = element.osmJson.tags?["phone"] {
+        if let phone = tags?["phone"] {
             details.append((ElementDetailType.phone, phone))
         }
-        if let website = element.osmJson.tags?["contact:website"] {
+        if let website = tags?["contact:website"] {
             details.append((ElementDetailType.website, website))
         }
-        if let facebook = element.osmJson.tags?["contact:facebook"] {
+        if let facebook = tags?["contact:facebook"] {
             details.append((ElementDetailType.facebook, facebook))
         }
-        if let openingHours = element.osmJson.tags?["opening_hours"] {
+        if let openingHours = tags?["opening_hours"] {
             details.append((ElementDetailType.openingHours, openingHours))
         }
         

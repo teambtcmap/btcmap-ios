@@ -51,10 +51,9 @@ struct ElementView: View {
             
             // MARK: - Verified
             HStack {
-                // TODO: Add logic - verified
                 HStack {
                     Image(systemName: "checkmark.seal.fill")
-                    Text("not_verified_by_supertaggers".localized)
+                    Text(elementViewModel.verifyText)
                         .font(.subheadline)
                 }
                 Spacer()
