@@ -30,15 +30,19 @@ struct DonateView: View {
                 }) {
                     Text("pay".localized)
                 }
-                .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
+                .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
+                .padding(.trailing, 10)
                 
                 Button(action: {
                     UIPasteboard.general.setValue(btc, forPasteboardType: UTType.plainText.identifier)
                 }) {
                     Text("copy_btc_address".localized)
                 }
-                .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
+                .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
+                .padding(.trailing, 10)
             }
+            .padding(.top, 10)
+            .padding(.bottom, 10)
             
             Image("lnurl")
                 .resizable()
@@ -51,15 +55,19 @@ struct DonateView: View {
                 }) {
                     Text("pay".localized)
                 }
-                .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
-                
+                .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
+                .padding(.trailing, 10)
+
                 Button(action: {
                     UIPasteboard.general.setValue(ln, forPasteboardType: UTType.plainText.identifier)
                 }) {
                     Text("copy_lnurl".localized)
                 }
-                .buttonStyle(RoundedPillButton(foregroundColor: .black, radius: 24, padding: 16))
+                .buttonStyle(RoundedPillButton(foregroundColor: .black, backgroundColor: .BTCMap_DarkBeige, radius: 24, padding: 16))
+                .padding(.trailing, 10)
             }
+            .padding(.top, 10)
+            .padding(.bottom, 10)
         }
         .navigationTitle("donate".localized)
     }

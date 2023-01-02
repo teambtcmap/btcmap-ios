@@ -29,7 +29,7 @@ struct ElementView: View {
                         .foregroundColor(.white)
                 }
                 .rotationEffect(.degrees(90))
-
+                
                 .confirmationDialog("", isPresented: $showingOptions, titleVisibility: .hidden) {
                     Button("supertagger_manual".localized) {
                         openURL(elementViewModel.superTaggerManualLink)
@@ -53,9 +53,11 @@ struct ElementView: View {
             HStack {
                 HStack {
                     Image(systemName: "checkmark.seal.fill")
+                        .renderingMode(.template)
+                        .colorMultiply(.BTCMap_LightBeige)
                     Text(elementViewModel.verifyText)
                         .lineLimit(2)
-                        .font(.subheadline)
+                        .font(.system(size: 14))
                 }
                 Spacer()
                 Button(action: {
@@ -64,63 +66,60 @@ struct ElementView: View {
                     }
                 }) {
                     Text("verify".localized.uppercased())
+                        .foregroundColor(Color.BTCMap_DarkBeige)
                 }
                 .buttonStyle(BorderButtonStyle(foregroundColor: .white, strokeColor: Color.gray.opacity(0.5), padding: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)))
             }
-            .padding(.bottom, 18)
             .padding(.horizontal)
-            
+                        
             
             // MARK: - Details
-            let details = elementViewModel.elementDetails
-            if !details.isEmpty {
-                ForEach(details, id: \.0) { detail in
-                    VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 20) {
+                let details = elementViewModel.elementDetails
+                if !details.isEmpty {
+                    ForEach(details, id: \.0) { detail in
                         HStack {
                             if let systemName = detail.type.displayIconSystemName {
-                                Image(systemName: systemName).renderingMode(.template).colorMultiply(.white)
+                                Image(systemName: systemName).renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
                             } else if let customName = detail.type.displayIconCustomName {
-                                Image(customName).renderingMode(.template).colorMultiply(.white)
+                                Image(customName).renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
                             }
-                            Text(detail.type.displayTitle)
-                                .font(.headline)
-                        }
-                        .padding(.bottom, 0)
-                        
-                        let url: URL? = {
-                            switch detail.type {
-                            case .phone:
-                                // TODO: phone url not resolving
-                                return URL(string: "tel:\(detail.value)")
-                            case .website:
-                                return URL(string: "\(detail.value)")
-                            case .email:                      
-                                return URL(string: "mailto:\(detail.value)")
-                            default: return nil
+                            
+                            let url: URL? = {
+                                switch detail.type {
+                                case .phone:
+                                    // TODO: phone url not resolving with some formats
+                                    return URL(string: "tel:\(detail.value)")
+                                case .website:
+                                    return URL(string: "\(detail.value)")
+                                case .email:
+                                    return URL(string: "mailto:\(detail.value)")
+                                default: return nil
+                                }
+                            }()
+                            
+                            if let url = url {
+                                Link("\(detail.value)", destination: url)
+                                    .tint(Color.BTCMap_DarkBeige)
+                            } else {
+                                Text(detail.value)
+                                    .font(.subheadline)
                             }
-                        }()
-                                                
-                        if let url = url {
-                            Link("\(detail.value)", destination: url)
-                        } else {
-                            Text(detail.value)
-                                .font(.subheadline)
                         }
-                        
                     }
-                    .padding(.bottom, 10)
-                    .padding(.horizontal)
                 }
             }
-            
+            .padding(.top, 40)
+            .padding(.horizontal)
+                        
             Spacer(minLength: 50)
-
+            
             // MARK: - Tags JSON Dump
             if let tags = elementViewModel.prettyPrintTags {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
-                        Image(systemName: "list.bullet.circle.fill")
-                        Text("tags".localized.uppercased())
+                        Image(systemName: "list.bullet.circle.fill").renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
+                        Text("tags".localized)
                             .fontWeight(.bold)
                             .font(.subheadline)
                     }

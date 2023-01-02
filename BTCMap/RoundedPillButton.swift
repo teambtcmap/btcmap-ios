@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RoundedPillButton: ButtonStyle {
     let foregroundColor: Color
+    let backgroundColor: Color
     let radius: Double
     let padding: Double
     
@@ -16,6 +17,6 @@ struct RoundedPillButton: ButtonStyle {
         configuration.label
             .padding(padding)
             .foregroundColor(foregroundColor)
-            .background(RoundedRectangle(cornerRadius: radius, style: .continuous))
+            .background(RoundedRectangle(cornerRadius: radius, style: .continuous).fill(backgroundColor))
     }
 }

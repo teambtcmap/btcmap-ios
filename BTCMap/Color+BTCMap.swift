@@ -17,6 +17,8 @@ extension Color {
     static var BTCMap_Background: Color { Color(UIColor.BTCMap_Background) }
     static var BTCMap_Heading: Color { Color(UIColor.BTCMap_Heading) }
     static var BTCMap_Body: Color { Color(UIColor.BTCMap_Body) }
+    static var BTCMap_LightBeige: Color { Color(UIColor.BTCMap_LightBeige) }
+    static var BTCMap_DarkBeige: Color { Color(UIColor.BTCMap_DarkBeige) }
 }
 
 
@@ -43,4 +45,6 @@ extension UIColor {
     static var BTCMap_Background: UIColor { return UIColor(hex: "#E4EBEC")! }
     static var BTCMap_Heading: UIColor { return UIColor(hex: "#164E63")! }
     static var BTCMap_Body: UIColor { return UIColor(hex: "#155E75")! }
+    static var BTCMap_LightBeige: UIColor { return UIColor(hex: "#e0c1a3")! }
+    static var BTCMap_DarkBeige: UIColor { return UIColor(hex: "#f9ba72")! }
 }
