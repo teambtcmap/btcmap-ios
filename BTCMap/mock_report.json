@@ -1,0 +1,17 @@
+{
+  "id": 48,
+  "area_id": "",
+  "date": "2022-11-12",
+  "tags": {
+    "legacy_elements": 6528,
+    "outdated_elements": 6952,
+    "total_elements": 8623,
+    "total_elements_lightning": 1483,
+    "total_elements_lightning_contactless": 257,
+    "total_elements_onchain": 1444,
+    "up_to_date_elements": 1671
+  },
+  "created_at": "2022-11-12T00:01:39Z",
+  "updated_at": "2022-11-12T00:01:39Z",
+  "deleted_at": ""
+}

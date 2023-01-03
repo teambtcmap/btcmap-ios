@@ -5,3 +5,35 @@
   Created by Vitaly Berg on 10/1/22.
   
 */
+
+// ELEMENT VIEW
+"verify" = "Verify";
+"not_verified_by_supertaggers" = "Not verified by \nSupertaggers";
+"supertagger_manual" = "Supertagger Manual";
+"view_on_osm" = "View on OSM";
+"edit_on_osm" = "Edit on OSM";
+"edit_tags" = "Edit tags";
+"tags" = "Tags";
+
+"address" = "Address";
+"phone" = "Phone";
+"website" = "Website";
+"email" = "Email";
+"facebook" = "Facebook";
+"twitter" = "Twitter";
+"opening_hours" = "Opening Hours";
+
+// OPTIONS VIEW
+"add_place" = "Add place";
+"communities" = "Communities";
+"trends" = "Trends";
+"top_supertaggers" = "Top supertaggers";
+"latest_changes" = "Latest changes";
+"settings" = "Settings";
+
+// DONATE
+"donate" = "Donate";
+"donate_headline" = "Help us improve BTC Map";
+"copy_lnurl" = "Copy LNURL";
+"copy_btc_address" = "Copy Address";
+"pay" = "Pay";

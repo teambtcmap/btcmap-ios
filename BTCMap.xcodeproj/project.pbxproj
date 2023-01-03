@@ -24,7 +24,28 @@
 		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
 		AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* Elements.swift */; };
-		AD96B94828E6CAB500B558D4 /* elements.json in Resources */ = {isa = PBXBuildFile; fileRef = AD96B94728E6CAB500B558D4 /* elements.json */; };
+		B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F309F2957789900926E4F /* BorderButtonStyle.swift */; };
+		B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A42957CA2000926E4F /* OptionsView.swift */; };
+		B17F30A72957CB4300926E4F /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A62957CB4300926E4F /* DonateView.swift */; };
+		B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A82957CBD000926E4F /* RoundedPillButton.swift */; };
+		B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30AB2958FCE900926E4F /* String+URLEncode.swift */; };
+		B17F30AE2959530300926E4F /* CommunitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30AD2959530300926E4F /* CommunitiesView.swift */; };
+		B17F30B02959536000926E4F /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */; };
+		B17F30B4295A599200926E4F /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B3295A599200926E4F /* MapAnnotationView.swift */; };
+		B17F30B6295A5C1300926E4F /* String+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B5295A5C1300926E4F /* String+UIImage.swift */; };
+		B17F30BA2963061900926E4F /* ElementSystemImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B92963061900926E4F /* ElementSystemImages.swift */; };
+		B17F30BD2963196800926E4F /* CircleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BC2963196800926E4F /* CircleAnnotationView.swift */; };
+		B17F30BF296319B700926E4F /* MarkerAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */; };
+		B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */; };
+		B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA82956BA4D007C2D0A /* ElementView.swift */; };
+		B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAA29573EFB007C2D0A /* Home.swift */; };
+		B1AFEEAD29573F93007C2D0A /* MapViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAC29573F93007C2D0A /* MapViewControllerWrapper.swift */; };
+		B1AFEEAF295742FB007C2D0A /* ElementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */; };
+		B1AFEEB3295747D8007C2D0A /* mock_element.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEB2295747D8007C2D0A /* mock_element.json */; };
+		B1AFEEB529574FE7007C2D0A /* mock_event.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEB429574FE7007C2D0A /* mock_event.json */; };
+		B1AFEEB729575004007C2D0A /* mock_user.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEB629575004007C2D0A /* mock_user.json */; };
+		B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEBA29575036007C2D0A /* mock_area.json */; };
+		B1AFEEBD29575053007C2D0A /* mock_report.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEBC29575053007C2D0A /* mock_report.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +68,29 @@
 		AD96B92C28E4B29400B558D4 /* ElementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ElementViewController.xib; sourceTree = "<group>"; };
 		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		AD96B93328E4BC7400B558D4 /* Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elements.swift; sourceTree = "<group>"; };
-		AD96B94728E6CAB500B558D4 /* elements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = elements.json; sourceTree = "<group>"; };
+		B17F309F2957789900926E4F /* BorderButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderButtonStyle.swift; sourceTree = "<group>"; };
+		B17F30A42957CA2000926E4F /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
+		B17F30A62957CB4300926E4F /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
+		B17F30A82957CBD000926E4F /* RoundedPillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPillButton.swift; sourceTree = "<group>"; };
+		B17F30AB2958FCE900926E4F /* String+URLEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+URLEncode.swift"; sourceTree = "<group>"; };
+		B17F30AD2959530300926E4F /* CommunitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesView.swift; sourceTree = "<group>"; };
+		B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
+		B17F30B3295A599200926E4F /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
+		B17F30B5295A5C1300926E4F /* String+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+UIImage.swift"; sourceTree = "<group>"; };
+		B17F30B92963061900926E4F /* ElementSystemImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementSystemImages.swift; sourceTree = "<group>"; };
+		B17F30BC2963196800926E4F /* CircleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationView.swift; sourceTree = "<group>"; };
+		B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerAnnotationView.swift; sourceTree = "<group>"; };
+		B1AFEEA4295213B6007C2D0A /* elements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = elements.json; sourceTree = SOURCE_ROOT; };
+		B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+BTCMap.swift"; sourceTree = "<group>"; };
+		B1AFEEA82956BA4D007C2D0A /* ElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementView.swift; sourceTree = "<group>"; };
+		B1AFEEAA29573EFB007C2D0A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		B1AFEEAC29573F93007C2D0A /* MapViewControllerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerWrapper.swift; sourceTree = "<group>"; };
+		B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementViewModel.swift; sourceTree = "<group>"; };
+		B1AFEEB2295747D8007C2D0A /* mock_element.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_element.json; sourceTree = "<group>"; };
+		B1AFEEB429574FE7007C2D0A /* mock_event.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_event.json; sourceTree = "<group>"; };
+		B1AFEEB629575004007C2D0A /* mock_user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_user.json; sourceTree = "<group>"; };
+		B1AFEEBA29575036007C2D0A /* mock_area.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_area.json; sourceTree = "<group>"; };
+		B1AFEEBC29575053007C2D0A /* mock_report.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_report.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +135,7 @@
 			children = (
 				AD7E331728E831B4004B1DFE /* Helpers */,
 				AD6914E428E380E300D9F34E /* Models */,
-				AD6914E528E380E800D9F34E /* Views & Controllers */,
+				AD6914E528E380E800D9F34E /* Views & ViewModels */,
 				AD6914CD28E37F4600D9F34E /* AppDelegate.swift */,
 				AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */,
 			);
@@ -105,7 +148,8 @@
 				AD7E331528E831A6004B1DFE /* Localizable.strings */,
 				AD6914D628E37F4800D9F34E /* Assets.xcassets */,
 				AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */,
-				AD96B94728E6CAB500B558D4 /* elements.json */,
+				B1AFEEA4295213B6007C2D0A /* elements.json */,
+				B1AFEEB1295747AD007C2D0A /* Mocks */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -125,25 +169,33 @@
 				AD96B93128E4BB7100B558D4 /* API.swift */,
 				AD96B93328E4BC7400B558D4 /* Elements.swift */,
 				AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */,
+				B17F30B92963061900926E4F /* ElementSystemImages.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
 		};
-		AD6914E528E380E800D9F34E /* Views & Controllers */ = {
+		AD6914E528E380E800D9F34E /* Views & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B17F30A62957CB4300926E4F /* DonateView.swift */,
+				B17F30AD2959530300926E4F /* CommunitiesView.swift */,
+				B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */,
+				B17F30A42957CA2000926E4F /* OptionsView.swift */,
 				AD7E331C28E8D275004B1DFE /* Common */,
 				AD6914E628E3813B00D9F34E /* Map */,
 				AD96B92A28E4B28600B558D4 /* Element */,
+				B1AFEEAA29573EFB007C2D0A /* Home.swift */,
 			);
-			name = "Views & Controllers";
+			name = "Views & ViewModels";
 			sourceTree = "<group>";
 		};
 		AD6914E628E3813B00D9F34E /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				B17F30BB2963194700926E4F /* AnnotationViews */,
 				AD6914E728E3814F00D9F34E /* MapViewController.swift */,
 				AD6914E828E3814F00D9F34E /* MapViewController.xib */,
+				B1AFEEAC29573F93007C2D0A /* MapViewControllerWrapper.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -152,6 +204,9 @@
 			isa = PBXGroup;
 			children = (
 				AD7E331828E831C2004B1DFE /* Localizable.swift */,
+				B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */,
+				B17F30AB2958FCE900926E4F /* String+URLEncode.swift */,
+				B17F30B5295A5C1300926E4F /* String+UIImage.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -159,7 +214,8 @@
 		AD7E331C28E8D275004B1DFE /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */,
+				B17F309E2957788900926E4F /* SwiftUI */,
+				B17F309D2957788000926E4F /* UIKit */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -167,8 +223,9 @@
 		AD8193EE28F2C7D400CAB29C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AD8193EF28F2C7ED00CAB29C /* ElementDetailsItemView.swift */,
-				AD8193F128F2C84400CAB29C /* ElementDetailsItemView.xib */,
+				B1AFEEB02957476A007C2D0A /* Deprecated */,
+				B1AFEEA82956BA4D007C2D0A /* ElementView.swift */,
+				B1AFEEAE295742FB007C2D0A /* ElementViewModel.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -177,10 +234,58 @@
 			isa = PBXGroup;
 			children = (
 				AD8193EE28F2C7D400CAB29C /* Views */,
-				AD96B92B28E4B29400B558D4 /* ElementViewController.swift */,
-				AD96B92C28E4B29400B558D4 /* ElementViewController.xib */,
 			);
 			name = Element;
+			sourceTree = "<group>";
+		};
+		B17F309D2957788000926E4F /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */,
+			);
+			name = UIKit;
+			sourceTree = "<group>";
+		};
+		B17F309E2957788900926E4F /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				B17F309F2957789900926E4F /* BorderButtonStyle.swift */,
+				B17F30A82957CBD000926E4F /* RoundedPillButton.swift */,
+			);
+			name = SwiftUI;
+			sourceTree = "<group>";
+		};
+		B17F30BB2963194700926E4F /* AnnotationViews */ = {
+			isa = PBXGroup;
+			children = (
+				B17F30B3295A599200926E4F /* MapAnnotationView.swift */,
+				B17F30BC2963196800926E4F /* CircleAnnotationView.swift */,
+				B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */,
+			);
+			name = AnnotationViews;
+			sourceTree = "<group>";
+		};
+		B1AFEEB02957476A007C2D0A /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				AD96B92B28E4B29400B558D4 /* ElementViewController.swift */,
+				AD96B92C28E4B29400B558D4 /* ElementViewController.xib */,
+				AD8193EF28F2C7ED00CAB29C /* ElementDetailsItemView.swift */,
+				AD8193F128F2C84400CAB29C /* ElementDetailsItemView.xib */,
+			);
+			name = Deprecated;
+			sourceTree = "<group>";
+		};
+		B1AFEEB1295747AD007C2D0A /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B1AFEEB2295747D8007C2D0A /* mock_element.json */,
+				B1AFEEB429574FE7007C2D0A /* mock_event.json */,
+				B1AFEEB629575004007C2D0A /* mock_user.json */,
+				B1AFEEBA29575036007C2D0A /* mock_area.json */,
+				B1AFEEBC29575053007C2D0A /* mock_report.json */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,12 +346,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1AFEEB729575004007C2D0A /* mock_user.json in Resources */,
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
+				B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */,
 				AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */,
+				B1AFEEB529574FE7007C2D0A /* mock_event.json in Resources */,
 				AD8193F228F2C84400CAB29C /* ElementDetailsItemView.xib in Resources */,
+				B1AFEEB3295747D8007C2D0A /* mock_element.json in Resources */,
+				B1AFEEBD29575053007C2D0A /* mock_report.json in Resources */,
 				AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */,
 				AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */,
-				AD96B94828E6CAB500B558D4 /* elements.json in Resources */,
 				AD6914D728E37F4800D9F34E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,15 +367,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B17F30B4295A599200926E4F /* MapAnnotationView.swift in Sources */,
+				B17F30AE2959530300926E4F /* CommunitiesView.swift in Sources */,
+				B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */,
+				B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */,
+				B17F30A72957CB4300926E4F /* DonateView.swift in Sources */,
 				AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */,
+				B17F30B6295A5C1300926E4F /* String+UIImage.swift in Sources */,
 				AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */,
+				B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */,
 				AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */,
 				AD7E331428E8278D004B1DFE /* REST.swift in Sources */,
+				B17F30BD2963196800926E4F /* CircleAnnotationView.swift in Sources */,
+				B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */,
+				B1AFEEAF295742FB007C2D0A /* ElementViewModel.swift in Sources */,
 				AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */,
+				B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
+				B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
+				B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
+				B17F30B02959536000926E4F /* CommunitiesViewModel.swift in Sources */,
+				B1AFEEAD29573F93007C2D0A /* MapViewControllerWrapper.swift in Sources */,
+				B17F30BA2963061900926E4F /* ElementSystemImages.swift in Sources */,
+				B17F30BF296319B700926E4F /* MarkerAnnotationView.swift in Sources */,
 				AD96B93228E4BB7100B558D4 /* API.swift in Sources */,
 				AD7E331E28E8D2CF004B1DFE /* StyledLabel.swift in Sources */,
 			);
@@ -418,6 +544,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -450,6 +577,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

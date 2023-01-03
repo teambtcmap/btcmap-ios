@@ -1,0 +1,39 @@
+{
+  "id": "node:9985802993",
+  "osm_json": {
+    "changeset": 127516569,
+    "id": 9985802993,
+    "lat": 53.4423766,
+    "lon": -2.2775673,
+    "tags": {
+      "addr:city": "Manchester",
+      "addr:housenumber": "585A",
+      "addr:postcode": "M21 9AF",
+      "addr:street": "Wilbraham Road",
+      "currency:GBP": "yes",
+      "currency:XBT": "yes",
+      "currency:others": "no",
+      "description": "Inexpensive traditional barbers, no appointment needed.",
+      "name": "RJ's",
+      "opening_hours": "Mo-Sa 09:00-17:00",
+      "payment:lightning": "yes",
+      "payment:lightning_contactless": "yes",
+      "payment:onchain": "yes",
+      "phone": "+44 7812 919857",
+      "shop": "hairdresser",
+      "survey:date": "2022-10-14"
+    },
+    "timestamp": "2022-10-14T10:27:01Z",
+    "type": "node",
+    "uid": 16971158,
+    "user": "nathan_day",
+    "version": 11
+  },
+  "tags": {
+    "category": "other",
+    "icon:android": "content_cut"
+  },
+  "created_at": "2022-09-25T08:45:08Z",
+  "updated_at": "2022-11-02T10:16:37Z",
+  "deleted_at": ""
+}

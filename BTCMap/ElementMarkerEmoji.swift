@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Use ElementSystemImages instead")
 struct ElementMarkerEmoji {
     static let sport = [
         "fitness": "💪",

@@ -1,0 +1,18 @@
+{
+  "id": "bitcoin-island-philippines",
+  "tags": {
+    "box:east": 122.005233764648,
+    "box:north": 12.0054894748356,
+    "box:south": 11.9323561839788,
+    "box:west": 121.840438842773,
+    "contact:discord": "https://discord.gg/YAZjxHysQD",
+    "contact:twitter": "https://twitter.com/BitcoinIslandPH",
+    "contact:website": "https://pouch.ph/bitcoinisland",
+    "icon:square": "https://btcmap.org/images/communities/bitcoin-island-philippines.jpg",
+    "name": "Bitcoin Island Philippines",
+    "type": "community"
+  },
+  "created_at": "2022-10-15T04:12:56Z",
+  "updated_at": "2022-10-19T20:40:21Z",
+  "deleted_at": ""
+}

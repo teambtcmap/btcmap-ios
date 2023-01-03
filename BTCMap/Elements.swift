@@ -34,14 +34,18 @@ class Elements {
             logger.log("Fetch local elements")
             let elements = try fetchElements()
             logger.log("Fetched local elements: \(elements.count)")
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 self.elements = elements
                 NotificationCenter.default.post(name: Self.changed, object: self, userInfo: [
                     Self.elements: elements
                 ])
-                self.queue.async { self.checkSince() }
+                self.queue.async { self.check(since: self.calculateLastUpdate()) }
             }
         } catch {
+            // TODO: Quick fix for bug where on fresh install, if no elements.json found above in `do` block, we'd skip to `catch` and never hit API.
+            //  Map would remain without data. Added line below but need to re-work this initialization flow.
+            self.queue.async { self.check() }
             logger.fault("Failed start with error: \(error as NSError)")
         }
     }
@@ -69,18 +73,22 @@ class Elements {
         return try api.decoder.decode([API.Element].self, from: data)
     }
     
-    private func checkSince() {
-        logger.log("Start checking created and changed elements")
+    private func calculateLastUpdate() -> String? {
         let elements = self.elements
-        guard !elements.isEmpty else { return }
+        guard !elements.isEmpty else { return nil }
         var since = elements[0].updatedAt
         for i in 1..<elements.count {
             if elements[i].updatedAt > since {
                 since = elements[i].updatedAt
             }
         }
-        logger.log("Load created and changed elements since: \(since)")
-        api.elementsSince(since) { [weak self] result in
+        logger.log("Calculate last update: \(since)")
+        return since
+    }
+    
+    private func check(since: String? = nil) {
+        logger.log("Start checking created and changed elements")
+        api.elements(since) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let elements):

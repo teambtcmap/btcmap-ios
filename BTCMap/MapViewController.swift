@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import SwiftUI
 
 class ElementAnnotation: NSObject, MKAnnotation {
     let element: API.Element
@@ -19,8 +20,9 @@ class ElementAnnotation: NSObject, MKAnnotation {
     }
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate {    
     @IBOutlet weak var mapView: MKMapView!
+    private var locationManager = CLLocationManager()
     
     private var elements: Elements!
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
@@ -70,58 +72,100 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? ElementAnnotation else { return }
         
-        if let elementVC = presentedViewController as? ElementViewController {
-            elementVC.element = annotation.element
-            return
+        // deselect current annotationView if different
+        if let elementVC = presentedViewController as? UIHostingController<ElementView>,
+           elementVC.rootView.elementViewModel.element.id != annotation.element.id {
+            self.dismiss(animated: true)
         }
         
-        let elementVC = ElementViewController()
-        elementVC.element = annotation.element
-        if let sheet = elementVC.sheetPresentationController {
+        // show new annotationView
+        let elementViewModel = ElementViewModel(element: annotation.element)
+        let elementDetailHostedVC = UIHostingController(rootView: ElementView(elementViewModel: elementViewModel))
+        if let sheet = elementDetailHostedVC.sheetPresentationController {
             sheet.delegate = self
             sheet.prefersGrabberVisible = true
             sheet.detents = [.medium(), .large()]
             sheet.largestUndimmedDetentIdentifier = .medium
             
         }
-        present(elementVC, animated: true)
+        present(elementDetailHostedVC, animated: true)
     }
-    
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         guard let annotation = view.annotation as? ElementAnnotation else { return }
-        guard let elementVC = presentedViewController as? ElementViewController else { return }
+        guard let elementVC = presentedViewController as? UIHostingController<ElementView> else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            if elementVC.element.id == annotation.element.id {
+            if elementVC.rootView.elementViewModel.element.id  == annotation.element.id {
                 self.dismiss(animated: true)
             }
         }
     }
     
-    private var elementEmojis: [String: String] = [:]
+    private var elementImages: [String: UIImage] = [:]
     
-    private func emoji(for element: API.Element) -> String? {
-        if let emoji = elementEmojis[element.id] {
-            return emoji
+    private func image(for element: API.Element) -> UIImage? {
+        if let image = elementImages[element.id] {
+            return image
         }
-        let emoji = ElementMarkerEmoji.emoji(for: element)
-        elementEmojis[element.id] = emoji
-        return emoji
+        let image = ElementSystemImages.systemImage(for: element)
+        elementImages[element.id] = image
+        return image
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ElementAnnotation {
-            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MKMarkerAnnotationView
-            marker.markerTintColor = #colorLiteral(red: 1, green: 0.555871129, blue: 0, alpha: 1)
-            marker.glyphText = emoji(for: annotation.element)
-            marker.displayPriority = .required
+            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MarkerAnnotationView
+            marker.glyphImage = image(for: annotation.element)
+            marker.displayPriority = .defaultHigh
+            marker.clusteringIdentifier = "element"
+            return marker
+        }
+        else if let cluster = annotation as? MKClusterAnnotation {
+            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster", for: cluster) as! CircleAnnotationView
+            marker.glyphText = String(cluster.memberAnnotations.count)
             return marker
         }
         return nil
     }
+
+    // MARK: - MapView Geometry
     
+    private func centerMapOnUserLocation(for mapView: MKMapView) {
+        guard let location = mapView.userLocation.location else { return }
+        
+        let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    // MARK: - CLLocationManager Delegate
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+        default:
+            mapView.showsUserLocation = false
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        // TODO: Implement
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        centerMapOnUserLocation(for: mapView)
+    }
+    
+
     // MARK: - UISheetPresentationControllerDelegate
-    
+    // NOTE: This is a bit of hack to allow SwiftUI Views to dismiss the presented hosted ElementView. Can implement a more elegant solution whebn MapVC is converted to SwiftUI
+    lazy var dismissElementDetail: () -> Void = { [weak self] in        
+        self?.dismiss(animated: true)
+        if let annotation = self?.mapView.selectedAnnotations.first {
+            self?.mapView.deselectAnnotation(annotation, animated: true)
+        }
+    }
+
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         if let annotation = mapView.selectedAnnotations.first {
             mapView.deselectAnnotation(annotation, animated: true)
@@ -132,8 +176,30 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+
+        mapView.register(MarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
+        mapView.register(CircleAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
+
+        userLocationButton.layer.cornerRadius = 10
+        
+        // TODO: Disabling temporarily because MapKit makes this difficult to move from it's top right position, which overlaps search bar
+        mapView.showsCompass = false
+        
         setupElements()
-        CLLocationManager().requestWhenInUseAuthorization()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        locationManager.requestLocation()
+    }
+    
+    // MARK: - User Location Button
+    @IBOutlet weak var userLocationButton: UIButton!
+    @IBAction func didTapUserLocationButton(_ sender: Any) {
+        centerMapOnUserLocation(for: mapView)
     }
 }
