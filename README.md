@@ -46,6 +46,12 @@ payment:bitcoin
 
 ## TODO
 
+## ELEMENT
+- [ ] If "type": "way", then the Element json returns a bounding box instead of a single coordinate. 
+Either:
+(1) Find the center of the bounding box and use that as a single coordinate for an annotation.
+(2) Draw the bounding box as a polyline.
+
 ### ELEMENT DETAIL MODAL
 - [ ] Finish adding rows to match Android. For sure Instagram and Pouch, need to verify what else
 - [ ] Phone number parsing isn't working for all formats. Can mimic Android repo implementation
