@@ -229,6 +229,10 @@ struct ElementSystemImages {
         "church": "location.circle.fill"
     ]
     
+    static func systemImage(for element: API.Element, with renderingMode: UIImage.RenderingMode) -> UIImage? {
+        return systemImage(for: element)?.withRenderingMode(renderingMode)
+    }
+    
     static func systemImage(for element: API.Element) -> UIImage? {
         guard let tags = element.osmJson.tags else { return nil }
         
