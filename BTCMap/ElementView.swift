@@ -97,9 +97,9 @@ struct ElementView: View {
                                 default: return nil
                                 }
                             }()
-                            
+                                                        
                             if let url = url {
-                                Link("\(detail.value)", destination: url)
+                                Link("\(detail.title)", destination: url)
                                     .tint(Color.BTCMap_DarkBeige)
                             } else {
                                 Text(detail.value)

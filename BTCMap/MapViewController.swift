@@ -12,11 +12,13 @@ import SwiftUI
 
 class ElementAnnotation: NSObject, MKAnnotation {
     let element: API.Element
+    let elementViewModel: ElementViewModel
     let coordinate: CLLocationCoordinate2D
     
     init(element: API.Element) {
         self.element = element
-        self.coordinate = .init(latitude: element.osmJson.lat!, longitude: element.osmJson.lon!)
+        self.elementViewModel = ElementViewModel(element: element)
+        self.coordinate = self.elementViewModel.coord ?? CLLocationCoordinate2D()
     }
 }
 
