@@ -58,6 +58,7 @@ struct ElementViewModel {
     let element: API.Element
     var tags: [String: String]? { element.osmJson.tags }
     
+    // TODO: Move majority of parsing to Element struct
     // MARK: - Links
     var verifyLink: URL? {
         guard let name = tags?["name"],

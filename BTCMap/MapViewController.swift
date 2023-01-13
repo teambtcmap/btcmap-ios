@@ -49,7 +49,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                         annotations.removeValue(forKey: element.id)
                     }
                 } else {
-                    if element.osmJson.lat != nil, element.osmJson.lon != nil {
+                    let vm = ElementViewModel(element: element)
+                    if vm.coord?.latitude != nil,
+                        vm.coord?.longitude != nil {
                         if let annotation = annotations[element.id] {
                             annotationsToRemove.append(annotation)
                         }
