@@ -50,7 +50,7 @@ payment:bitcoin
 - [ ] Biggest issue right now is we have a very naive implementation of the map annotations. We are adding all of them on viewDidLoad of MapVC. This becomes a problem as user zooms out to world view, as MapKit is surprisingly bad with their clustering logic and UI pauses for a bit. Biggest win might be using this 3rd party clustering framework: https://github.com/efremidze/Cluster
 
 ## ELEMENT
-- [X] ~~If "type": "way", then the Element json returns a bounding box instead of a single coordinate. ~~
+- [X] ~~If "type": "way", then the Element json returns a bounding box instead of a single coordinate.~~
 Either:
 (1) Find the center of the bounding box and use that as a single coordinate for an annotation. - IMPLEMENTED
 (2) Draw the bounding box as a polyline. Both Android and web currently just do (1).
