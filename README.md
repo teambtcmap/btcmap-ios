@@ -46,6 +46,9 @@ payment:bitcoin
 
 ## TODO
 
+## MAP PERFORMANCE
+- [ ] Biggest issue right now is we have a very naive implementation of the map annotations. We are adding all of them on viewDidLoad of MapVC. This becomes a problem as user zooms out to world view, as MapKit is surprisingly bad with their clustering logic and UI pauses for a bit. Biggest win might be using this 3rd party clustering framework: https://github.com/efremidze/Cluster
+
 ## ELEMENT
 - [ ] If "type": "way", then the Element json returns a bounding box instead of a single coordinate. 
 Either:
