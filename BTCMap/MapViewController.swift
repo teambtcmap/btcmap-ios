@@ -26,17 +26,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     @IBOutlet weak var mapView: MKMapView!
     private var locationManager = CLLocationManager()
     
-    private var elements: Elements!
+    private var elements: ElementsRepository!
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] = [:]
     
     private func setupElements() {
         elements = .init(api: API())
-        NotificationCenter.default.addObserver(self, selector: #selector(elementsChanged), name: Elements.changed, object: elements)
+        NotificationCenter.default.addObserver(self, selector: #selector(elementsChanged), name: ElementsRepository.changed, object: elements)
     }
     
     @objc private func elementsChanged(_ notification: Notification) {
-        guard let elements = notification.userInfo?[Elements.elements] as? [API.Element] else { return }
+        guard let elements = notification.userInfo?[ElementsRepository.elements] as? [API.Element] else { return }
         var annotations = elementAnnotations
         elementsQueue.async {
             var annotationsToAdd: [ElementAnnotation] = []

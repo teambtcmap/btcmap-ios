@@ -23,7 +23,7 @@
 		AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B92B28E4B29400B558D4 /* ElementViewController.swift */; };
 		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
-		AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* Elements.swift */; };
+		AD96B93428E4BC7400B558D4 /* ElementsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* ElementsRepository.swift */; };
 		B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F309F2957789900926E4F /* BorderButtonStyle.swift */; };
 		B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A42957CA2000926E4F /* OptionsView.swift */; };
 		B17F30A72957CB4300926E4F /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A62957CB4300926E4F /* DonateView.swift */; };
@@ -67,7 +67,7 @@
 		AD96B92B28E4B29400B558D4 /* ElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementViewController.swift; sourceTree = "<group>"; };
 		AD96B92C28E4B29400B558D4 /* ElementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ElementViewController.xib; sourceTree = "<group>"; };
 		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		AD96B93328E4BC7400B558D4 /* Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elements.swift; sourceTree = "<group>"; };
+		AD96B93328E4BC7400B558D4 /* ElementsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementsRepository.swift; sourceTree = "<group>"; };
 		B17F309F2957789900926E4F /* BorderButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderButtonStyle.swift; sourceTree = "<group>"; };
 		B17F30A42957CA2000926E4F /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		B17F30A62957CB4300926E4F /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
@@ -133,6 +133,8 @@
 		AD6914E128E380B000D9F34E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B1459B5D2979FC71006D376B /* Repositories */,
+				B1459B5C2979FC67006D376B /* Service */,
 				AD7E331728E831B4004B1DFE /* Helpers */,
 				AD6914E428E380E300D9F34E /* Models */,
 				AD6914E528E380E800D9F34E /* Views & ViewModels */,
@@ -165,9 +167,6 @@
 		AD6914E428E380E300D9F34E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AD7E331328E8278D004B1DFE /* REST.swift */,
-				AD96B93128E4BB7100B558D4 /* API.swift */,
-				AD96B93328E4BC7400B558D4 /* Elements.swift */,
 				AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */,
 				B17F30B92963061900926E4F /* ElementSystemImages.swift */,
 			);
@@ -177,9 +176,8 @@
 		AD6914E528E380E800D9F34E /* Views & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B1CE7E5E29772FCD0099AC1C /* Communities */,
 				B17F30A62957CB4300926E4F /* DonateView.swift */,
-				B17F30AD2959530300926E4F /* CommunitiesView.swift */,
-				B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */,
 				B17F30A42957CA2000926E4F /* OptionsView.swift */,
 				AD7E331C28E8D275004B1DFE /* Common */,
 				AD6914E628E3813B00D9F34E /* Map */,
@@ -238,6 +236,23 @@
 			name = Element;
 			sourceTree = "<group>";
 		};
+		B1459B5C2979FC67006D376B /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				AD7E331328E8278D004B1DFE /* REST.swift */,
+				AD96B93128E4BB7100B558D4 /* API.swift */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		B1459B5D2979FC71006D376B /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				AD96B93328E4BC7400B558D4 /* ElementsRepository.swift */,
+			);
+			name = Repositories;
+			sourceTree = "<group>";
+		};
 		B17F309D2957788000926E4F /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +301,15 @@
 				B1AFEEBC29575053007C2D0A /* mock_report.json */,
 			);
 			name = Mocks;
+			sourceTree = "<group>";
+		};
+		B1CE7E5E29772FCD0099AC1C /* Communities */ = {
+			isa = PBXGroup;
+			children = (
+				B17F30AD2959530300926E4F /* CommunitiesView.swift */,
+				B17F30AF2959536000926E4F /* CommunitiesViewModel.swift */,
+			);
+			name = Communities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -372,7 +396,7 @@
 				B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */,
 				B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */,
 				B17F30A72957CB4300926E4F /* DonateView.swift in Sources */,
-				AD96B93428E4BC7400B558D4 /* Elements.swift in Sources */,
+				AD96B93428E4BC7400B558D4 /* ElementsRepository.swift in Sources */,
 				B17F30B6295A5C1300926E4F /* String+UIImage.swift in Sources */,
 				AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */,
 				B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */,

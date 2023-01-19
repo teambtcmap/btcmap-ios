@@ -8,7 +8,7 @@
 import Foundation
 import os
 
-class Elements {
+class ElementsRepository {
     let api: API
     let logger = Logger(subsystem: "org.btcmap.app", category: "Elements")
     let queue = DispatchQueue(label: "org.btcmap.app.elements")
