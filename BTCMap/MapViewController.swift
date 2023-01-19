@@ -12,11 +12,13 @@ import SwiftUI
 
 class ElementAnnotation: NSObject, MKAnnotation {
     let element: API.Element
+    let elementViewModel: ElementViewModel
     let coordinate: CLLocationCoordinate2D
     
     init(element: API.Element) {
         self.element = element
-        self.coordinate = .init(latitude: element.osmJson.lat!, longitude: element.osmJson.lon!)
+        self.elementViewModel = ElementViewModel(element: element)
+        self.coordinate = self.elementViewModel.coord ?? CLLocationCoordinate2D()
     }
 }
 
@@ -47,7 +49,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                         annotations.removeValue(forKey: element.id)
                     }
                 } else {
-                    if element.osmJson.lat != nil, element.osmJson.lon != nil {
+                    let vm = ElementViewModel(element: element)
+                    if vm.coord?.latitude != nil,
+                        vm.coord?.longitude != nil {
                         if let annotation = annotations[element.id] {
                             annotationsToRemove.append(annotation)
                         }
@@ -101,22 +105,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         }
     }
     
-    private var elementImages: [String: UIImage] = [:]
-    
-    private func image(for element: API.Element) -> UIImage? {
-        if let image = elementImages[element.id] {
-            return image
-        }
-        let image = ElementSystemImages.systemImage(for: element)
-        elementImages[element.id] = image
-        return image
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ElementAnnotation {
             let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MarkerAnnotationView
-            marker.glyphImage = image(for: annotation.element)
-            marker.displayPriority = .defaultHigh
+            marker.glyphImage = ElementSystemImages.systemImage(for: annotation.element, with: .alwaysTemplate)
+            marker.displayPriority = .defaultLow
             marker.clusteringIdentifier = "element"
             return marker
         }

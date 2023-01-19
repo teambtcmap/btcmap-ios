@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 enum ElementDetailType {
     case address
@@ -50,12 +51,14 @@ enum ElementDetailType {
 }
 
 struct ElementViewModel {
+    typealias ElementDetail = (type: ElementDetailType, title: ElementDetailTitle, value: ElementDetailValue)
+    typealias ElementDetailTitle = String
     typealias ElementDetailValue = String
-    typealias ElementDetail = (type: ElementDetailType, value: ElementDetailValue)
-    
+
     let element: API.Element
     var tags: [String: String]? { element.osmJson.tags }
     
+    // TODO: Move majority of parsing to Element struct
     // MARK: - Links
     var verifyLink: URL? {
         guard let name = tags?["name"],
@@ -81,15 +84,15 @@ struct ElementViewModel {
     // MARK: - Verify
     private var surveyDates: [String] {
         var surveyDates = [String]()
-
+        
         if let date = tags?["survey:date"] {
             surveyDates.append(date)
         }
-
+        
         if let date = tags?["check_date"] {
             surveyDates.append(date)
         }
-
+        
         if let date = tags?["check_date:currency:XBT"] {
             surveyDates.append(date)
         }
@@ -105,7 +108,7 @@ struct ElementViewModel {
         guard !surveyDates.isEmpty,
               let max = surveyDates.max() else {
             return notVerifiedText }
-                    
+        
         // NOTE: These dates come back as a simple string in formate `2022-11-22`. So need to massage to work for DateFormatter.
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -122,6 +125,71 @@ struct ElementViewModel {
     var elementDetails: [ElementDetail] {
         var details = [ElementDetail]()
         
+        if !address.isEmpty {
+            details.append((ElementDetailType.address, address, address))
+        }
+        
+        if let phone = tags?["phone"] {
+            details.append((ElementDetailType.phone,phone, phone))
+        }
+        
+        if let websiteTitle = websiteTitle, let websiteUrl = websiteUrl {
+            details.append((ElementDetailType.website, websiteTitle, websiteUrl))
+        }
+        
+        if var twitter = tags?["contact:twitter"] {
+            twitter = twitter
+                .replacingOccurrences(of: "https://twitter.com/", with: "")
+                .trimmingCharacters(in: ["@"])
+            details.append((ElementDetailType.twitter, twitter, twitter))
+        }
+        if let facebook = tags?["contact:facebook"] {
+            details.append((ElementDetailType.facebook, facebook, facebook))
+        }
+        if let openingHours = tags?["opening_hours"] {
+            details.append((ElementDetailType.openingHours, openingHours, openingHours))
+        }
+        
+        return details
+    }
+    
+    var prettyPrintTags: String? {
+        guard let tags = tags,
+              let data = try? JSONSerialization.data(withJSONObject: tags, options: .prettyPrinted),
+              let string = String(data: data, encoding: .utf8) else { return nil }
+        
+        return string
+    }
+    
+    // MARK: Coords
+    var coord: CLLocationCoordinate2D? {
+        var lat: Double
+        var lon: Double
+        
+        if element.osmJson.type == .node {
+            guard let _lat = element.osmJson.lat,
+                let _lon = element.osmJson.lon else { return nil }
+                             
+            lat = _lat
+            lon = _lon
+        } else {
+            guard let bounds = element.osmJson.bounds else { return nil }
+            
+            let boundsMinLat = bounds.minlat
+            let boundsMinLon = bounds.minlon
+            let boundsMaxLat = bounds.maxlat
+            let boundsMaxLon = bounds.maxlon
+            
+            lat = (boundsMinLat + boundsMaxLat) / 2.0
+            lon = (boundsMinLon + boundsMaxLon) / 2.0
+            print("[TUNCO] bounds - lat: \(lat) - lon: \(lon)")
+        }
+        
+        return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
+    
+    // MARK: Details
+    var address: String {
         var address = ""
         
         if let houseNumber = tags?["addr:housenumber"] {
@@ -144,44 +212,22 @@ struct ElementViewModel {
             address += postcode
         }
         
-        if !address.isEmpty {
-            details.append((ElementDetailType.address, address))
-        }
-        
-        if let phone = tags?["phone"] {
-            details.append((ElementDetailType.phone, phone))
-        }
-        if var website = tags?["website"] ?? tags?["contact:website"] {
-            website = website
-                .replacingOccurrences(of: "https://www.", with: "")
-                .replacingOccurrences(of: "http://www.", with: "")
-                .replacingOccurrences(of: "https://", with: "")
-                .replacingOccurrences(of: "http://", with: "")
-                .trimmingCharacters(in: ["/"])
-            details.append((ElementDetailType.website, website))
-        }
-
-        if var twitter = tags?["contact:twitter"] {
-            twitter = twitter
-                .replacingOccurrences(of: "https://twitter.com/", with: "")
-                .trimmingCharacters(in: ["@"])
-            details.append((ElementDetailType.twitter, twitter))
-        }
-        if let facebook = tags?["contact:facebook"] {
-            details.append((ElementDetailType.facebook, facebook))
-        }
-        if let openingHours = tags?["opening_hours"] {
-            details.append((ElementDetailType.openingHours, openingHours))
-        }
-        
-        return details
+        return address
     }
     
-    var prettyPrintTags: String? {
-        guard let tags = tags,
-              let data = try? JSONSerialization.data(withJSONObject: tags, options: .prettyPrinted),
-              let string = String(data: data, encoding: .utf8) else { return nil }
-            
-        return string
+    var websiteUrl: String? {
+        return tags?["website"] ?? tags?["contact:website"]
+    }
+    
+    var websiteTitle: String? {
+        guard let website = websiteUrl else { return nil }
+        return website
+            .replacingOccurrences(of: "https://www.", with: "")
+            .replacingOccurrences(of: "http://www.", with: "")
+            .replacingOccurrences(of: "https://", with: "")
+            .replacingOccurrences(of: "http://", with: "")
+            .trimmingCharacters(in: ["/"])
     }
 }
+
+
