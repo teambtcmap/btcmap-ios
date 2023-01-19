@@ -8,38 +8,34 @@
 import Foundation
 import os
 
-class ElementsRepository {
+class ElementsRepository: ObservableObject, Repository {
+    typealias Item = API.Element
+        
     let api: API
     let logger = Logger(subsystem: "org.btcmap.app", category: "Elements")
     let queue = DispatchQueue(label: "org.btcmap.app.elements")
     
-    init(api: API) {
+    required init(api: API) {
         logger.log("Init")
         self.api = api
         queue.async { self.start() }
     }
-    
-    static let changed = Notification.Name("BTCMapElementsChanged")
-    static let elements = "elements"
-    
-    private(set) var elements: [API.Element] = []
+        
+    @Published private(set) var items: Array<API.Element> = []
     
     private struct BadLibraryURLError: Error {}
     private struct BadBundledURLError: Error {}
     
-    private func start() {
+    internal func start() {
         do {
             logger.log("Copy bundled elements if needed")
             try copyBundledElementsIfNeeded()
             logger.log("Fetch local elements")
-            let elements = try fetchElements()
+            let elements = try fetchLocal()
             logger.log("Fetched local elements: \(elements.count)")
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.elements = elements
-                NotificationCenter.default.post(name: Self.changed, object: self, userInfo: [
-                    Self.elements: elements
-                ])
+                self.items = elements
                 self.queue.async { self.check(since: self.calculateLastUpdate()) }
             }
         } catch {
@@ -50,6 +46,7 @@ class ElementsRepository {
         }
     }
     
+    // MARK: Local
     private func copyBundledElementsIfNeeded() throws {
         guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
         let elementsURL = libraryURL.appendingPathComponent("elements.json")
@@ -59,22 +56,23 @@ class ElementsRepository {
         }
     }
     
-    private func storeElements(_ elements: [API.Element]) throws {
+    internal func storeLocal(_ items: [API.Element]) throws {
         guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
         let elementsURL = libraryURL.appendingPathComponent("elements.json")
-        let data = try api.encoder.encode(elements)
+        let data = try api.encoder.encode(items)
         try data.write(to: elementsURL)
     }
     
-    private func fetchElements() throws -> [API.Element] {
+    internal func fetchLocal() throws -> [API.Element] {
         guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
         let elementsURL = libraryURL.appendingPathComponent("elements.json")
         let data = try Data(contentsOf: elementsURL)
         return try api.decoder.decode([API.Element].self, from: data)
     }
     
+    // MARK: Remote
     private func calculateLastUpdate() -> String? {
-        let elements = self.elements
+        let elements = self.items
         guard !elements.isEmpty else { return nil }
         var since = elements[0].updatedAt
         for i in 1..<elements.count {
@@ -94,19 +92,16 @@ class ElementsRepository {
             case .success(let elements):
                 self.logger.log("Loaded created and changed elements: \(elements.count)")
                 guard !elements.isEmpty else { return }
-                var currentElements = self.elements
+                var currentElements = self.items
                 self.queue.async {
                     let elementsId = elements.reduce(into: Set<String>()) { $0.insert($1.id) }
                     currentElements = currentElements.filter { !elementsId.contains($0.id) } + elements
                     DispatchQueue.main.async {
-                        self.elements = currentElements
-                        NotificationCenter.default.post(name: Self.changed, object: self, userInfo: [
-                            Self.elements: elements
-                        ])
+                        self.items = currentElements
                     }
                     do {
                         self.logger.log("Store created and changed elements: \(currentElements.count)")
-                        try self.storeElements(currentElements)
+                        try self.storeLocal(currentElements)
                     } catch {
                         self.logger.log("Failed store created and changed elements with error: \(error as NSError)")
                     }

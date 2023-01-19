@@ -9,6 +9,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import SwiftUI
+import Combine
 
 class ElementAnnotation: NSObject, MKAnnotation {
     let element: API.Element
@@ -26,17 +27,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     @IBOutlet weak var mapView: MKMapView!
     private var locationManager = CLLocationManager()
     
-    private var elements: ElementsRepository!
+    private var elementsRepo: ElementsRepository!
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] = [:]
     
+    var cancellables = Set<AnyCancellable>()
+
     private func setupElements() {
-        elements = .init(api: API())
-        NotificationCenter.default.addObserver(self, selector: #selector(elementsChanged), name: ElementsRepository.changed, object: elements)
+        elementsRepo = .init(api: API())
+        elementsRepo.$items.sink(receiveValue: { [weak self] elements in
+              self?.elementsChanged(elements)
+          })
+        .store(in: &cancellables)
     }
     
-    @objc private func elementsChanged(_ notification: Notification) {
-        guard let elements = notification.userInfo?[ElementsRepository.elements] as? [API.Element] else { return }
+    private func elementsChanged(_ elements: [API.Element]) {
         var annotations = elementAnnotations
         elementsQueue.async {
             var annotationsToAdd: [ElementAnnotation] = []
