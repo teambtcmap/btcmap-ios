@@ -9,12 +9,16 @@ import Foundation
 import os
 
 class ElementsRepository: ObservableObject, Repository {
+    
     typealias Item = API.Element
         
     let api: API
     let logger = Logger(subsystem: "org.btcmap.app", category: "Elements")
     let queue = DispatchQueue(label: "org.btcmap.app.elements")
-    
+    let bundledJsonPath: String = "elements"
+    let documentPath: String = "elements"
+    let description: String = "elements"
+
     required init(api: API) {
         logger.log("Init")
         self.api = api
@@ -22,52 +26,58 @@ class ElementsRepository: ObservableObject, Repository {
     }
         
     @Published private(set) var items: Array<API.Element> = []
-    
-    private struct BadLibraryURLError: Error {}
-    private struct BadBundledURLError: Error {}
-    
+        
     internal func start() {
         do {
-            logger.log("Copy bundled elements if needed")
-            try copyBundledElementsIfNeeded()
-            logger.log("Fetch local elements")
-            let elements = try fetchLocal()
-            logger.log("Fetched local elements: \(elements.count)")
+            let items = try {
+                logger.log("Fetch bundled \(self.description) if needed")
+                if let fetchedItems = try fetchBundledItemsIfNeeded() {
+                    try storeLocal(fetchedItems)
+                    return fetchedItems
+                } else {
+                    logger.log("Fetch local \(self.description)")
+                    let items = try fetchLocal()
+                    logger.log("Fetched local \(self.description): \(items.count)")
+                    return items
+                }
+            }()
+            
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.items = elements
+                self.items = items
                 self.queue.async { self.check(since: self.calculateLastUpdate()) }
             }
         } catch {
-            // TODO: Quick fix for bug where on fresh install, if no elements.json found above in `do` block, we'd skip to `catch` and never hit API.
-            //  Map would remain without data. Added line below but need to re-work this initialization flow.
             self.queue.async { self.check() }
-            logger.fault("Failed start with error: \(error as NSError)")
+            logger.fault("Failed start with error: \(error as NSError) - fetching all from api")
         }
     }
     
     // MARK: Local
-    private func copyBundledElementsIfNeeded() throws {
+    private func fetchBundledItemsIfNeeded() throws -> [Item]? {
         guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
-        let elementsURL = libraryURL.appendingPathComponent("elements.json")
-        if !FileManager.default.fileExists(atPath: elementsURL.path) {
-            guard let bundledURL = Bundle.main.url(forResource: "elements", withExtension: "json") else { throw BadBundledURLError() }
-            try FileManager.default.copyItem(at: bundledURL, to: elementsURL)
+        let url = libraryURL.appendingPathComponent(documentPath)
+        if !FileManager.default.fileExists(atPath: url.path) {
+            guard let bundledURL = Bundle.main.url(forResource: bundledJsonPath, withExtension: "json") else { throw BadBundledURLError() }
+            let data = try Data(contentsOf: bundledURL)
+            let items = try api.decoder.decode([Item].self, from: data)
+            return items
         }
+        return nil
     }
     
     internal func storeLocal(_ items: [API.Element]) throws {
         guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
-        let elementsURL = libraryURL.appendingPathComponent("elements.json")
+        let url = libraryURL.appendingPathComponent(documentPath)
         let data = try api.encoder.encode(items)
-        try data.write(to: elementsURL)
+        try data.write(to: url)
     }
     
     internal func fetchLocal() throws -> [API.Element] {
         guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
-        let elementsURL = libraryURL.appendingPathComponent("elements.json")
-        let data = try Data(contentsOf: elementsURL)
-        return try api.decoder.decode([API.Element].self, from: data)
+        let url = libraryURL.appendingPathComponent(documentPath)
+        let data = try Data(contentsOf: url)
+        return try api.decoder.decode([Item].self, from: data)
     }
     
     // MARK: Remote
@@ -85,12 +95,12 @@ class ElementsRepository: ObservableObject, Repository {
     }
     
     private func check(since: String? = nil) {
-        logger.log("Start checking created and changed elements")
+        logger.log("Start checking created and changed \(self.description)")
         api.elements(since) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let elements):
-                self.logger.log("Loaded created and changed elements: \(elements.count)")
+                self.logger.log("Loaded created and changed \(self.description): \(elements.count)")
                 guard !elements.isEmpty else { return }
                 var currentElements = self.items
                 self.queue.async {
@@ -100,14 +110,14 @@ class ElementsRepository: ObservableObject, Repository {
                         self.items = currentElements
                     }
                     do {
-                        self.logger.log("Store created and changed elements: \(currentElements.count)")
+                        self.logger.log("Store created and changed \(self.description): \(currentElements.count)")
                         try self.storeLocal(currentElements)
                     } catch {
-                        self.logger.log("Failed store created and changed elements with error: \(error as NSError)")
+                        self.logger.log("Failed store created and changed \(self.description) with error: \(error as NSError)")
                     }
                 }
             case .failure(let error):
-                self.logger.fault("Failed load elements since with error: \(error as NSError)")
+                self.logger.fault("Failed load \(self.description) since with error: \(error as NSError)")
             }
         }
     }

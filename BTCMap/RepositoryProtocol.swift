@@ -13,6 +13,10 @@ protocol Repository<Item> {
     var api: API { get }
     var logger: Logger { get }
     var queue: DispatchQueue { get }
+    var bundledJsonPath: String { get }
+    var documentPath: String { get }
+    var description: String { get }
+
     var items: Array<Item> {get}
     
     init(api: API)
@@ -21,3 +25,6 @@ protocol Repository<Item> {
     func storeLocal(_ items: Array<Item>) throws
     func fetchLocal() throws -> Array<Item>
 }
+
+internal struct BadLibraryURLError: Error {}
+internal struct BadBundledURLError: Error {}

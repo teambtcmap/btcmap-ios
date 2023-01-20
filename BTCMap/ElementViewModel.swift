@@ -182,7 +182,6 @@ struct ElementViewModel {
             
             lat = (boundsMinLat + boundsMaxLat) / 2.0
             lon = (boundsMinLon + boundsMaxLon) / 2.0
-            print("[TUNCO] bounds - lat: \(lat) - lon: \(lon)")
         }
         
         return CLLocationCoordinate2D(latitude: lat, longitude: lon)
