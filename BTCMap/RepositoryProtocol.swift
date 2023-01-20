@@ -13,9 +13,13 @@ protocol Repository<Item> {
     var api: API { get }
     var logger: Logger { get }
     var queue: DispatchQueue { get }
+    var defaults: UserDefaults { get }
+    var defaultLastUpdatedKey: String { get }
     var bundledJsonPath: String { get }
     var documentPath: String { get }
     var description: String { get }
+    
+    var lastUpdated: String? { get }
 
     var items: Array<Item> {get}
     
@@ -25,6 +29,9 @@ protocol Repository<Item> {
     func fetchBundledItemsIfNeeded() throws -> [Item]?
     func storeLocal(_ items: Array<Item>) throws
     func fetchLocal() throws -> Array<Item>
+    
+    func calculateLastUpdate() -> String?
+    func fetchRemote(since: String?)
 }
 
 internal struct BadLibraryURLError: Error {}
@@ -57,4 +64,7 @@ extension Repository {
         return try api.decoder.decode([Item].self, from: data)
     }
     
+    var lastUpdated: String? {
+        return defaults.string(forKey: defaultLastUpdatedKey) ?? calculateLastUpdate()
+    }
 }

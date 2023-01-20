@@ -18,7 +18,7 @@ struct ElementView: View {
             
             // MARK: - Title, Options Button
             HStack {
-                Text(elementViewModel.name)
+                Text(elementViewModel.element.osmJson.name)
                     .font(.title)
                     .padding()
                 Spacer()
@@ -50,85 +50,11 @@ struct ElementView: View {
             }
             
             // MARK: - Verified
-            HStack {
-                HStack {
-                    Image(systemName: "checkmark.seal.fill")
-                        .renderingMode(.template)
-                        .colorMultiply(.BTCMap_LightBeige)
-                    Text(elementViewModel.verifyText)
-                        .lineLimit(2)
-                        .font(.system(size: 14))
-                }
-                Spacer()
-                Button(action: {
-                    if let url = elementViewModel.verifyLink {
-                        openURL(url)
-                    }
-                }) {
-                    Text("verify".localized.uppercased())
-                        .foregroundColor(Color.BTCMap_DarkBeige)
-                }
-                .buttonStyle(BorderButtonStyle(foregroundColor: .white, strokeColor: Color.gray.opacity(0.5), padding: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)))
-            }
-            .padding(.horizontal)
-                        
+            ElementVerifyView(elementViewModel: elementViewModel,
+                              notVerifiedTextType: .long)
             
             // MARK: - Details
-            VStack(alignment: .leading, spacing: 20) {
-                let details = elementViewModel.elementDetails
-                if !details.isEmpty {
-                    ForEach(details, id: \.0) { detail in
-                        HStack {
-                            if let systemName = detail.type.displayIconSystemName {
-                                Image(systemName: systemName).renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
-                            } else if let customName = detail.type.displayIconCustomName {
-                                Image(customName).renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
-                            }
-                            
-                            let url: URL? = {
-                                switch detail.type {
-                                case .phone:
-                                    // TODO: phone url not resolving with some formats
-                                    return URL(string: "tel:\(detail.value)")
-                                case .website:
-                                    return URL(string: "\(detail.value)")
-                                case .email:
-                                    return URL(string: "mailto:\(detail.value)")
-                                default: return nil
-                                }
-                            }()
-                                                        
-                            if let url = url {
-                                Link("\(detail.title)", destination: url)
-                                    .tint(Color.BTCMap_DarkBeige)
-                            } else {
-                                Text(detail.value)
-                                    .font(.subheadline)
-                            }
-                        }
-                    }
-                }
-            }
-            .padding(.top, 40)
-            .padding(.horizontal)
-                        
-            Spacer(minLength: 50)
-            
-            // MARK: - Tags JSON Dump
-            if let tags = elementViewModel.prettyPrintTags {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        Image(systemName: "list.bullet.circle.fill").renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
-                        Text("tags".localized)
-                            .fontWeight(.bold)
-                            .font(.subheadline)
-                    }
-                    Text(tags)
-                        .font(.system(size: 12))
-                }
-                .padding(.horizontal)
-            }
-            
+            ElementTagsView(elementViewModel: elementViewModel)            
         }
         .padding()
         .alignmentGuide(.top) { _ in 0 }

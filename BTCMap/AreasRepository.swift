@@ -1,47 +1,42 @@
 //
-//  Elements.swift
-//  BTC Map
+//  AreasRepository.swift
+//  BTCMap
 //
-//  Created by Vitaly Berg on 9/29/22.
+//  Created by salva on 1/19/23.
 //
 
 import Foundation
+import Combine
+import CoreLocation
 import os
 
-class ElementsRepository: ObservableObject, Repository {
-    typealias Item = API.Element
+class AreasRepository: ObservableObject, Repository {
+    typealias Item = API.Area
         
     let api: API
-    let logger = Logger(subsystem: "org.btcmap.app", category: "Elements")
-    let queue = DispatchQueue(label: "org.btcmap.app.elements")
+    let logger = Logger(subsystem: "org.btcmap.app", category: "Areas")
+    let queue = DispatchQueue(label: "org.btcmap.app.areas")
     let defaults = UserDefaults.standard
-    let defaultLastUpdatedKey = "lastUpdate_elements"
-    let bundledJsonPath: String = "elements"
-    let documentPath: String = "elements"
-    let description: String = "elements"
-    
+    let defaultLastUpdatedKey = "lastUpdate_areas"
+    let bundledJsonPath: String = "areas"
+    let documentPath: String = "areas"
+    let description: String = "areas"
+
     required init(api: API) {
         logger.log("Init")
         self.api = api
         queue.async { self.start() }
     }
         
-    @Published private(set) var items: Array<API.Element> = []
-        
+    @Published private(set) var items: Array<API.Area> = []
+    lazy var communities: Array<API.Area> = { items.filter { $0.type != "country" } }()
+
+    // MARK: Start
     internal func start() {
         do {
-            let items = try {
-                logger.log("Fetch bundled \(self.description) if needed")
-                if let fetchedItems = try fetchBundledItemsIfNeeded() {
-                    try storeLocal(fetchedItems)
-                    return fetchedItems
-                } else {
-                    logger.log("Fetch local \(self.description)")
-                    let items = try fetchLocal()
-                    logger.log("Fetched local \(self.description): \(items.count)")
-                    return items
-                }
-            }()
+            logger.log("Fetch local \(self.description)")
+            let items = try fetchLocal()
+            logger.log("Fetched local \(self.description): \(items.count)")
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -66,7 +61,7 @@ class ElementsRepository: ObservableObject, Repository {
     
     internal func fetchRemote(since: String? = nil) {
         logger.log("Start checking created and changed \(self.description)")
-        api.elements(since) { [weak self] result in
+        api.areas(since) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let items):
@@ -89,18 +84,6 @@ class ElementsRepository: ObservableObject, Repository {
             case .failure(let error):
                 self.logger.fault("Failed load \(self.description) since with error: \(error as NSError)")
             }
-        }
-    }
-}
-
-extension ElementsRepository {
-    func elements(from bounds: Bounds) -> Array<API.Element> {
-        return items.filter {
-            guard let coord = $0.coord else { return false }
-            return coord.latitude > bounds.minlat &&
-            coord.latitude < bounds.maxlat &&
-            coord.longitude > bounds.minlon &&
-            coord.longitude < bounds.maxlon
         }
     }
 }

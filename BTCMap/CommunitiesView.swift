@@ -8,28 +8,46 @@
 import SwiftUI
 
 struct CommunitiesView: View {
-    // TODO: Pass API as Environment
-    @StateObject var communitesViewModel = CommunitiesViewModel(api: API())
+    let locationManager = LocationManager()
+    @EnvironmentObject var areasRepo: AreasRepository
     
+    var communitiesPlusDistance: [CommunityPlusDistance] {
+        guard let currentLoc = locationManager.location else { return areasRepo.communities.map { CommunityPlusDistance(area: $0, distance: nil) } }
+        return areasRepo.communities.map { (area) in
+            guard let areaCoord = area.coord else { return CommunityPlusDistance(area: area, distance: nil) }
+            return CommunityPlusDistance(area: area,
+                                         distance: MapCalculations.haversineDistance(coord1: currentLoc.coordinate,
+                                                                                     coord2: areaCoord))
+        }
+    }
+    
+    var communitiesSortedByDistance: [CommunityPlusDistance] {
+        return communitiesPlusDistance.sorted { (community1, community2) -> Bool in
+            if community1.distance == nil { return false }
+            if community2.distance == nil { return true }
+            return community1.distance! < community2.distance!
+        }
+    }
+    
+    // TODO: This is constantly getting refreshed
     var body: some View {
         VStack {
-            List {
-                ForEach(communitesViewModel.communities, id: \.self) { item in
-                    
-                    // TODO: Tap on row leads to community page
+            List(communitiesSortedByDistance, id: \.area.id) { item in
+                let communityDetailViewModel = CommunityDetailViewModel(communityPlusDistance: item)
+                NavigationLink(destination: CommunityDetailView(communityDetailViewModel: communityDetailViewModel)) {
                     HStack {
-                        AsyncImage(url: item.iconUrl)
+                        AsyncImage(url: item.area.iconUrl)
                             .frame(width: 40, height: 40)
                             .clipShape(Circle())
+                            .padding([.trailing], 10)
                         
                         VStack(alignment: .leading) {
-                            Text(item.name)
+                            Text(item.area.name)
                                 .font(.headline)
                             
-                            // TODO: Calculate distance to user for detail text
-                            //Text("distance")
-                            //    .font(.subheadline)
-                            //    .foregroundColor(.gray)
+                            Text(communityDetailViewModel.distanceText ?? "")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
                         }
                     }
                 }
@@ -38,7 +56,7 @@ struct CommunitiesView: View {
             .listStyle(.plain)
         }
         .navigationBarHidden(false)
-        .navigationTitle("communities".localized)
+        .navigationBarTitle("Communities", displayMode: .inline)
     }
 }
 
