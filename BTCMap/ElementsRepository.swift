@@ -53,33 +53,6 @@ class ElementsRepository: ObservableObject, Repository {
         }
     }
     
-    // MARK: Local
-    private func fetchBundledItemsIfNeeded() throws -> [Item]? {
-        guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
-        let url = libraryURL.appendingPathComponent(documentPath)
-        if !FileManager.default.fileExists(atPath: url.path) {
-            guard let bundledURL = Bundle.main.url(forResource: bundledJsonPath, withExtension: "json") else { throw BadBundledURLError() }
-            let data = try Data(contentsOf: bundledURL)
-            let items = try api.decoder.decode([Item].self, from: data)
-            return items
-        }
-        return nil
-    }
-    
-    internal func storeLocal(_ items: [API.Element]) throws {
-        guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
-        let url = libraryURL.appendingPathComponent(documentPath)
-        let data = try api.encoder.encode(items)
-        try data.write(to: url)
-    }
-    
-    internal func fetchLocal() throws -> [API.Element] {
-        guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
-        let url = libraryURL.appendingPathComponent(documentPath)
-        let data = try Data(contentsOf: url)
-        return try api.decoder.decode([Item].self, from: data)
-    }
-    
     // MARK: Remote
     private func calculateLastUpdate() -> String? {
         let elements = self.items
