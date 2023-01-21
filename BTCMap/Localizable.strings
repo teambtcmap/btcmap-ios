@@ -8,7 +8,8 @@
 
 // ELEMENT VIEW
 "verify" = "Verify";
-"not_verified_by_supertaggers" = "Not verified by \nSupertaggers";
+"not_verified_by_supertaggers_short" = "Not verified";
+"not_verified_by_supertaggers_long" = "Not verified by \nSupertaggers";
 "supertagger_manual" = "Supertagger Manual";
 "view_on_osm" = "View on OSM";
 "edit_on_osm" = "Edit on OSM";
@@ -22,6 +23,11 @@
 "facebook" = "Facebook";
 "twitter" = "Twitter";
 "opening_hours" = "Opening Hours";
+
+// COMMUNITIES VIEW
+"km" = "km";
+"places" = "places";
+"verified" = "Verified";
 
 // OPTIONS VIEW
 "add_place" = "Add place";

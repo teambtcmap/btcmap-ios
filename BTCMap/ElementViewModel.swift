@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import SwiftUI
 
 enum ElementDetailType {
     case address
@@ -56,12 +57,10 @@ struct ElementViewModel {
     typealias ElementDetailValue = String
 
     let element: API.Element
-    var tags: [String: String]? { element.osmJson.tags }
     
-    // TODO: Move majority of parsing to Element struct
     // MARK: - Links
     var verifyLink: URL? {
-        guard let name = tags?["name"],
+        guard let name = element.osmJson.tags?["name"],
               let lat = element.osmJson.lat,
               let lon = element.osmJson.lon,
               let url = "https://btcmap.org/verify-location?&name=\(name)&lat=\(lat)&long=\(lon)&\(element.osmJson.type.rawValue)=\(element.osmJson.id)".urlEncoded() else { return nil }
@@ -85,15 +84,15 @@ struct ElementViewModel {
     private var surveyDates: [String] {
         var surveyDates = [String]()
         
-        if let date = tags?["survey:date"] {
+        if let date = element.osmJson.tags?["survey:date"] {
             surveyDates.append(date)
         }
         
-        if let date = tags?["check_date"] {
+        if let date = element.osmJson.tags?["check_date"] {
             surveyDates.append(date)
         }
         
-        if let date = tags?["check_date:currency:XBT"] {
+        if let date = element.osmJson.tags?["check_date:currency:XBT"] {
             surveyDates.append(date)
         }
         
@@ -101,52 +100,59 @@ struct ElementViewModel {
     }
     
     var isVerified: Bool { !surveyDates.isEmpty }
-    
-    var notVerifiedText: String { return "not_verified_by_supertaggers".localized }
-    
-    var verifyText: String {
+    var verifyText: String? {
         guard !surveyDates.isEmpty,
               let max = surveyDates.max() else {
-            return notVerifiedText }
+            return nil }
         
         // NOTE: These dates come back as a simple string in formate `2022-11-22`. So need to massage to work for DateFormatter.
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         guard let date = formatter.date(from: max) else {
-            return notVerifiedText }
+            return nil }
         
         formatter.dateFormat = "dd/MM/yyyy"
         return formatter.string(from: date)
     }
     
-    // MARK: - Details (Tags)
-    var name: String { tags?["name"] ?? "" }
+    enum NotVerifiedTextType {
+        case short
+        case long
+        
+        var text: String {
+            switch self {
+            case .short: return "not_verified_by_supertaggers_short".localized
+            case .long: return "not_verified_by_supertaggers_long".localized
+            }
+        }
+    }
     
+    // MARK: - Details (Tags)    
     var elementDetails: [ElementDetail] {
         var details = [ElementDetail]()
         
-        if !address.isEmpty {
-            details.append((ElementDetailType.address, address, address))
+        if !element.osmJson.address.isEmpty {
+            details.append((ElementDetailType.address, element.osmJson.address, element.osmJson.address))
         }
         
-        if let phone = tags?["phone"] {
-            details.append((ElementDetailType.phone,phone, phone))
+        if let phone = element.osmJson.tags?["phone"] {
+            details.append((ElementDetailType.phone, phone, phone))
         }
         
-        if let websiteTitle = websiteTitle, let websiteUrl = websiteUrl {
+        if let websiteTitle = element.osmJson.websiteTitle, let websiteUrl = element.osmJson.websiteUrl {
             details.append((ElementDetailType.website, websiteTitle, websiteUrl))
         }
         
-        if var twitter = tags?["contact:twitter"] {
+        if var twitter = element.osmJson.tags?["contact:twitter"] {
             twitter = twitter
                 .replacingOccurrences(of: "https://twitter.com/", with: "")
                 .trimmingCharacters(in: ["@"])
             details.append((ElementDetailType.twitter, twitter, twitter))
         }
-        if let facebook = tags?["contact:facebook"] {
+        if let facebook = element.osmJson.tags?["contact:facebook"] {
             details.append((ElementDetailType.facebook, facebook, facebook))
         }
-        if let openingHours = tags?["opening_hours"] {
+        if let openingHours = element.osmJson.tags?["opening_hours"] {
             details.append((ElementDetailType.openingHours, openingHours, openingHours))
         }
         
@@ -154,79 +160,11 @@ struct ElementViewModel {
     }
     
     var prettyPrintTags: String? {
-        guard let tags = tags,
+        guard let tags = element.osmJson.tags,
               let data = try? JSONSerialization.data(withJSONObject: tags, options: .prettyPrinted),
               let string = String(data: data, encoding: .utf8) else { return nil }
         
         return string
-    }
-    
-    // MARK: Coords
-    var coord: CLLocationCoordinate2D? {
-        var lat: Double
-        var lon: Double
-        
-        if element.osmJson.type == .node {
-            guard let _lat = element.osmJson.lat,
-                let _lon = element.osmJson.lon else { return nil }
-                             
-            lat = _lat
-            lon = _lon
-        } else {
-            guard let bounds = element.osmJson.bounds else { return nil }
-            
-            let boundsMinLat = bounds.minlat
-            let boundsMinLon = bounds.minlon
-            let boundsMaxLat = bounds.maxlat
-            let boundsMaxLon = bounds.maxlon
-            
-            lat = (boundsMinLat + boundsMaxLat) / 2.0
-            lon = (boundsMinLon + boundsMaxLon) / 2.0
-            print("[TUNCO] bounds - lat: \(lat) - lon: \(lon)")
-        }
-        
-        return CLLocationCoordinate2D(latitude: lat, longitude: lon)
-    }
-    
-    // MARK: Details
-    var address: String {
-        var address = ""
-        
-        if let houseNumber = tags?["addr:housenumber"] {
-            address += houseNumber
-        }
-        if let street = tags?["addr:street"] {
-            if !address.isEmpty { address += " " }
-            address += street
-        }
-        if let city = tags?["addr:city"] {
-            if !address.isEmpty { address += ", " }
-            address += city
-        }
-        if let state = tags?["addr:state"] {
-            if !address.isEmpty { address += ", " }
-            address += state
-        }
-        if let postcode = tags?["addr:postcode"] {
-            if !address.isEmpty { address += ", " }
-            address += postcode
-        }
-        
-        return address
-    }
-    
-    var websiteUrl: String? {
-        return tags?["website"] ?? tags?["contact:website"]
-    }
-    
-    var websiteTitle: String? {
-        guard let website = websiteUrl else { return nil }
-        return website
-            .replacingOccurrences(of: "https://www.", with: "")
-            .replacingOccurrences(of: "http://www.", with: "")
-            .replacingOccurrences(of: "https://", with: "")
-            .replacingOccurrences(of: "http://", with: "")
-            .trimmingCharacters(in: ["/"])
     }
 }
 

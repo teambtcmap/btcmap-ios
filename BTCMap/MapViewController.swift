@@ -9,34 +9,36 @@ import UIKit
 import MapKit
 import CoreLocation
 import SwiftUI
+import Combine
 
-class ElementAnnotation: NSObject, MKAnnotation {
+class ElementAnnotation: NSObject, MKAnnotation, Identifiable {
     let element: API.Element
-    let elementViewModel: ElementViewModel
     let coordinate: CLLocationCoordinate2D
     
     init(element: API.Element) {
         self.element = element
-        self.elementViewModel = ElementViewModel(element: element)
-        self.coordinate = self.elementViewModel.coord ?? CLLocationCoordinate2D()
+        self.coordinate = self.element.coord ?? CLLocationCoordinate2D()
     }
 }
 
 class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate {    
     @IBOutlet weak var mapView: MKMapView!
     private var locationManager = CLLocationManager()
-    
-    private var elements: Elements!
+    private var elementsRepo: ElementsRepository!
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] = [:]
     
+    var cancellables = Set<AnyCancellable>()
+
     private func setupElements() {
-        elements = .init(api: API())
-        NotificationCenter.default.addObserver(self, selector: #selector(elementsChanged), name: Elements.changed, object: elements)
+        elementsRepo = .init(api: API())
+        elementsRepo.$items.sink(receiveValue: { [weak self] elements in
+              self?.elementsChanged(elements)
+          })
+        .store(in: &cancellables)
     }
     
-    @objc private func elementsChanged(_ notification: Notification) {
-        guard let elements = notification.userInfo?[Elements.elements] as? [API.Element] else { return }
+    private func elementsChanged(_ elements: [API.Element]) {
         var annotations = elementAnnotations
         elementsQueue.async {
             var annotationsToAdd: [ElementAnnotation] = []
@@ -49,9 +51,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                         annotations.removeValue(forKey: element.id)
                     }
                 } else {
-                    let vm = ElementViewModel(element: element)
-                    if vm.coord?.latitude != nil,
-                        vm.coord?.longitude != nil {
+                    if element.coord?.latitude != nil,
+                       element.coord?.longitude != nil {
                         if let annotation = annotations[element.id] {
                             annotationsToRemove.append(annotation)
                         }

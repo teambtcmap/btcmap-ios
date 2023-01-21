@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct Home: View {
-    let mapVCWrapper = MapViewControllerWrapper()
+    // TODO: Inject all these from SceneDelegate?
+    @StateObject var areasRepository = AreasRepository(api: API())
+    @StateObject var elementsRepository = ElementsRepository(api: API())
+
+    var mapVCWrapper = MapViewControllerWrapper()
     
     var body: some View {
         NavigationView {            
@@ -24,6 +28,8 @@ struct Home: View {
             .navigationBarHidden(true).navigationBarTitle("")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .environmentObject(areasRepository)
+        .environmentObject(elementsRepository)
     }
 }
 

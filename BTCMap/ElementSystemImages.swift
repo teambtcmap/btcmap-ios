@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 struct ElementSystemImages {
     static let sport = [
@@ -169,12 +170,12 @@ struct ElementSystemImages {
     ]
     static let amenity = [
         "restaurant": "knife.fork",
-        "atm": "dollarsign.circle",
+        "atm": "bitcoinsign.circle.fill",
         "cafe": "cup.and.saucer.fill",
         "bar": "wineglass",
-        "bureau_de_change": "dollarsign.circle",
+        "bureau_de_change": "bitcoinsign.circle.fill",
         "fast_food": "fork.knife.circle.fill",
-        "bank": "dollarsign.circle",
+        "bank": "bitcoinsign.circle.fill",
         "dentist": "location.circle.fill",
         "pub": "food.drink",
         "fuel": "fuelpump.fill",
@@ -188,7 +189,7 @@ struct ElementSystemImages {
         "ice_cream": "fork.knife.circle.fill",
         "hospital": "cross.circle.fill",
         "boat_rental": "sailboat.fill",
-        "money_transfer": "dollarsign.circle",
+        "money_transfer": "bitcoinsign.circle.fill",
         "marketplace": "bag.circle",
         "arts_centre": "paintpalette.fill",
         "college": "graduationcap.fill",
@@ -205,13 +206,13 @@ struct ElementSystemImages {
         "library": "books.vertical.fill",
         "parking": "parkingsign.circle",
         "police": "location.circle.fill",
-        "casino": "dollarsign.circle",
+        "casino": "bitcoinsign.circle.fill",
         "notary": "location.circle.fill",
         "dancing_school": "figure.socialdance",
         "stripclub": "figure.dance",
         "nightclub": "figure.socialdance",
         "motorcycle_rental": "figure.outdoor.cycle",
-        "payment_terminal": "dollarsign.circle",
+        "payment_terminal": "bitcoinsign.circle.fill",
         "charging_station": "car.circle.fill",
         "training": "figure.strengthtraining.traditional",
         "bitcoin_office": "bitcoinsign.circle.fill",
@@ -229,6 +230,13 @@ struct ElementSystemImages {
         "church": "location.circle.fill"
     ]
     
+    // MARK: - SwiftUI
+    static func swiftUISystemImage(for element: API.Element, with renderingMode: Image.TemplateRenderingMode) -> Image? {
+        guard let uiImage = systemImage(for: element) else { return nil }
+        return Image(uiImage: uiImage).renderingMode(renderingMode)
+    }
+    
+    // MARK: - UIKit
     static func systemImage(for element: API.Element, with renderingMode: UIImage.RenderingMode) -> UIImage? {
         return systemImage(for: element)?.withRenderingMode(renderingMode)
     }

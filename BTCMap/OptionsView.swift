@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OptionsView: View {
     @Environment(\.openURL) var openURL
+    @EnvironmentObject var areasRepo: AreasRepository
+
     @State private var showingOptions = false
     @State private var showingCommunities = false
     @State private var showingDonate = false
@@ -43,11 +45,11 @@ struct OptionsView: View {
                     openURL(URL(string: "https://btcmap.org/add-location")!)
                 }
                 
+                Button("communities".localized) {
+                    showingCommunities = true
+                }
+                
                 // TODO: Hide for now until implemented
-//                Button("communities".localized) {
-//                    showingCommunities = true
-//                }
-//
 //                Button("trends".localized) {
 //                    // TODO: Implement
 //                    showingNotImplementedAlert = true
@@ -81,8 +83,8 @@ struct OptionsView: View {
     }
 }
 
-struct OptionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        OptionsView()
-    }
-}
+//struct OptionsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OptionsView()
+//    }
+//}

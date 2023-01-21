@@ -7,6 +7,7 @@
 
 import Foundation
 import os
+import CoreLocation
 
 // API Documentation: https://github.com/teambtcmap/btcmap-api/wiki
 class API {
@@ -16,7 +17,7 @@ class API {
     var decoder: JSONDecoder { rest.decoder }
     
     typealias Completion<Response> = (Result<Response, Error>) -> Void
-    
+         
     // MARK: - Element
     struct Element: Identifiable, Equatable, Codable {
         struct OsmJson: Identifiable, Equatable, Codable {
@@ -55,6 +56,48 @@ class API {
             let bounds: Bounds?
             let nodes: [Int64]?
             let members: [Member]?
+            
+            // MARK: Tags
+            var name: String { tags?["name"] ?? "" }
+            var address: String {
+                var address = ""
+                
+                if let houseNumber = tags?["addr:housenumber"] {
+                    address += houseNumber
+                }
+                if let street = tags?["addr:street"] {
+                    if !address.isEmpty { address += " " }
+                    address += street
+                }
+                if let city = tags?["addr:city"] {
+                    if !address.isEmpty { address += ", " }
+                    address += city
+                }
+                if let state = tags?["addr:state"] {
+                    if !address.isEmpty { address += ", " }
+                    address += state
+                }
+                if let postcode = tags?["addr:postcode"] {
+                    if !address.isEmpty { address += ", " }
+                    address += postcode
+                }
+                
+                return address
+            }
+            
+            var websiteUrl: String? {
+                return tags?["website"] ?? tags?["contact:website"]
+            }
+            
+            var websiteTitle: String? {
+                guard let website = websiteUrl else { return nil }
+                return website
+                    .replacingOccurrences(of: "https://www.", with: "")
+                    .replacingOccurrences(of: "http://www.", with: "")
+                    .replacingOccurrences(of: "https://", with: "")
+                    .replacingOccurrences(of: "http://", with: "")
+                    .trimmingCharacters(in: ["/"])
+            }
         }
         
         enum OsmType: String, Codable {
@@ -70,6 +113,25 @@ class API {
         let deletedAt: String
         let tags: [String: String]?
         
+        // MARK: Coords
+        var coord: CLLocationCoordinate2D? {
+            var lat: Double
+            var lon: Double
+            
+            if osmJson.type == .node {
+                guard let _lat = osmJson.lat,
+                    let _lon = osmJson.lon else { return nil }
+                lat = _lat
+                lon = _lon
+            } else {
+                guard let bounds = osmJson.bounds else { return nil }
+                lat = (bounds.minlat + bounds.maxlat) / 2.0
+                lon = (bounds.minlon + bounds.maxlon) / 2.0
+            }
+            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        }
+        
+        // MARK: Mocks
         static var mock: Element? {
             guard let fileURL = Bundle.main.url(forResource: "mock_element", withExtension: "json") else {
                 assertionFailure(); return nil }
@@ -81,19 +143,7 @@ class API {
             }
         }
     }
-    
-    func elements(completion: @escaping Completion<[Element]>) {
-        rest.get("v2/elements", completion: completion)
-    }
-    
-    func elements(_ since: String?, completion: @escaping Completion<[Element]>) {
-        let query: REST.Query? = {
-            guard let since = since else { return nil }
-            return ["updated_since": since]
-        }()
-        rest.get("v2/elements", query: query, completion: completion)
-    }
-    
+ 
     // MARK: - Area
     struct Area: Codable, Hashable, Equatable {
         let id: String
@@ -147,6 +197,21 @@ class API {
         var iconUrl: URL? { URL(string: tags.iconSquare ?? "") }
         var name: String { tags.name }
         var type: String { tags.type }
+        var bounds: Bounds? {
+            guard let boxEast = tags.boxEast, let boxWest = tags.boxWest, let boxSouth = tags.boxSouth, let boxNorth = tags.boxNorth else { return nil }
+            return Bounds(maxlat: max(boxSouth, boxNorth),
+                          maxlon: max(boxEast, boxWest),
+                          minlat: min(boxSouth, boxNorth),
+                          minlon: min(boxEast, boxWest))
+        }
+
+        // MARK: Coords
+        var coord: CLLocationCoordinate2D? {
+            guard let e = tags.boxEast, let w = tags.boxWest, let s = tags.boxSouth, let n = tags.boxNorth else { return nil }
+            let lat = (s + n) / 2.0
+            let lon = (e + w) / 2.0
+            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        }
         
         // MARK: Hashable
         func hash(into hasher: inout Hasher) {
@@ -168,10 +233,6 @@ class API {
                 return nil
             }
         }
-    }
-    
-    func areas(completion: @escaping Completion<[Area]>) {
-        rest.get("v2/areas", completion: completion)
     }
     
     //MARK: - Event
@@ -284,5 +345,26 @@ class API {
                 return nil
             }
         }
+    }
+}
+
+// MARK: - Calls
+extension API {
+    // MARK: Generic
+    func items<Item: Decodable>(_ since: String?, resource: String, completion: @escaping API.Completion<[Item]>) {
+        let query: REST.Query? = {
+            guard let since = since else { return nil }
+            return ["updated_since": since]
+        }()
+        rest.get("v2/\(resource)", query: query, completion: completion)
+    }
+    
+    // MARK: Specific
+    func elements(_ since: String? = nil, completion: @escaping Completion<[Element]>) {
+        items(since, resource: "elements", completion: completion )
+    }
+    
+    func areas(_ since: String? = nil, completion: @escaping Completion<[Area]>) {
+        items(since, resource: "areas", completion: completion )
     }
 }

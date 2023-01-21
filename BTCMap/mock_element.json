@@ -1,39 +1,34 @@
 {
-  "id": "node:9985802993",
+  "id": "node:10135426413",
   "osm_json": {
-    "changeset": 127516569,
-    "id": 9985802993,
-    "lat": 53.4423766,
-    "lon": -2.2775673,
+    "changeset": 128174809,
+    "id": 10135426413,
+    "lat": 11.9646239,
+    "lon": 121.9269029,
     "tags": {
-      "addr:city": "Manchester",
-      "addr:housenumber": "585A",
-      "addr:postcode": "M21 9AF",
-      "addr:street": "Wilbraham Road",
-      "currency:GBP": "yes",
+      "amenity": "bar",
+      "contact:email": "2brownboysboracay@gmail.com",
+      "contact:facebook": "https://www.facebook.com/2brownboys/",
+      "cuisine": "burger",
       "currency:XBT": "yes",
-      "currency:others": "no",
-      "description": "Inexpensive traditional barbers, no appointment needed.",
-      "name": "RJ's",
-      "opening_hours": "Mo-Sa 09:00-17:00",
+      "name": "2 Brown Boys",
       "payment:lightning": "yes",
-      "payment:lightning_contactless": "yes",
+      "payment:lightning_contactless": "no",
       "payment:onchain": "yes",
-      "phone": "+44 7812 919857",
-      "shop": "hairdresser",
-      "survey:date": "2022-10-14"
+      "phone": "+63 36 288 9828",
+      "survey:date": "2022-09-27"
     },
-    "timestamp": "2022-10-14T10:27:01Z",
+    "timestamp": "2022-10-28T13:04:13Z",
     "type": "node",
-    "uid": 16971158,
-    "user": "nathan_day",
-    "version": 11
+    "uid": 2104834,
+    "user": "Igor Bubelov",
+    "version": 1
   },
   "tags": {
     "category": "other",
-    "icon:android": "content_cut"
+    "icon:android": "lunch_dining"
   },
-  "created_at": "2022-09-25T08:45:08Z",
-  "updated_at": "2022-11-02T10:16:37Z",
-  "deleted_at": ""
+  "created_at": "2022-10-28T13:11:32Z",
+  "updated_at": "2022-11-18T09:51:48Z",
+  "deleted_at": "2022-11-18T09:51:48Z"
 }
