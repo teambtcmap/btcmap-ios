@@ -34,7 +34,7 @@ struct CommunityDetailView: View {
                             .onTapGesture {
                                 // TODO: Tap - Map on CommunityDetail - Go to mapVC centered on bounds
                             }
-                        NavBarTitleSubtitle(title: communityDetailViewModel.area.name, subtitle: "\(elements.count) \("places".localized)")
+                        NavBarTitleSubtitle(title: communityDetailViewModel.area.name ?? "" , subtitle: "\(elements.count) \("places".localized)")
                     }
                     .listRowSeparator(.hidden)
                     
