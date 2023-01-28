@@ -27,6 +27,7 @@
 		B1459B5F2979FCC6006D376B /* AreasRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1459B5E2979FCC6006D376B /* AreasRepository.swift */; };
 		B1459B612979FCE9006D376B /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1459B602979FCE9006D376B /* RepositoryProtocol.swift */; };
 		B1459B63297A0F5F006D376B /* elements.json in Resources */ = {isa = PBXBuildFile; fileRef = B1459B62297A0F5F006D376B /* elements.json */; };
+		B155BAD6298589FF00A25265 /* Cluster in Frameworks */ = {isa = PBXBuildFile; productRef = B155BAD5298589FF00A25265 /* Cluster */; };
 		B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F309F2957789900926E4F /* BorderButtonStyle.swift */; };
 		B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A42957CA2000926E4F /* OptionsView.swift */; };
 		B17F30A72957CB4300926E4F /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A62957CB4300926E4F /* DonateView.swift */; };
@@ -36,7 +37,7 @@
 		B17F30B4295A599200926E4F /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B3295A599200926E4F /* MapAnnotationView.swift */; };
 		B17F30B6295A5C1300926E4F /* String+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B5295A5C1300926E4F /* String+UIImage.swift */; };
 		B17F30BA2963061900926E4F /* ElementSystemImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B92963061900926E4F /* ElementSystemImages.swift */; };
-		B17F30BD2963196800926E4F /* CircleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BC2963196800926E4F /* CircleAnnotationView.swift */; };
+		B17F30BD2963196800926E4F /* CountClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BC2963196800926E4F /* CountClusterAnnotationView.swift */; };
 		B17F30BF296319B700926E4F /* MarkerAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */; };
 		B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */; };
 		B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA82956BA4D007C2D0A /* ElementView.swift */; };
@@ -93,7 +94,7 @@
 		B17F30B3295A599200926E4F /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		B17F30B5295A5C1300926E4F /* String+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+UIImage.swift"; sourceTree = "<group>"; };
 		B17F30B92963061900926E4F /* ElementSystemImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementSystemImages.swift; sourceTree = "<group>"; };
-		B17F30BC2963196800926E4F /* CircleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationView.swift; sourceTree = "<group>"; };
+		B17F30BC2963196800926E4F /* CountClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountClusterAnnotationView.swift; sourceTree = "<group>"; };
 		B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerAnnotationView.swift; sourceTree = "<group>"; };
 		B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+BTCMap.swift"; sourceTree = "<group>"; };
 		B1AFEEA82956BA4D007C2D0A /* ElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementView.swift; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B155BAD6298589FF00A25265 /* Cluster in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,7 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				B17F30B3295A599200926E4F /* MapAnnotationView.swift */,
-				B17F30BC2963196800926E4F /* CircleAnnotationView.swift */,
+				B17F30BC2963196800926E4F /* CountClusterAnnotationView.swift */,
 				B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */,
 			);
 			name = AnnotationViews;
@@ -373,6 +375,9 @@
 			dependencies = (
 			);
 			name = BTCMap;
+			packageProductDependencies = (
+				B155BAD5298589FF00A25265 /* Cluster */,
+			);
 			productName = BTCMap;
 			productReference = AD6914CA28E37F4600D9F34E /* BTCMap.app */;
 			productType = "com.apple.product-type.application";
@@ -401,6 +406,9 @@
 				Base,
 			);
 			mainGroup = AD6914C128E37F4600D9F34E;
+			packageReferences = (
+				B155BAD4298589FF00A25265 /* XCRemoteSwiftPackageReference "Cluster" */,
+			);
 			productRefGroup = AD6914CB28E37F4600D9F34E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -453,7 +461,7 @@
 				B1C35DF2297C1A5000D59008 /* ElementVerifyView.swift in Sources */,
 				AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */,
 				AD7E331428E8278D004B1DFE /* REST.swift in Sources */,
-				B17F30BD2963196800926E4F /* CircleAnnotationView.swift in Sources */,
+				B17F30BD2963196800926E4F /* CountClusterAnnotationView.swift in Sources */,
 				B1459B5F2979FCC6006D376B /* AreasRepository.swift in Sources */,
 				B1C35DE4297ADF6C00D59008 /* CommunityDetailViewModel.swift in Sources */,
 				B1C35DE2297ADDEC00D59008 /* LocationManager.swift in Sources */,
@@ -696,6 +704,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B155BAD4298589FF00A25265 /* XCRemoteSwiftPackageReference "Cluster" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/efremidze/Cluster.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B155BAD5298589FF00A25265 /* Cluster */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B155BAD4298589FF00A25265 /* XCRemoteSwiftPackageReference "Cluster" */;
+			productName = Cluster;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AD6914C228E37F4600D9F34E /* Project object */;
 }
