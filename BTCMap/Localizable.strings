@@ -26,7 +26,8 @@
 
 // COMMUNITIES VIEW
 "km" = "km";
-"places" = "places";
+"place_singular" = "place";
+"places_plural" = "places";
 "verified" = "Verified";
 
 // OPTIONS VIEW
