@@ -42,7 +42,7 @@ struct CommunitiesView: View {
                             .padding([.trailing], 10)
                         
                         VStack(alignment: .leading) {
-                            Text(item.area.name)
+                            Text(item.area.name ?? "")
                                 .font(.headline)
                             
                             Text(communityDetailViewModel.distanceText ?? "")

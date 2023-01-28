@@ -10,6 +10,7 @@ import MapKit
 import CoreLocation
 import SwiftUI
 import Combine
+import Cluster
 
 class ElementAnnotation: NSObject, MKAnnotation, Identifiable {
     let element: API.Element
@@ -21,7 +22,7 @@ class ElementAnnotation: NSObject, MKAnnotation, Identifiable {
     }
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate {    
+class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate, ClusterManagerDelegate {    
     @IBOutlet weak var mapView: MKMapView!
     private var locationManager = CLLocationManager()
     private var elementsRepo: ElementsRepository!
@@ -29,6 +30,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     private var elementAnnotations: [String: ElementAnnotation] = [:]
     
     var cancellables = Set<AnyCancellable>()
+    
+    lazy var manager: ClusterManager = { [unowned self] in
+        let manager = ClusterManager()
+        manager.delegate = self
+        return manager
+    }()
 
     private func setupElements() {
         elementsRepo = .init(api: API())
@@ -66,34 +73,62 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             
             DispatchQueue.main.async {
                 self.elementAnnotations = annotations
-                self.mapView.addAnnotations(annotationsToAdd)
-                self.mapView.removeAnnotations(annotationsToRemove)
+                self.addAnnotations(annotationsToAdd)
+                self.removeAnnotations(annotationsToRemove)
             }
         }
+    }
+    
+    // MARK: - Annotations
+    private func addAnnotations(_ annotations: [MKAnnotation]) {
+        manager.add(annotations)
+        manager.reload(mapView: mapView)
+    }
+
+    private func removeAnnotations(_ annotations: [MKAnnotation]) {
+        manager.remove(annotations)
+        manager.reload(mapView: mapView)
     }
     
     // MARK: - MKMapViewDelegate
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let annotation = view.annotation as? ElementAnnotation else { return }
-        
-        // deselect current annotationView if different
-        if let elementVC = presentedViewController as? UIHostingController<ElementView>,
-           elementVC.rootView.elementViewModel.element.id != annotation.element.id {
-            self.dismiss(animated: true)
+        // 1. Cluster annotations
+        if let cluster = view.annotation as? ClusterAnnotation {
+            var zoomRect = MKMapRect.null
+            for annotation in cluster.annotations {
+                let annotationPoint = MKMapPoint(annotation.coordinate)
+                let pointRect = MKMapRect(x: annotationPoint.x, y: annotationPoint.y, width: 0, height: 0)
+                if zoomRect.isNull {
+                    zoomRect = pointRect
+                } else {
+                    zoomRect = zoomRect.union(pointRect)
+                }
+            }
+            mapView.setVisibleMapRect(zoomRect, animated: true)
+            return
         }
-        
-        // show new annotationView
-        let elementViewModel = ElementViewModel(element: annotation.element)
-        let elementDetailHostedVC = UIHostingController(rootView: ElementView(elementViewModel: elementViewModel))
-        if let sheet = elementDetailHostedVC.sheetPresentationController {
-            sheet.delegate = self
-            sheet.prefersGrabberVisible = true
-            sheet.detents = [.medium(), .large()]
-            sheet.largestUndimmedDetentIdentifier = .medium
+        // 2. Element annotations
+        else if let annotation = view.annotation as? ElementAnnotation {
             
+            // deselect current annotationView if different
+            if let elementVC = presentedViewController as? UIHostingController<ElementView>,
+               elementVC.rootView.elementViewModel.element.id != annotation.element.id {
+                self.dismiss(animated: true)
+            }
+            
+            // show new annotationView
+            let elementViewModel = ElementViewModel(element: annotation.element)
+            let elementDetailHostedVC = UIHostingController(rootView: ElementView(elementViewModel: elementViewModel))
+            if let sheet = elementDetailHostedVC.sheetPresentationController {
+                sheet.delegate = self
+                sheet.prefersGrabberVisible = true
+                sheet.detents = [.medium(), .large()]
+                sheet.largestUndimmedDetentIdentifier = .medium
+                
+            }
+            present(elementDetailHostedVC, animated: true)
         }
-        present(elementDetailHostedVC, animated: true)
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
@@ -111,15 +146,24 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MarkerAnnotationView
             marker.glyphImage = ElementSystemImages.systemImage(for: annotation.element, with: .alwaysTemplate)
             marker.displayPriority = .defaultLow
-            marker.clusteringIdentifier = "element"
             return marker
         }
-        else if let cluster = annotation as? MKClusterAnnotation {
-            let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "cluster", for: cluster) as! CircleAnnotationView
-            marker.glyphText = String(cluster.memberAnnotations.count)
-            return marker
+        else if let annotation = annotation as? ClusterAnnotation {
+            return mapView.dequeueReusableAnnotationView(withIdentifier: "cluster", for: annotation) as! CountClusterAnnotationView
         }
+        
         return nil
+    }
+        
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        manager.reload(mapView: mapView)
+    }
+    
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        views.forEach { $0.alpha = 0 }
+        UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [], animations: {
+            views.forEach { $0.alpha = 1 }
+        }, completion: nil)
     }
 
     // MARK: - MapView Geometry
@@ -175,7 +219,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         locationManager.requestWhenInUseAuthorization()
 
         mapView.register(MarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
-        mapView.register(CircleAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
+        mapView.register(CountClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
 
         userLocationButton.layer.cornerRadius = 10
         

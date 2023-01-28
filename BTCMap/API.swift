@@ -161,8 +161,8 @@ class API {
             let twitter: String?
             let website: String?
             let iconSquare: String?
-            let name: String
-            let type: String
+            let name: String?
+            let type: String?
             
             private enum CodingKeys: String, CodingKey {
                 case boxEast = "box:east"
@@ -188,15 +188,15 @@ class API {
                 twitter = try container.decodeIfPresent(String.self, forKey: .twitter)
                 website = try container.decodeIfPresent(String.self, forKey: .website)
                 iconSquare = try container.decodeIfPresent(String.self, forKey: .iconSquare)
-                name = try container.decode(String.self, forKey: .name)
-                type = try container.decode(String.self, forKey: .type)
+                name = try container.decodeIfPresent(String.self, forKey: .name)
+                type = try container.decodeIfPresent(String.self, forKey: .type)
             }
         }
         
         // MARK: Getters
         var iconUrl: URL? { URL(string: tags.iconSquare ?? "") }
-        var name: String { tags.name }
-        var type: String { tags.type }
+        var name: String? { tags.name }
+        var type: String? { tags.type }
         var bounds: Bounds? {
             guard let boxEast = tags.boxEast, let boxWest = tags.boxWest, let boxSouth = tags.boxSouth, let boxNorth = tags.boxNorth else { return nil }
             return Bounds(maxlat: max(boxSouth, boxNorth),
