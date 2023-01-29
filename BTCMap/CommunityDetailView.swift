@@ -9,6 +9,7 @@ import MapKit
 import SwiftUI
 
 struct CommunityDetailView: View {
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var elementsRepo: ElementsRepository
     var communityDetailViewModel: CommunityDetailViewModel
     
@@ -20,7 +21,6 @@ struct CommunityDetailView: View {
     }
     
     // TODO: Not verified text pink like in ElementView    
-    // TODO: Tap - Map on CommunityDetail - Go to mapVC centered on bounds
 
     var body: some View {
         GeometryReader { geometry in
@@ -28,11 +28,14 @@ struct CommunityDetailView: View {
                 List {
                     // MARK: - Map
                     ZStack(alignment: .top) {
-                        BoundedMapView(region: BoundedMapView.region(from: communityDetailViewModel.area.bounds ?? Bounds.zeroBounds))
+                        let bounds = communityDetailViewModel.area.bounds
+                        BoundedMapView(region: BoundedMapView.region(from: bounds ?? Bounds.zeroBounds))
                             .frame(height: geometry.size.height * 0.3)
                             .frame( maxWidth: .infinity)
                             .onTapGesture {
-                                // TODO: Tap - Map on CommunityDetail - Go to mapVC centered on bounds
+                                // hack to pop back to home. see note in AppState
+                                appState.homeViewId = UUID()
+                                appState.mapState.bounds = bounds
                             }
                         let placesText = elements.count == 1 ? "place_singular".localized : "places_plural".localized
                         NavBarTitleSubtitle(title: communityDetailViewModel.area.name ?? "" , subtitle: "\(elements.count) \(placesText)")

@@ -22,23 +22,37 @@ class ElementAnnotation: NSObject, MKAnnotation, Identifiable {
     }
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate, ClusterManagerDelegate {    
+class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate, ClusterManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
+    var mapState: MapState!
+    var elementsRepo: ElementsRepository!
     private var locationManager = CLLocationManager()
-    private var elementsRepo: ElementsRepository!
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] = [:]
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
-    lazy var manager: ClusterManager = { [unowned self] in
+    private func setupMapStateObservers() {
+        mapState.$centerCoordinate.sink(receiveValue: { [weak self] coord in
+            guard let coord = coord else { return }
+            self?.centerMapOnLocation(coord)
+        })
+        .store(in: &cancellables)
+        
+        mapState.$bounds.sink(receiveValue: { [weak self] bounds in
+            guard let bounds = bounds else { return }
+            self?.centerMapOnBounds(bounds)
+        })
+        .store(in: &cancellables)
+    }
+    
+    private lazy var manager: ClusterManager = { [unowned self] in
         let manager = ClusterManager()
         manager.delegate = self
         return manager
     }()
-
+    
     private func setupElements() {
-        elementsRepo = .init(api: API())
         elementsRepo.$items.sink(receiveValue: { [weak self] elements in
               self?.elementsChanged(elements)
           })
@@ -84,7 +98,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         manager.add(annotations)
         manager.reload(mapView: mapView)
     }
-
+    
     private func removeAnnotations(_ annotations: [MKAnnotation]) {
         manager.remove(annotations)
         manager.reload(mapView: mapView)
@@ -154,7 +168,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         
         return nil
     }
-        
+    
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         manager.reload(mapView: mapView)
     }
@@ -165,14 +179,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             views.forEach { $0.alpha = 1 }
         }, completion: nil)
     }
-
+    
     // MARK: - MapView Geometry
     
-    private func centerMapOnUserLocation(for mapView: MKMapView) {
+    func centerMapOnUserLocation() {
         guard let location = mapView.userLocation.location else { return }
         
         let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: true)
+    }
+    
+    func centerMapOnLocation(_ coordinate: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func centerMapOnBounds(_ bounds: Bounds) {
+        mapView.setRegion(bounds.toMKCoordinateRegion(), animated: true)
     }
     
     // MARK: - CLLocationManager Delegate
@@ -191,19 +214,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        centerMapOnUserLocation(for: mapView)
+        centerMapOnUserLocation()
     }
     
-
+    
     // MARK: - UISheetPresentationControllerDelegate
     // NOTE: This is a bit of hack to allow SwiftUI Views to dismiss the presented hosted ElementView. Can implement a more elegant solution whebn MapVC is converted to SwiftUI
-    lazy var dismissElementDetail: () -> Void = { [weak self] in        
+    lazy var dismissElementDetail: () -> Void = { [weak self] in
         self?.dismiss(animated: true)
         if let annotation = self?.mapView.selectedAnnotations.first {
             self?.mapView.deselectAnnotation(annotation, animated: true)
         }
     }
-
+    
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         if let annotation = mapView.selectedAnnotations.first {
             mapView.deselectAnnotation(annotation, animated: true)
@@ -211,33 +234,39 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     // MARK: - UIViewController
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-
+        
         mapView.register(MarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
         mapView.register(CountClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
-
+        
         userLocationButton.layer.cornerRadius = 10
         
         // TODO: Disabling temporarily because MapKit makes this difficult to move from it's top right position, which overlaps search bar
         mapView.showsCompass = false
         
         setupElements()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        setupMapStateObservers()
         
         locationManager.requestLocation()
+    }
+    
+    private var firstLoad = true
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if firstLoad {
+            locationManager.requestLocation()
+            firstLoad = !firstLoad
+        }
     }
     
     // MARK: - User Location Button
     @IBOutlet weak var userLocationButton: UIButton!
     @IBAction func didTapUserLocationButton(_ sender: Any) {
-        centerMapOnUserLocation(for: mapView)
+        centerMapOnUserLocation()
     }
 }

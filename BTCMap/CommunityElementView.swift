@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CommunityElementView: View {
+    @EnvironmentObject var appState: AppState
     var communityDetailViewModel: CommunityDetailViewModel
     var element: API.Element
     
@@ -26,7 +27,9 @@ struct CommunityElementView: View {
                             .frame(height: geometry.size.height * 0.3)
                             .frame( maxWidth: .infinity)
                             .onTapGesture {
-                                // TODO: Tap - Map on CommunityElement - Go to mapVC centered on annotation
+                                // hack to pop back to home. see note in AppState
+                                appState.homeViewId = UUID()
+                                appState.mapState.centerCoordinate = element.coord
                             }
                         
                         NavBarTitleSubtitle(title: element.osmJson.name, subtitle: "")

@@ -8,15 +8,22 @@
 import SwiftUI
 
 struct Home: View {
-    // TODO: Inject all these from SceneDelegate?
+    @StateObject var appState = AppState()
+    // TODO: Add to AppState?
     @StateObject var areasRepository = AreasRepository(api: API())
     @StateObject var elementsRepository = ElementsRepository(api: API())
-
-    var mapVCWrapper = MapViewControllerWrapper()
     
+    func injectMapVCWrapper() {
+        mapVCWrapper.mapViewController.mapState = appState.mapState
+        mapVCWrapper.mapViewController.elementsRepo = elementsRepository
+    }
+    
+    var mapVCWrapper = MapViewControllerWrapper()
+
     var body: some View {
         NavigationView {            
             ZStack(alignment: .topTrailing) {
+                let _ = injectMapVCWrapper()
                 mapVCWrapper
                     .edgesIgnoringSafeArea(.all)
                 
@@ -27,7 +34,9 @@ struct Home: View {
             }
             .navigationBarHidden(true).navigationBarTitle("")
             .navigationBarTitleDisplayMode(.inline)
+            .id(appState.homeViewId)
         }
+        .environmentObject(appState)
         .environmentObject(areasRepository)
         .environmentObject(elementsRepository)
     }

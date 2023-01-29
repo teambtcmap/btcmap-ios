@@ -28,6 +28,7 @@
 		B1459B612979FCE9006D376B /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1459B602979FCE9006D376B /* RepositoryProtocol.swift */; };
 		B1459B63297A0F5F006D376B /* elements.json in Resources */ = {isa = PBXBuildFile; fileRef = B1459B62297A0F5F006D376B /* elements.json */; };
 		B155BAD6298589FF00A25265 /* Cluster in Frameworks */ = {isa = PBXBuildFile; productRef = B155BAD5298589FF00A25265 /* Cluster */; };
+		B155BADB2985F4D500A25265 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B155BADA2985F4D500A25265 /* AppState.swift */; };
 		B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F309F2957789900926E4F /* BorderButtonStyle.swift */; };
 		B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A42957CA2000926E4F /* OptionsView.swift */; };
 		B17F30A72957CB4300926E4F /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30A62957CB4300926E4F /* DonateView.swift */; };
@@ -85,6 +86,7 @@
 		B1459B5E2979FCC6006D376B /* AreasRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreasRepository.swift; sourceTree = "<group>"; };
 		B1459B602979FCE9006D376B /* RepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
 		B1459B62297A0F5F006D376B /* elements.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = elements.json; sourceTree = "<group>"; };
+		B155BADA2985F4D500A25265 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		B17F309F2957789900926E4F /* BorderButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderButtonStyle.swift; sourceTree = "<group>"; };
 		B17F30A42957CA2000926E4F /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		B17F30A62957CB4300926E4F /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 		AD6914E128E380B000D9F34E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B155BADA2985F4D500A25265 /* AppState.swift */,
 				B1C35DE0297ADDDF00D59008 /* Managers */,
 				B1459B5D2979FC71006D376B /* Repositories */,
 				B1459B5C2979FC67006D376B /* Service */,
@@ -219,6 +222,7 @@
 		AD6914E628E3813B00D9F34E /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */,
 				B17F30BB2963194700926E4F /* AnnotationViews */,
 				AD6914E728E3814F00D9F34E /* MapViewController.swift */,
 				AD6914E828E3814F00D9F34E /* MapViewController.xib */,
@@ -302,7 +306,6 @@
 				B17F30A82957CBD000926E4F /* RoundedPillButton.swift */,
 				B1C35DE7297B2EFF00D59008 /* NavBarTitleSubtitle.swift */,
 				B1C35DEB297B60E900D59008 /* ImageCircle.swift */,
-				B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */,
 			);
 			name = SwiftUI;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				B1459B612979FCE9006D376B /* RepositoryProtocol.swift in Sources */,
 				AD96B93428E4BC7400B558D4 /* ElementsRepository.swift in Sources */,
 				B17F30B6295A5C1300926E4F /* String+UIImage.swift in Sources */,
+				B155BADB2985F4D500A25265 /* AppState.swift in Sources */,
 				B1C35DF0297C0E8C00D59008 /* BoundedMap.swift in Sources */,
 				B1C35DE6297AE23F00D59008 /* MapCalculations.swift in Sources */,
 				AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */,

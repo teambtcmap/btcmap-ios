@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct MapViewControllerWrapper: UIViewControllerRepresentable {
-    let mapViewController = MapViewController()
+    var mapViewController = MapViewController()
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<MapViewControllerWrapper>) -> UIViewController {
         return mapViewController

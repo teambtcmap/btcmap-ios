@@ -32,6 +32,5 @@ struct BoundedMapView: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
-        .disabled(true)        
     }
 }
