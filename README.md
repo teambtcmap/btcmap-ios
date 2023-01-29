@@ -50,7 +50,7 @@ payment:bitcoin
 - [ ] Setup local db so caching/querying locally is more efficient
 
 ## MAP PERFORMANCE
-- [ ] Biggest issue right now is we have a very naive implementation of the map annotations. We are adding all of them on viewDidLoad of MapVC. This becomes a problem as user zooms out to world view, as MapKit is surprisingly bad with their clustering logic and UI pauses for a bit. Biggest win might be using this 3rd party clustering framework: https://github.com/efremidze/Cluster
+- [X] Biggest issue right now is we have a very naive implementation of the map annotations. We are adding all of them on viewDidLoad of MapVC. This becomes a problem as user zooms out to world view, as MapKit is surprisingly bad with their clustering logic and UI pauses for a bit. Biggest win might be using this 3rd party clustering framework: https://github.com/efremidze/Cluster
 
 ## ELEMENT
 - [X] ~~If "type": "way", then the Element json returns a bounding box instead of a single coordinate.~~
@@ -64,7 +64,7 @@ Either:
 - [ ] Phone number parsing isn't working for all formats. Can mimic Android repo implementation
 
 ### MAIN OPTIONS BUTTON
-- [ ] All of the options in the main options button are NOT implemented. Communities Main is partially implemented, but unfinished
+- [ ] All of the options in the main options button are NOT implemented.
 
 ### REFACTOR
 - [ ] Initial startup logic (initial loading of Elements) could use a refactor. Local vs Remote persistence is a bit mixed up
