@@ -13,7 +13,7 @@ class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     let objectWillChange = PassthroughSubject<Void, Never>()
     
-    @Published var status: CLAuthorizationStatus? {
+    @Published var status: CLAuthorizationStatus {
         willSet { objectWillChange.send() }
     }
     
@@ -22,12 +22,15 @@ class LocationManager: NSObject, ObservableObject {
     }
     
     override init() {
+        status = locationManager.authorizationStatus
+        location = locationManager.location
+        
         super.init()
         
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.startUpdatingLocation()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
 }
 

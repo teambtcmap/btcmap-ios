@@ -11,7 +11,7 @@ struct CommunitiesView: View {
     let locationManager = LocationManager()
     @EnvironmentObject var areasRepo: AreasRepository
     
-    var communitiesPlusDistance: [CommunityPlusDistance] {
+    private var communitiesWithDistance: [CommunityPlusDistance] {
         guard let currentLoc = locationManager.location else { return areasRepo.communities.map { CommunityPlusDistance(area: $0, distance: nil) } }
         return areasRepo.communities.map { (area) in
             guard let areaCoord = area.coord else { return CommunityPlusDistance(area: area, distance: nil) }
@@ -21,18 +21,32 @@ struct CommunitiesView: View {
         }
     }
     
-    var communitiesSortedByDistance: [CommunityPlusDistance] {
-        return communitiesPlusDistance.sorted { (community1, community2) -> Bool in
+    private var communitiesWithoutDistance: [CommunityPlusDistance] {
+        return areasRepo.communities.map { CommunityPlusDistance(area: $0, distance: nil) }
+    }
+
+    private var communities: [CommunityPlusDistance] {
+        let communities: [CommunityPlusDistance] = {
+            switch locationManager.status {
+                case .authorizedAlways, .authorizedWhenInUse:
+                return communitiesWithDistance
+                case .denied, .restricted, .notDetermined:
+                return communitiesWithoutDistance
+            @unknown default:
+                fatalError()
+            }
+        }()
+        
+        return communities.sorted { (community1, community2) -> Bool in
             if community1.distance == nil { return false }
             if community2.distance == nil { return true }
             return community1.distance! < community2.distance!
-        }
+        }        
     }
     
-    // TODO: This is constantly getting refreshed
     var body: some View {
         VStack {
-            List(communitiesSortedByDistance, id: \.area.id) { item in
+            List(communities, id: \.area.id) { item in
                 let communityDetailViewModel = CommunityDetailViewModel(communityPlusDistance: item)
                 NavigationLink(destination: CommunityDetailView(communityDetailViewModel: communityDetailViewModel)) {
                     HStack {
