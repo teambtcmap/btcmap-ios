@@ -169,7 +169,7 @@ struct ElementSystemImages {
         "farm": "carrot.fill"
     ]
     static let amenity = [
-        "restaurant": "knife.fork",
+        "restaurant": "fork.knife.circle.fill",
         "atm": "bitcoinsign.circle.fill",
         "cafe": "cup.and.saucer.fill",
         "bar": "wineglass",
@@ -177,7 +177,7 @@ struct ElementSystemImages {
         "fast_food": "fork.knife.circle.fill",
         "bank": "bitcoinsign.circle.fill",
         "dentist": "location.circle.fill",
-        "pub": "food.drink",
+        "pub": "ork.knife.circle.fill",
         "fuel": "fuelpump.fill",
         "doctros": "cross.circle.fill",
         "pharmacy": "pill.fill",
@@ -245,7 +245,7 @@ struct ElementSystemImages {
         guard let tags = element.osmJson.tags else { return nil }
         
         if let cuisine = tags["cuisine"] {
-            return lookup(cuisine, in: Self.cuisine) ?? UIImage(systemName: "food.drink")
+            return lookup(cuisine, in: Self.cuisine) ?? UIImage(systemName: "fork.knife.circle.fill")
         }
         if let shop = tags["shop"] {
             return lookup(shop, in: Self.shop) ?? UIImage(systemName: "bag.circle")
