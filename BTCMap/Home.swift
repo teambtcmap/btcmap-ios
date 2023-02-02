@@ -36,6 +36,7 @@ struct Home: View {
             .navigationBarTitleDisplayMode(.inline)
             .id(appState.homeViewId)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(appState)
         .environmentObject(areasRepository)
         .environmentObject(elementsRepository)
