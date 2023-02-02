@@ -159,7 +159,9 @@ class API {
             let boxWest: Double?
             let discord: String?
             let twitter: String?
+            let telegram: String?
             let website: String?
+            let youtube: String?
             let iconSquare: String?
             let name: String?
             let type: String?
@@ -171,7 +173,9 @@ class API {
                 case boxWest = "box:west"
                 case discord = "contact:discord"
                 case twitter = "contact:twitter"
+                case telegram = "contact:telegram"
                 case website = "contact:website"
+                case youtube = "contact:youtube"
                 case iconSquare = "icon:square"
                 case name
                 case type
@@ -186,7 +190,9 @@ class API {
                 boxWest = try? (try? container.decode(Double.self, forKey: .boxWest)) ?? Double(try container.decode(String.self, forKey: .boxWest))
                 discord = try container.decodeIfPresent(String.self, forKey: .discord)
                 twitter = try container.decodeIfPresent(String.self, forKey: .twitter)
+                telegram = try container.decodeIfPresent(String.self, forKey: .telegram)
                 website = try container.decodeIfPresent(String.self, forKey: .website)
+                youtube = try container.decodeIfPresent(String.self, forKey: .youtube)
                 iconSquare = try container.decodeIfPresent(String.self, forKey: .iconSquare)
                 name = try container.decodeIfPresent(String.self, forKey: .name)
                 type = try container.decodeIfPresent(String.self, forKey: .type)

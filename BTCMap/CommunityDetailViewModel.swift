@@ -16,16 +16,15 @@ enum CommunityContactType: CaseIterable {
     case discord
     case youtube
     
-    // NOTE: Only website and twitter coded right now
-    static var codedContacts: [CommunityContactType] { [.website, .twitter] }
+    static var codedContacts: [CommunityContactType] { [.telegram, .discord, .twitter, .youtube, .website] }
     
     var displayIcon: Image? {
         switch self {
         case .website: return Image(systemName: "globe.americas.fill")
         case .twitter: return Image("twitter")
-        case .telegram: return nil
-        case .discord: return nil
-        case .youtube: return nil
+        case .telegram: return Image("telegram")
+        case .discord: return Image("discord")
+        case .youtube: return Image("youtube")
         }
     }
     
@@ -33,9 +32,9 @@ enum CommunityContactType: CaseIterable {
         switch self {
         case .website: return area.tags.website
         case .twitter: return area.tags.twitter
-        case .telegram: return nil
+        case .telegram: return area.tags.telegram
         case .discord: return area.tags.discord
-        case .youtube: return nil
+        case .youtube: return area.tags.youtube
         }
     }
     
@@ -43,8 +42,7 @@ enum CommunityContactType: CaseIterable {
         guard let contact = contact(from: area) else { return nil }
         
         switch self {
-        case .website: return URL(string: contact)
-        case .twitter: return URL(string: contact)
+        case .website, .twitter, .telegram, .discord, .youtube: return URL(string: contact)
         default: return nil
         }
     }

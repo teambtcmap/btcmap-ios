@@ -44,24 +44,35 @@ struct CommunityDetailView: View {
                     
                     
                     // MARK: - Contact Buttons
-                    HStack {
-                        ForEach(communityDetailViewModel.contacts, id: \.self) { contact in
-                            ImageCircle(image: contact.displayIcon,
-                                        diameter: 45,
-                                        imageColor: .white,
-                                        backgroundColor: Color.BTCMap_DarkBeige)
-                            .padding(4)
-                            .onTapGesture {                           
-                                guard let url = contact.url(from: communityDetailViewModel.area) else { return }
-                                UIApplication.shared.open(url)
+                    VStack {
+                        HStack {
+                            ForEach(communityDetailViewModel.contacts, id: \.self) { contact in
+                                ImageCircle(image: contact.displayIcon,
+                                            diameter: 45,
+                                            imageColor: .white,
+                                            backgroundColor: Color.BTCMap_DarkBeige)
+                                .padding(4)
+                                .onTapGesture {
+                                    guard let url = contact.url(from: communityDetailViewModel.area) else { return }
+                                    UIApplication.shared.open(url)
+                                }
                             }
                         }
+                        .listRowSeparator(.hidden)
+                        .padding([.top, .bottom], 6)
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                     }
-                    .listRowSeparator(.hidden)
-                    .padding([.top, .bottom], 6)
-                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                    
+                    .frame(height: 45)
+
+
                     // MARK: - Elements
+                    if elements.isEmpty {
+                        Text("No Locations")
+                            .listRowSeparator(.hidden)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                            .padding([.top, .bottom], 6)
+                    }
+                    
                     ForEach(elements) { item in
                         NavigationLink(destination: CommunityElementView(communityDetailViewModel: communityDetailViewModel, element: item)) {
                             
@@ -91,7 +102,7 @@ struct CommunityDetailView: View {
                     }
                 }
                 .listStyle(.plain)
-                .frame( maxWidth: .infinity)
+                .frame(maxWidth: .infinity)
                 .edgesIgnoringSafeArea(.horizontal)
             }
         }

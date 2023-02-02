@@ -20,7 +20,12 @@ struct ImageCircle: View {
                 .fill(backgroundColor)
                 .frame(width: diameter, height: diameter)
             
-            image?.foregroundColor(imageColor)
+            image?
+                .renderingMode(.template)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(imageColor)
+                .frame(width: diameter * 0.5, height: diameter * 0.5, alignment: .center)
         }
     }
 }
