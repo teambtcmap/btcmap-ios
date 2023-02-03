@@ -21,5 +21,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>While BTCMap is active, we use your location to center the map and to location filter Communities and Elements.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>While BTCMap is active, we use your location to center the map and to location filter Communities and Elements.</string>
 </dict>
 </plist>
