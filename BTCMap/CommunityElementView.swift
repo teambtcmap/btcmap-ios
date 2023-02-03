@@ -14,7 +14,7 @@ struct CommunityElementView: View {
     var element: API.Element
     
     // TODO: Tap - Map on CommunityElement - Go to mapVC centered on annotation
-
+    
     var body: some View {
         let elementViewModel = ElementViewModel(element: element)
         GeometryReader { geometry in
@@ -24,13 +24,13 @@ struct CommunityElementView: View {
                     ZStack(alignment: .top) {
                         BoundedMapView(element: element,
                                        region: BoundedMapView.region(from: communityDetailViewModel.area.bounds ?? Bounds.zeroBounds))
-                            .frame(height: geometry.size.height * 0.3)
-                            .frame( maxWidth: .infinity)
-                            .onTapGesture {
-                                // hack to pop back to home. see note in AppState
-                                appState.homeViewId = UUID()
-                                appState.mapState.centerCoordinate = element.coord
-                            }
+                        .frame(height: geometry.size.height * 0.3)
+                        .frame( maxWidth: .infinity)
+                        .onTapGesture {
+                            // hack to pop back to home. see note in AppState
+                            appState.homeViewId = UUID()
+                            appState.mapState.centerCoordinate = element.coord
+                        }
                         
                         NavBarTitleSubtitle(title: element.osmJson.name, subtitle: "")
                     }
@@ -41,16 +41,23 @@ struct CommunityElementView: View {
                         .font(.title2)
                         .padding(.horizontal)
                         .listRowSeparator(.hidden)
-
+                    
                     // MARK: - Verified
-                    ElementVerifyView(elementViewModel: elementViewModel,
-                                      notVerifiedTextType: .long)
-                        .listRowSeparator(.hidden)
-
+                    HStack {
+                        ElementVerifyView(elementViewModel: elementViewModel,
+                                          notVerifiedTextType: .long)
+                    }
+                    .listRowSeparator(.hidden)
+                    .padding(.horizontal)
+                    
+                    
                     // MARK: - Details
-                    ElementTagsView(elementViewModel: elementViewModel)
-                        .listRowSeparator(.hidden)
-
+                    HStack {
+                        ElementTagsView(elementViewModel: elementViewModel)
+                    }
+                    .listRowSeparator(.hidden)
+                    .padding(.horizontal)
+                    
                 }
                 .listStyle(.plain)
                 .frame( maxWidth: .infinity)
