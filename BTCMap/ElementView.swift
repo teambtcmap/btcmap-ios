@@ -20,6 +20,8 @@ struct ElementView: View {
             HStack {
                 Text(elementViewModel.element.osmJson.name)
                     .font(.title)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.6)
                     .padding()
                 Spacer()
                 Button(action: {
