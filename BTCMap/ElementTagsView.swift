@@ -46,26 +46,24 @@ struct ElementTagsView: View {
                     }
                 }
             }
+            
+            // MARK: - Tags JSON Dump
+            if let tags = elementViewModel.prettyPrintTags {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Image(systemName: "list.bullet.circle.fill").renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
+                        Text("tags".localized)
+                            .fontWeight(.bold)
+                            .font(.subheadline)
+                    }
+                    Text(tags)
+                        .font(.system(size: 12))
+                }
+                .padding(.top, 60)
+            }
         }
         .padding(.top, 40)
         .padding(.horizontal)
-        
-        Spacer(minLength: 50)
-        
-        // MARK: - Tags JSON Dump
-        if let tags = elementViewModel.prettyPrintTags {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Image(systemName: "list.bullet.circle.fill").renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
-                    Text("tags".localized)
-                        .fontWeight(.bold)
-                        .font(.subheadline)
-                }
-                Text(tags)
-                    .font(.system(size: 12))
-            }
-            .padding(.horizontal)
-        }
     }
 }
 
