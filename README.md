@@ -58,12 +58,24 @@ Either:
 (1) Find the center of the bounding box and use that as a single coordinate for an annotation. - IMPLEMENTED
 (2) Draw the bounding box as a polyline. Both Android and web currently just do (1).
 
-
 ### ELEMENT DETAIL MODAL
 - [ ] Finish adding rows to match Android. For sure Instagram and Pouch, need to verify what else
 - [ ] Phone number parsing isn't working for all formats. Can mimic Android repo implementation
 - [ ] Hide tags initially. Tags button shows/hides.
 - [ ] Change "Verify" button to "Verify or Report" to match android
+
+### COMMUNITIES
+- [ ] Add missing social/contacts buttons. Per secondl1ght:
+    ```$: website = tags['contact:website'] && tags['contact:website'];
+    $: twitter = tags['contact:twitter'] && tags['contact:twitter'];
+    $: secondTwitter = tags['contact:second_twitter'] && tags['contact:second_twitter'];
+    $: meetup = tags['contact:meetup'] && tags['contact:meetup'];
+    $: eventbrite = tags['contact:eventbrite'] && tags['contact:eventbrite'];
+    $: telegram = tags['contact:telegram'] && tags['contact:telegram'];
+    $: discord = tags['contact:discord'] && tags['contact:discord'];
+    $: youtube = tags['contact:youtube'] && tags['contact:youtube'];
+    $: github = tags['contact:github'] && tags['contact:github'];
+    $: reddit = tags['contact:reddit'] && tags['contact:reddit'];```
 
 ### MAIN OPTIONS BUTTON
 - [ ] All of the options in the main options button are NOT implemented.
