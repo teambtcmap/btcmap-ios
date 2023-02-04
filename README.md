@@ -62,6 +62,8 @@ Either:
 ### ELEMENT DETAIL MODAL
 - [ ] Finish adding rows to match Android. For sure Instagram and Pouch, need to verify what else
 - [ ] Phone number parsing isn't working for all formats. Can mimic Android repo implementation
+- [ ] Hide tags initially. Tags button shows/hides.
+- [ ] Change "Verify" button to "Verify or Report" to match android
 
 ### MAIN OPTIONS BUTTON
 - [ ] All of the options in the main options button are NOT implemented.
