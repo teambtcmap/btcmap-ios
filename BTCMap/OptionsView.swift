@@ -21,10 +21,10 @@ struct OptionsView: View {
     var body: some View {
         HStack {
             // MARK: - Donate Button
-            NavigationLink(destination: DonateView(), isActive: $showingDonate) {
+            NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) {
                 Button(action: {
                     dismissElementView?()
-                    showingDonate = true
+                    showingCommunities = true
                 }) {
                     Image("btc_logo")
                         .foregroundColor(.white)
@@ -41,13 +41,18 @@ struct OptionsView: View {
             }
             .rotationEffect(.degrees(90))
             .confirmationDialog("Options", isPresented: $showingOptions, titleVisibility: .hidden) {
+                Button("communities".localized) {
+                    showingCommunities = true
+                }
+                
                 Button("add_place".localized) {
                     openURL(URL(string: "https://btcmap.org/add-location")!)
                 }
                 
-                Button("communities".localized) {
-                    showingCommunities = true
+                Button("donate".localized) {
+                    showingDonate = true
                 }
+         
                 
                 // TODO: Hide for now until implemented
 //                Button("trends".localized) {
@@ -75,7 +80,7 @@ struct OptionsView: View {
                 Button("OK", role: .cancel) { }
             }
             
-            NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) { }
+            NavigationLink(destination: DonateView(), isActive: $showingDonate) { }
         }
         .padding(14)
         .background(Color.black.opacity(0.7))
