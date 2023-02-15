@@ -238,9 +238,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.allowsBackgroundLocationUpdates = false
+
         mapView.register(MarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
         mapView.register(CountClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
         
@@ -251,17 +252,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         
         setupElements()
         setupMapStateObservers()
-        
-        locationManager.requestLocation()
-    }
-    
-    private var firstLoad = true
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if firstLoad {
-            locationManager.requestLocation()
-            firstLoad = !firstLoad
-        }
     }
     
     // MARK: - User Location Button
