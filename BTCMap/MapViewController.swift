@@ -11,6 +11,7 @@ import CoreLocation
 import SwiftUI
 import Combine
 import Cluster
+import os
 
 class ElementAnnotation: NSObject, MKAnnotation, Identifiable {
     let element: API.Element
@@ -29,7 +30,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     private var locationManager = CLLocationManager()
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] = [:]
-    
+    private let logger = Logger(subsystem: "org.btcmap.app", category: "Map")
+
     private var cancellables = Set<AnyCancellable>()
     
     private func setupMapStateObservers() {
@@ -86,9 +88,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             }
             
             DispatchQueue.main.async {
+                self.logger.log("elementsChanged - adding: \(annotationsToAdd.count) - removing: \(annotationsToRemove.count)")
                 self.elementAnnotations = annotations
-                self.addAnnotations(annotationsToAdd)
-                self.removeAnnotations(annotationsToRemove)
+                self.removeThenAddAnnotations(remove: annotationsToRemove, add: annotationsToAdd)
             }
         }
     }
@@ -101,6 +103,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     private func removeAnnotations(_ annotations: [MKAnnotation]) {
         manager.remove(annotations)
+        manager.reload(mapView: mapView)
+    }
+    
+    private func removeThenAddAnnotations(remove: [MKAnnotation]?, add: [MKAnnotation]?) {
+        if let remove = remove { manager.remove(remove) }
+        if let add = add { manager.add(add) }
+        self.logger.log("removeThenAddAnnotations - remove: \(remove != nil ? remove!.count : 0) - then add: \(add != nil ? add!.count : 0) ")
         manager.reload(mapView: mapView)
     }
     
