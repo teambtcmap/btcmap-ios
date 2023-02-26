@@ -32,6 +32,11 @@ struct ElementTagsView: View {
                                 return URL(string: "\(detail.value)")
                             case .email:
                                 return URL(string: "mailto:\(detail.value)")
+                            case .address:
+                                //TODO let the user choose which map app to open https://stackoverflow.com/questions/38250397/open-an-alert-asking-to-choose-app-to-open-map-with
+                                var mapUrl = "http://maps.apple.com/?q=\(detail.value)"
+                                let urlEncoded:String = mapUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                                return URL(string: urlEncoded)
                             default: return nil
                             }
                         }()
