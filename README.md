@@ -44,48 +44,5 @@ currency:BTC
 payment:bitcoin
 ```
 
-## TODO
-
-## SETUP LOCAL DB
-- [ ] Setup local db so caching/querying locally is more efficient
-
-## MAP PERFORMANCE
-- [X] - DONE - Biggest issue right now is we have a very naive implementation of the map annotations. We are adding all of them on viewDidLoad of MapVC. This becomes a problem as user zooms out to world view, as MapKit is surprisingly bad with their clustering logic and UI pauses for a bit. Biggest win might be using this 3rd party clustering framework: https://github.com/efremidze/Cluster
-
-## ELEMENT
-- [X] - DONE - If "type": "way", then the Element json returns a bounding box instead of a single coordinate.
-Either:
-(1) Find the center of the bounding box and use that as a single coordinate for an annotation. - IMPLEMENTED
-(2) Draw the bounding box as a polyline. Both Android and web currently just do (1).
-
-### ELEMENT DETAIL MODAL
-- [ ] Finish adding rows to match Android. For sure Instagram and Pouch, need to verify what else
-- [ ] Phone number parsing isn't working for all formats. Can mimic Android repo implementation
-- [ ] Hide tags initially. Tags button shows/hides.
-- [ ] Change "Verify" button to "Verify or Report" to match android
-
-### COMMUNITIES
-- [ ] Add missing social/contacts buttons. Per secondl1ght:
-    ```$: website = tags['contact:website'] && tags['contact:website'];
-    $: twitter = tags['contact:twitter'] && tags['contact:twitter'];
-    $: secondTwitter = tags['contact:second_twitter'] && tags['contact:second_twitter'];
-    $: meetup = tags['contact:meetup'] && tags['contact:meetup'];
-    $: eventbrite = tags['contact:eventbrite'] && tags['contact:eventbrite'];
-    $: telegram = tags['contact:telegram'] && tags['contact:telegram'];
-    $: discord = tags['contact:discord'] && tags['contact:discord'];
-    $: youtube = tags['contact:youtube'] && tags['contact:youtube'];
-    $: github = tags['contact:github'] && tags['contact:github'];
-    $: reddit = tags['contact:reddit'] && tags['contact:reddit'];```
-
-### MAIN OPTIONS BUTTON
-- [ ] All of the options in the main options button are NOT implemented.
-
-### REFACTOR
-- [ ] Initial startup logic (initial loading of Elements) could use a refactor. Local vs Remote persistence is a bit mixed up
-
-### TESTS
-- [ ] There are currently no tests. Start with API mocks
-
 ---
-
 ![Untitled](https://user-images.githubusercontent.com/85003930/194117128-2f96bafd-2379-407a-a584-6c03396a42cc.png)
