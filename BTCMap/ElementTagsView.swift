@@ -26,8 +26,8 @@ struct ElementTagsView: View {
                         let url: URL? = {
                             switch detail.type {
                             case .phone:
-                                // TODO: phone url not resolving with some formats
-                                return URL(string: "tel:\(detail.value)")
+                                let phone:String = detail.value.replacingOccurrences(of: " ", with: "", options: .regularExpression)
+                                return URL(string: "tel://\(phone)")
                             case .website:
                                 return URL(string: "\(detail.value)")
                             case .email:
