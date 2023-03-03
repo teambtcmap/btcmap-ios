@@ -17,6 +17,10 @@ struct RoundedPillButton: ButtonStyle {
         configuration.label
             .padding(padding)
             .foregroundColor(foregroundColor)
-            .background(RoundedRectangle(cornerRadius: radius, style: .continuous).fill(backgroundColor))
+            .background(RoundedRectangle(cornerRadius: radius, style: .continuous).fill(backgroundColor(configuration: configuration)))
+    }
+    
+    private func backgroundColor(configuration: Configuration) -> Color {
+        return configuration.isPressed ? backgroundColor.opacity(0.5) : backgroundColor
     }
 }
