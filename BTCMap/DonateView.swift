@@ -11,8 +11,8 @@ import UniformTypeIdentifiers
 struct DonateView: View {
     @Environment(\.openURL) var openURL
     
-    let btc = "bc1qyyr7g9tew6sfa57mv2r6rvgj2ucakcmqnqzqjj"
-    let ln = "LNURL1DP68GURN8GHJ7ERZXVUXVER9X4SNYTNY9EMX7MR5V9NK2CTSWQHXJME0D3H82UNVWQHKZURF9AMRZTMVDE6HYMP0XYA8GEF9"
+    let btc = "bc1qqmy5c03clt6a72aq0ys5jzm2sjnws3qr05nvmz"
+    let ln = "LNURL1DP68GURN8GHJ7MT9WF3KSCTWW3EJUCN5VDKKZUPWDAEXWTMVDE6HYMRS9ARKXVN4W5EQCJQMEY"
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -20,7 +20,7 @@ struct DonateView: View {
                 Text("donate_headline".localized)
                     .font(.title2)
                 
-                Image("btc_address")
+                Image("onchain-qr")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 240, height: 240)
@@ -45,7 +45,7 @@ struct DonateView: View {
                 .padding(.top, 10)
                 .padding(.bottom, 10)
                 
-                Image("lnurl")
+                Image("lightning-qr")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 240, height: 240)
