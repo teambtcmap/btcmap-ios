@@ -39,8 +39,7 @@ enum CommunityContactType: CaseIterable {
     }
     
     func url(from area: API.Area) -> URL? {
-        guard let contact = contact(from: area) else { return nil }
-        
+        guard let contact = contact(from: area)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
         switch self {
         case .website, .twitter, .telegram, .discord, .youtube: return URL(string: contact)
         default: return nil
