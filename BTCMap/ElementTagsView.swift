@@ -37,6 +37,15 @@ struct ElementTagsView: View {
                                 var mapUrl = "http://maps.apple.com/?q=\(detail.value)"
                                 let urlEncoded:String = mapUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                                 return URL(string: urlEncoded)
+                            case .facebook:
+                                print(detail.value)
+                                return URL(string: "https://www.facebook.com/\(detail.value)")
+                            case .instagram:
+                                print(detail.value)
+                                return URL(string: "https://www.instagram.com/\(detail.value)")
+                            case .twitter:
+                                print(detail.value)
+                                return URL(string: "https://twitter.com/\(detail.value)")
                             default: return nil
                             }
                         }()
