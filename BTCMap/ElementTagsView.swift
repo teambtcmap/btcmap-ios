@@ -32,20 +32,21 @@ struct ElementTagsView: View {
                                 return URL(string: "\(detail.value)")
                             case .email:
                                 return URL(string: "mailto:\(detail.value)")
-                            case .address:
-                                //TODO let the user choose which map app to open https://stackoverflow.com/questions/38250397/open-an-alert-asking-to-choose-app-to-open-map-with
-                                var mapUrl = "http://maps.apple.com/?q=\(detail.value)"
-                                let urlEncoded:String = mapUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-                                return URL(string: urlEncoded)
+                            //The case .address: is handled in the next if block
                             default: return nil
                             }
                         }()
                         
                         if let url = url {
                             Button(action: {
-                                UIApplication.shared.open(url)
+                                if(detail.type == .address){
+                                    openMapButtonAction(address: detail.value)
+                                }
+                                else {
+                                    openURL(url)
+                                }
                             }) {
-                                Link("\(detail.title)", destination: url)
+                                Text(detail.title)
                                     .foregroundColor(Color.BTCMap_DarkBeige)
                                     .font(.system(size: 18, weight: .black))
                             }
@@ -86,6 +87,50 @@ struct ElementTagsView: View {
             }
         }
     }
+    
+    func openMapButtonAction(address: String) {
+        let appleURL = "http://maps.apple.com/?q=\(address)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let googleURL = "comgooglemaps://?q=\(address)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let wazeURL = "waze://ul?q=\(address)&navigate=false".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+
+        let googleItem = ("Google Maps", URL(string:googleURL)!)
+        let wazeItem = ("Waze", URL(string:wazeURL)!)
+        var installedNavigationApps = [("Apple Maps", URL(string:appleURL)!)]
+
+        if UIApplication.shared.canOpenURL(googleItem.1) {
+            installedNavigationApps.append(googleItem)
+        }
+
+        if UIApplication.shared.canOpenURL(wazeItem.1) {
+            installedNavigationApps.append(wazeItem)
+        }
+
+        guard installedNavigationApps.count > 1 else {
+            if let (_, url) = installedNavigationApps.first {
+                openURL(url)
+            }
+            return
+        }
+        
+        let alert = UIAlertController(title: "select_navigation_app".localized, message:nil , preferredStyle: .actionSheet)
+        for app in installedNavigationApps {
+            let button = UIAlertAction(title: app.0, style: .default, handler: { _ in
+                print(app.1)
+                openURL(app.1)
+            })
+            alert.addAction(button)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        if var topController = UIApplication.shared.keyWindow?.rootViewController  {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            topController.present(alert, animated: true, completion: nil)
+        }
+    }
+
 }
 
 //struct ElementTagsView_Previews: PreviewProvider {
