@@ -58,6 +58,7 @@ struct ElementTagsView: View {
             }
             
             // MARK: - Tags Dump
+            // TODO: use the isShowTagsOn preference
             if let tags = elementViewModel.element.osmJson.tags {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
