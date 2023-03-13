@@ -164,7 +164,6 @@ struct ElementViewModel {
         if let email = element.osmJson.tags?["contact:email"] {
             details.append((ElementDetailType.email, email, email))
         }
-        //TODO add pouch
         if let openingHours = element.osmJson.tags?["opening_hours"] {
             details.append((ElementDetailType.openingHours, openingHours, openingHours))
         }
