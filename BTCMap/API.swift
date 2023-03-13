@@ -159,9 +159,14 @@ class API {
             let boxWest: Double?
             let discord: String?
             let twitter: String?
+            let secondTwitter: String?
+            let meetup: String?
+            let eventbrite: String?
             let telegram: String?
             let website: String?
             let youtube: String?
+            let github: String?
+            let reddit: String?
             let iconSquare: String?
             let name: String?
             let type: String?
@@ -173,9 +178,14 @@ class API {
                 case boxWest = "box:west"
                 case discord = "contact:discord"
                 case twitter = "contact:twitter"
+                case secondTwitter = "contact:second_twitter"
+                case meetup = "contact:meetup"
+                case eventbrite = "contact:eventbrite"
                 case telegram = "contact:telegram"
                 case website = "contact:website"
                 case youtube = "contact:youtube"
+                case github = "contact:github"
+                case reddit = "contact:reddit"
                 case iconSquare = "icon:square"
                 case name
                 case type
@@ -190,9 +200,14 @@ class API {
                 boxWest = try? (try? container.decode(Double.self, forKey: .boxWest)) ?? Double(try container.decode(String.self, forKey: .boxWest))
                 discord = try container.decodeIfPresent(String.self, forKey: .discord)
                 twitter = try container.decodeIfPresent(String.self, forKey: .twitter)
+                meetup = try container.decodeIfPresent(String.self, forKey: .meetup)
+                eventbrite = try container.decodeIfPresent(String.self, forKey: .eventbrite)
+                secondTwitter = try container.decodeIfPresent(String.self, forKey: .secondTwitter)
                 telegram = try container.decodeIfPresent(String.self, forKey: .telegram)
                 website = try container.decodeIfPresent(String.self, forKey: .website)
                 youtube = try container.decodeIfPresent(String.self, forKey: .youtube)
+                github = try container.decodeIfPresent(String.self, forKey: .github)
+                reddit = try container.decodeIfPresent(String.self, forKey: .reddit)
                 iconSquare = try container.decodeIfPresent(String.self, forKey: .iconSquare)
                 name = try container.decodeIfPresent(String.self, forKey: .name)
                 type = try container.decodeIfPresent(String.self, forKey: .type)
