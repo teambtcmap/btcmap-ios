@@ -27,7 +27,7 @@ struct OptionsView: View {
                     dismissElementView?()
                     showingCommunities = true
                 }) {
-                    Image("btc_logo")
+                    Image("filter")
                         .foregroundColor(.white)
                 }
             }
