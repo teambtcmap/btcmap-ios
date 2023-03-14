@@ -2,7 +2,7 @@
 //  SettingsView.swift
 //  BTCMap
 //
-//  Created by LorenzoPrimi on 13/03/23.
+//  Created by Lorenzo Primiterra on 13/03/23.
 //
 
 import SwiftUI

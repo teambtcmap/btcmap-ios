@@ -58,32 +58,34 @@ struct ElementTagsView: View {
             }
             
             // MARK: - Tags Dump
-            // TODO: use the isShowTagsOn preference
-            if let tags = elementViewModel.element.osmJson.tags {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        Image(systemName: "list.bullet.circle.fill").renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
-                        Text("tags".localized)
-                            .fontWeight(.bold)
-                            .font(.subheadline)
-                    }
-                    ForEach(Array(tags.keys), id: \.self) { key in
+            let isShowTagsOn = UserDefaults.standard.bool(forKey: "isShowTagsOn")
+            if(isShowTagsOn){
+                if let tags = elementViewModel.element.osmJson.tags {
+                    VStack(alignment: .leading, spacing: 10) {
                         HStack {
-                            if let value = tags[key]{
-                                Text("\(key)")
-                                    .fontWeight(.bold)
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.gray)
-                                Text(value)
-                                    .font(.system(size: 12))
-                                    .foregroundColor(Color.BTCMap_LightTeal)
-                            }                          
+                            Image(systemName: "list.bullet.circle.fill").renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
+                            Text("tags".localized)
+                                .fontWeight(.bold)
+                                .font(.subheadline)
                         }
-                      
-                    }
+                        ForEach(Array(tags.keys), id: \.self) { key in
+                            HStack {
+                                if let value = tags[key]{
+                                    Text("\(key)")
+                                        .fontWeight(.bold)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.gray)
+                                    Text(value)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(Color.BTCMap_LightTeal)
+                                }
+                            }
+                          
+                        }
 
+                    }
+                    .padding(.top, 30)
                 }
-                .padding(.top, 30)
             }
         }
     }
