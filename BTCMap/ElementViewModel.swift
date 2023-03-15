@@ -16,6 +16,7 @@ enum ElementDetailType {
     case email
     case facebook
     case twitter
+    case instagram
     case openingHours
     
     var displayTitle: String {
@@ -26,6 +27,7 @@ enum ElementDetailType {
         case .email: return "email".localized.capitalized
         case .facebook: return "facebook".localized.capitalized
         case .twitter: return "twitter".localized.capitalized
+        case .instagram: return "instagram".localized.capitalized
         case .openingHours: return "opening_hours".localized.capitalized
         }
     }
@@ -38,6 +40,7 @@ enum ElementDetailType {
         case .email: return "envelope.fill"
         case .facebook: return nil
         case .twitter: return nil
+        case .instagram: return nil
         case .openingHours: return "clock.fill"
         }
     }
@@ -46,6 +49,7 @@ enum ElementDetailType {
         switch self {
         case .facebook: return "facebook"
         case .twitter: return "twitter"
+        case .instagram: return "instagram"
         default: return nil
         }
     }
@@ -149,8 +153,19 @@ struct ElementViewModel {
                 .trimmingCharacters(in: ["@"])
             details.append((ElementDetailType.twitter, twitter, twitter))
         }
-        if let facebook = element.osmJson.tags?["contact:facebook"] {
+        if var facebook = element.osmJson.tags?["contact:facebook"] {
+            facebook = facebook
+                .replacingOccurrences(of: "https://www.facebook.com/", with: "")
             details.append((ElementDetailType.facebook, facebook, facebook))
+        }
+        if var instagram = element.osmJson.tags?["contact:instagram"] {
+            instagram = instagram
+                .replacingOccurrences(of: "https://www.instagram.com/", with: "")
+                .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+            details.append((ElementDetailType.instagram, instagram, instagram))
+        }
+        if let email = element.osmJson.tags?["contact:email"] {
+            details.append((ElementDetailType.email, email, email))
         }
         if let openingHours = element.osmJson.tags?["opening_hours"] {
             details.append((ElementDetailType.openingHours, openingHours, openingHours))
