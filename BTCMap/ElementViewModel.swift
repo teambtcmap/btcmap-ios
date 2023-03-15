@@ -158,7 +158,10 @@ struct ElementViewModel {
                 .replacingOccurrences(of: "https://www.facebook.com/", with: "")
             details.append((ElementDetailType.facebook, facebook, facebook))
         }
-        if let instagram = element.osmJson.tags?["contact:instagram"] {
+        if var instagram = element.osmJson.tags?["contact:instagram"] {
+            instagram = instagram
+                .replacingOccurrences(of: "https://www.instagram.com/", with: "")
+                .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
             details.append((ElementDetailType.instagram, instagram, instagram))
         }
         if let email = element.osmJson.tags?["contact:email"] {
