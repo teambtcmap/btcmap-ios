@@ -36,15 +36,18 @@ struct ElementTagsView: View {
                             default: return nil
                             }
                         }()
-                        
-                        if let url = url {
+
+                        if detail.type == .address {
                             Button(action: {
-                                if(detail.type == .address){
-                                    openMapButtonAction(address: detail.value)
-                                }
-                                else {
-                                    openURL(url)
-                                }
+                                openMapButtonAction(address: detail.value)
+                            }) {
+                                Text(detail.title)
+                                    .foregroundColor(Color.BTCMap_DarkBeige)
+                                    .font(.system(size: 18, weight: .black))
+                            }
+                        } else if let url = url {
+                            Button(action: {
+                                openURL(url)
                             }) {
                                 Text(detail.title)
                                     .foregroundColor(Color.BTCMap_DarkBeige)
