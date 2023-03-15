@@ -46,15 +46,24 @@ struct ElementTagsView: View {
                             case .twitter:
                                 print(detail.value)
                                 return URL(string: "https://twitter.com/\(detail.value)")
+                            //The case .address: is handled in the next if block
                             default: return nil
                             }
                         }()
-                        
-                        if let url = url {
+
+                        if detail.type == .address {
                             Button(action: {
-                                UIApplication.shared.open(url)
+                                openMapButtonAction(address: detail.value)
                             }) {
-                                Link("\(detail.title)", destination: url)
+                                Text(detail.title)
+                                    .foregroundColor(Color.BTCMap_DarkBeige)
+                                    .font(.system(size: 18, weight: .black))
+                            }
+                        } else if let url = url {
+                            Button(action: {
+                                openURL(url)
+                            }) {
+                                Text(detail.title)
                                     .foregroundColor(Color.BTCMap_DarkBeige)
                                     .font(.system(size: 18, weight: .black))
                             }
@@ -67,34 +76,81 @@ struct ElementTagsView: View {
             }
             
             // MARK: - Tags Dump
-            if let tags = elementViewModel.element.osmJson.tags {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        Image(systemName: "list.bullet.circle.fill").renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
-                        Text("tags".localized)
-                            .fontWeight(.bold)
-                            .font(.subheadline)
-                    }
-                    ForEach(Array(tags.keys), id: \.self) { key in
+            let isShowTagsOn = UserDefaults.standard.bool(forKey: "isShowTagsOn")
+            if(isShowTagsOn){
+                if let tags = elementViewModel.element.osmJson.tags {
+                    VStack(alignment: .leading, spacing: 10) {
                         HStack {
-                            if let value = tags[key]{
-                                Text("\(key)")
-                                    .fontWeight(.bold)
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.gray)
-                                Text(value)
-                                    .font(.system(size: 12))
-                                    .foregroundColor(Color.BTCMap_LightTeal)
-                            }                          
+                            Image(systemName: "list.bullet.circle.fill").renderingMode(.template).colorMultiply(.BTCMap_LightBeige)
+                            Text("tags".localized)
+                                .fontWeight(.bold)
+                                .font(.subheadline)
                         }
-                      
-                    }
+                        ForEach(Array(tags.keys), id: \.self) { key in
+                            HStack {
+                                if let value = tags[key]{
+                                    Text("\(key)")
+                                        .fontWeight(.bold)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.gray)
+                                    Text(value)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(Color.BTCMap_LightTeal)
+                                }
+                            }
+                          
+                        }
 
+                    }
+                    .padding(.top, 30)
                 }
-                .padding(.top, 30)
             }
         }
     }
+    
+    func openMapButtonAction(address: String) {
+        let appleURL = "http://maps.apple.com/?q=\(address)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let googleURL = "comgooglemaps://?q=\(address)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let wazeURL = "waze://ul?q=\(address)&navigate=false".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+
+        let googleItem = ("Google Maps", URL(string:googleURL)!)
+        let wazeItem = ("Waze", URL(string:wazeURL)!)
+        var installedNavigationApps = [("Apple Maps", URL(string:appleURL)!)]
+
+        if UIApplication.shared.canOpenURL(googleItem.1) {
+            installedNavigationApps.append(googleItem)
+        }
+
+        if UIApplication.shared.canOpenURL(wazeItem.1) {
+            installedNavigationApps.append(wazeItem)
+        }
+
+        guard installedNavigationApps.count > 1 else {
+            if let (_, url) = installedNavigationApps.first {
+                openURL(url)
+            }
+            return
+        }
+        
+        let alert = UIAlertController(title: "select_navigation_app".localized, message:nil , preferredStyle: .actionSheet)
+        for app in installedNavigationApps {
+            let button = UIAlertAction(title: app.0, style: .default, handler: { _ in
+                print(app.1)
+                openURL(app.1)
+            })
+            alert.addAction(button)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        if var topController = UIApplication.shared.keyWindow?.rootViewController  {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            topController.present(alert, animated: true, completion: nil)
+        }
+    }
+
 }
 
 //struct ElementTagsView_Previews: PreviewProvider {

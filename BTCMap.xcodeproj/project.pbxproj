@@ -61,6 +61,7 @@
 		B1C35DF0297C0E8C00D59008 /* BoundedMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */; };
 		B1C35DF2297C1A5000D59008 /* ElementVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */; };
 		B1C35DF4297C1AAB00D59008 /* ElementTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */; };
+		ED3AEF7729BF5E70003A63FF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3AEF7629BF5E70003A63FF /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -119,6 +120,7 @@
 		B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedMap.swift; sourceTree = "<group>"; };
 		B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementVerifyView.swift; sourceTree = "<group>"; };
 		B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTagsView.swift; sourceTree = "<group>"; };
+		ED3AEF7629BF5E70003A63FF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 				B1CE7E5E29772FCD0099AC1C /* Communities */,
 				B17F30A62957CB4300926E4F /* DonateView.swift */,
 				B17F30A42957CA2000926E4F /* OptionsView.swift */,
+				ED3AEF7629BF5E70003A63FF /* SettingsView.swift */,
 				AD7E331C28E8D275004B1DFE /* Common */,
 				AD6914E628E3813B00D9F34E /* Map */,
 				AD96B92A28E4B28600B558D4 /* Element */,
@@ -469,6 +472,7 @@
 				B1459B5F2979FCC6006D376B /* AreasRepository.swift in Sources */,
 				B1C35DE4297ADF6C00D59008 /* CommunityDetailViewModel.swift in Sources */,
 				B1C35DE2297ADDEC00D59008 /* LocationManager.swift in Sources */,
+				ED3AEF7729BF5E70003A63FF /* SettingsView.swift in Sources */,
 				B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */,
 				B1C35DE8297B2EFF00D59008 /* NavBarTitleSubtitle.swift in Sources */,
 				B1AFEEAF295742FB007C2D0A /* ElementViewModel.swift in Sources */,

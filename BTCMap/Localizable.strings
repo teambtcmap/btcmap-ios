@@ -23,6 +23,7 @@
 "facebook" = "Facebook";
 "twitter" = "Twitter";
 "opening_hours" = "Opening Hours";
+"select_navigation_app" = "Select Navigation App";
 
 // COMMUNITIES VIEW
 "km" = "km";
@@ -37,6 +38,10 @@
 "top_supertaggers" = "Top supertaggers";
 "latest_changes" = "Latest changes";
 "settings" = "Settings";
+"connect_osm_account" = "Connect OSM account";
+"themed_pins" = "Themed pins";
+"dark_map" = "Dark map";
+"show_tags" = "Show tags";
 
 // DONATE
 "donate" = "Donate";
