@@ -15,6 +15,7 @@ struct OptionsView: View {
     @State private var showingSettings = false
     @State private var showingCommunities = false
     @State private var showingDonate = false
+    @State private var showingFilter = false
     @State private var showingNotImplementedAlert = false
     
     var dismissElementView: (() -> Void)?
@@ -25,13 +26,23 @@ struct OptionsView: View {
             NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) {
                 Button(action: {
                     dismissElementView?()
-                    showingCommunities = true
+                    showingFilter = true
                 }) {
                     Image("filter")
                         .foregroundColor(.white)
                 }
             }
             
+            NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) {
+                Button(action: {
+                    dismissElementView?()
+                    showingCommunities = true
+                }) {
+                    Image("btc_logo")
+                        .foregroundColor(.white)
+                }
+            }
+
             // MARK: - Options Button
             Button(action: {
                 dismissElementView?()
@@ -82,14 +93,14 @@ struct OptionsView: View {
             
             NavigationLink(destination: DonateView(), isActive: $showingDonate) { }
             NavigationLink(destination: SettingsView(), isActive: $showingSettings) { }
+            NavigationLink(destination: FilterView(), isActive: $showingFilter) { }
         }
         .background(Color.clear)
     }
 }
 
-
-//struct OptionsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OptionsView()
-//    }
-//}
+struct OptionsView_Previews: PreviewProvider {
+    static var previews: some View {
+        OptionsView()
+    }
+}
