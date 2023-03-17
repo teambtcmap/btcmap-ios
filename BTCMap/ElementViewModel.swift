@@ -63,6 +63,14 @@ struct ElementViewModel {
     let element: API.Element
     
     // MARK: - Links
+    var hasPouchLink: Bool { element.tags?["payment:pouch"] != nil }
+    var payLink: URL? {
+        guard let pouch = element.tags?["payment:pouch"],
+              let url = "https://app.pouch.ph/\(pouch)".urlEncoded() else { return nil }
+        
+        return URL(string: url)
+    }
+
     var verifyLink: URL? {
         guard let name = element.osmJson.tags?["name"],
               let lat = element.osmJson.lat,
