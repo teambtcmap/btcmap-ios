@@ -66,6 +66,7 @@
 		B1C35DF0297C0E8C00D59008 /* BoundedMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */; };
 		B1C35DF2297C1A5000D59008 /* ElementVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */; };
 		B1C35DF4297C1AAB00D59008 /* ElementTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */; };
+		ED08162B29C2AD630050EDAE /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED08162A29C2AD630050EDAE /* FilterView.swift */; };
 		ED3AEF7729BF5E70003A63FF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3AEF7629BF5E70003A63FF /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +130,7 @@
 		B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedMap.swift; sourceTree = "<group>"; };
 		B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementVerifyView.swift; sourceTree = "<group>"; };
 		B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTagsView.swift; sourceTree = "<group>"; };
+		ED08162A29C2AD630050EDAE /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		ED3AEF7629BF5E70003A63FF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -225,6 +227,7 @@
 				B17F30A62957CB4300926E4F /* DonateView.swift */,
 				B17F30A42957CA2000926E4F /* OptionsView.swift */,
 				ED3AEF7629BF5E70003A63FF /* SettingsView.swift */,
+				ED08162A29C2AD630050EDAE /* FilterView.swift */,
 				AD7E331C28E8D275004B1DFE /* Common */,
 				AD6914E628E3813B00D9F34E /* Map */,
 				AD96B92A28E4B28600B558D4 /* Element */,
@@ -516,6 +519,7 @@
 				B1AFEEAD29573F93007C2D0A /* MapViewControllerWrapper.swift in Sources */,
 				B17F30BA2963061900926E4F /* ElementSystemImages.swift in Sources */,
 				B1C35DEA297B30E000D59008 /* Bounds.swift in Sources */,
+				ED08162B29C2AD630050EDAE /* FilterView.swift in Sources */,
 				B17F30BF296319B700926E4F /* MarkerAnnotationView.swift in Sources */,
 				AD96B93228E4BB7100B558D4 /* API.swift in Sources */,
 				B1C35DEC297B60E900D59008 /* ImageCircle.swift in Sources */,
