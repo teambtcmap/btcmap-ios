@@ -8,6 +8,7 @@
 import Foundation
 import os
 import CoreLocation
+import GEOSwift
 
 // API Documentation: https://github.com/teambtcmap/btcmap-api/wiki
 class API {
@@ -120,7 +121,7 @@ class API {
             
             if osmJson.type == .node {
                 guard let _lat = osmJson.lat,
-                    let _lon = osmJson.lon else { return nil }
+                      let _lon = osmJson.lon else { return nil }
                 lat = _lat
                 lon = _lon
             } else {
@@ -157,6 +158,7 @@ class API {
             let boxNorth: Double?
             let boxSouth: Double?
             let boxWest: Double?
+            let geoJson: GeoJson?
             let discord: String?
             let twitter: String?
             let telegram: String?
@@ -171,14 +173,14 @@ class API {
                 case boxNorth = "box:north"
                 case boxSouth = "box:south"
                 case boxWest = "box:west"
+                case geoJson
                 case discord = "contact:discord"
                 case twitter = "contact:twitter"
                 case telegram = "contact:telegram"
                 case website = "contact:website"
                 case youtube = "contact:youtube"
                 case iconSquare = "icon:square"
-                case name
-                case type
+                case name, type
             }
             
             init(from decoder: Decoder) throws {
@@ -196,6 +198,86 @@ class API {
                 iconSquare = try container.decodeIfPresent(String.self, forKey: .iconSquare)
                 name = try container.decodeIfPresent(String.self, forKey: .name)
                 type = try container.decodeIfPresent(String.self, forKey: .type)
+                geoJson = try container.decodeIfPresent(GeoJson.self, forKey: .geoJson)
+            }
+            
+            // MARK: GeoJson
+            struct GeoJson: Codable {
+                let type: String
+                let coordinates: [[CLLocationCoordinate2D]]?
+                let features: [Feature]?
+                
+                enum CodingKeys: String, CodingKey {
+                    case type, coordinates, features
+                }
+                
+                init(from decoder: Decoder) throws {
+                    let values = try decoder.container(keyedBy: CodingKeys.self)
+                    type = try values.decode(String.self, forKey: .type)
+                    features = try values.decodeIfPresent([Feature].self, forKey: .features)
+                    guard let rawCoordinates = try? values.decode([[[Double]]].self, forKey: .coordinates) else { coordinates = nil; return }
+                    coordinates = rawCoordinates.map {
+                        $0.map {
+                            CLLocationCoordinate2D(latitude: $0[1], longitude: $0[0])
+                        }
+                    }
+                }
+                
+                func encode(to encoder: Encoder) throws {
+                    var container = encoder.container(keyedBy: CodingKeys.self)
+                    try container.encode(type, forKey: .type)
+                }
+                
+                struct Feature: Decodable {
+                    let type: String
+                    let geometry: Geometry
+                    let properties: Properties?
+
+                    struct Properties: Codable, Hashable {
+                        let osmId: Int?
+                        let boundary: String?
+                        let adminLevel: Int?
+                        let parents: [String]?
+                        let name: String?
+                        let localName: String?
+                        let nameEn: String?
+                    }
+                    
+                    enum Geometry: Decodable {
+                        case polygon(Polygon)
+                        case multiPolygon(MultiPolygon)
+                        
+                        enum CodingKeys: String, CodingKey {
+                            case type
+                            case coordinates
+                        }
+                        
+                        init(from decoder: Decoder) throws {
+                            let values = try decoder.container(keyedBy: CodingKeys.self)
+                            let type = try values.decode(String.self, forKey: .type)
+                            switch type {
+                            case "Polygon":
+                                /// WARNING: The coords in `feature` come back as `[[Double]]`, but with longitude first. So they get decoded into `CLLocationCoordinate2D` incorreclty. Here we just manually switch them.
+                                let coordinates = try values.decode([[CLLocationCoordinate2D]].self, forKey: .coordinates)
+                                let exteriorRing = try Polygon.LinearRing(points: coordinates[0].map { Point(x: $0.longitude, y: $0.latitude )} )
+                                let interiorRings = try coordinates[1...].map { try Polygon.LinearRing(points: $0.map { Point(x: $0.longitude, y: $0.latitude )}) }
+                                let polygon = Polygon(exterior: exteriorRing, holes: interiorRings)
+                                self = .polygon(polygon)
+                            case "MultiPolygon":
+                                let coordinates = try values.decode([[[CLLocationCoordinate2D]]].self, forKey: .coordinates)
+                                let polygons = try coordinates.map { coords in
+                                    let exteriorRing = try Polygon.LinearRing(points: coords[0].map { Point(x: $0.longitude, y: $0.latitude )} )
+                                    let interiorRings = try coords[1...].map { try Polygon.LinearRing(points: $0.map { Point(x: $0.longitude, y: $0.latitude )}) }
+                                    return Polygon(exterior: exteriorRing, holes: interiorRings)
+                                }
+                                let multiPolygon = MultiPolygon(polygons: polygons)
+                                self = .multiPolygon(multiPolygon)
+                            default:
+                                throw DecodingError.dataCorruptedError(forKey: .type, in: values, debugDescription: "Unsupported type")
+                            }
+                        }
+                    }
+                }
             }
         }
         
@@ -210,13 +292,67 @@ class API {
                           minlat: min(boxSouth, boxNorth),
                           minlon: min(boxEast, boxWest))
         }
-
-        // MARK: Coords
-        var coord: CLLocationCoordinate2D? {
-            guard let e = tags.boxEast, let w = tags.boxWest, let s = tags.boxSouth, let n = tags.boxNorth else { return nil }
-            let lat = (s + n) / 2.0
-            let lon = (e + w) / 2.0
-            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        
+        // MARK: Polygons
+        var polygons: [Polygon]? {
+            guard let geoJson = tags.geoJson else { return nil }
+            
+            var result: [Polygon] = []
+            switch geoJson.type {
+            case "FeatureCollection":
+                guard let features = geoJson.features else { break }
+                for feature in features {
+                    switch feature.geometry {
+                    case .polygon(let polygon):
+                        result.append(polygon)
+                    case .multiPolygon(let multiPolygon):
+                        result.append(contentsOf: multiPolygon.polygons)
+                    }
+                }
+            case "MultiPolygon":
+                guard let coords = geoJson.coordinates?.first else { break }
+                let exteriorRing = try? Polygon.LinearRing(points: coords.map { Point(x: $0.latitude, y: $0.longitude )} )
+                guard let exterior = exteriorRing else { break }
+                
+                let interiorRings = try? geoJson.coordinates?.dropFirst().map { try Polygon.LinearRing(points: $0.map { Point(x: $0.latitude, y: $0.longitude) }) }
+                let polygon = Polygon(exterior: exterior, holes: interiorRings ?? [])
+                result.append(polygon)
+            case "Polygon":
+                guard let coords = geoJson.coordinates?.first else { break }
+                let exteriorRing = try? Polygon.LinearRing(points: coords.map { Point(x: $0.latitude, y: $0.longitude )} )
+                guard let exterior = exteriorRing else { break }
+                let polygon = Polygon(exterior: exterior)
+                result.append(polygon)
+            default: break
+            }
+            
+            return result
+        }
+        
+        var unionedPolygon: Polygon? {
+            guard let polygons = polygons, polygons.count > 0 else { return nil }
+            return polygons.reduce(into: polygons[0]) { result, polygon in
+                do {
+                    try result.union(with: polygon)
+                } catch {
+                    print("Failed to union polygons: \(error)")
+                }
+            }
+        }
+        
+        // MARK: centerCoord
+        var centerCoord: CLLocationCoordinate2D? {
+            if let polygons = polygons {
+                guard polygons.count > 0 else { return nil }
+                guard let center: Point = try? polygons[0].centroid() else { return nil }
+                return CLLocationCoordinate2D(latitude: center.x, longitude: center.y)
+            } else if let bounds = bounds {
+                guard let e = tags.boxEast, let w = tags.boxWest, let s = tags.boxSouth, let n = tags.boxNorth else { return nil }
+                let lat = (s + n) / 2.0
+                let lon = (e + w) / 2.0
+                return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            } else { return nil }
+            
         }
         
         // MARK: Hashable

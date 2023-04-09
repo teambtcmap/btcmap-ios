@@ -11,16 +11,18 @@ struct CommunitiesView: View {
     let locationManager = LocationManager()
     @EnvironmentObject var areasRepo: AreasRepository
     
+    /// Returns communities with a distance value, which can then be sorted by proximity to current user location.
     private var communitiesWithDistance: [CommunityPlusDistance] {
         guard let currentLoc = locationManager.location else { return areasRepo.communities.map { CommunityPlusDistance(area: $0, distance: nil) } }
         return areasRepo.communities.map { (area) in
-            guard let areaCoord = area.coord else { return CommunityPlusDistance(area: area, distance: nil) }
+            guard let areaCoord = area.centerCoord else { return CommunityPlusDistance(area: area, distance: nil) }
             return CommunityPlusDistance(area: area,
                                          distance: MapCalculations.haversineDistance(coord1: currentLoc.coordinate,
                                                                                      coord2: areaCoord))
         }
     }
     
+    /// Returns communities without a distance value. This is used when a user has not authorized user location.
     private var communitiesWithoutDistance: [CommunityPlusDistance] {
         return areasRepo.communities.map { CommunityPlusDistance(area: $0, distance: nil) }
     }
