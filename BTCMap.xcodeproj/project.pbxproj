@@ -43,6 +43,7 @@
 		B17F30BD2963196800926E4F /* CountClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BC2963196800926E4F /* CountClusterAnnotationView.swift */; };
 		B17F30BF296319B700926E4F /* MarkerAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */; };
 		B1926FBC29E3460C00512641 /* GEOSwift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1926FBB29E3460C00512641 /* GEOSwift+Extensions.swift */; };
+		B1926FBE29E3774400512641 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1926FBD29E3774400512641 /* SearchBar.swift */; };
 		B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */; };
 		B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA82956BA4D007C2D0A /* ElementView.swift */; };
 		B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAA29573EFB007C2D0A /* Home.swift */; };
@@ -104,6 +105,7 @@
 		B17F30BC2963196800926E4F /* CountClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountClusterAnnotationView.swift; sourceTree = "<group>"; };
 		B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerAnnotationView.swift; sourceTree = "<group>"; };
 		B1926FBB29E3460C00512641 /* GEOSwift+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GEOSwift+Extensions.swift"; sourceTree = "<group>"; };
+		B1926FBD29E3774400512641 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+BTCMap.swift"; sourceTree = "<group>"; };
 		B1AFEEA82956BA4D007C2D0A /* ElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementView.swift; sourceTree = "<group>"; };
 		B1AFEEAA29573EFB007C2D0A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				B17F30A82957CBD000926E4F /* RoundedPillButton.swift */,
 				B1C35DE7297B2EFF00D59008 /* NavBarTitleSubtitle.swift */,
 				B1C35DEB297B60E900D59008 /* ImageCircle.swift */,
+				B1926FBD29E3774400512641 /* SearchBar.swift */,
 			);
 			name = SwiftUI;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
 				B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */,
 				B1926FBC29E3460C00512641 /* GEOSwift+Extensions.swift in Sources */,
+				B1926FBE29E3774400512641 /* SearchBar.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
 				B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
