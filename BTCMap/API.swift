@@ -99,6 +99,39 @@ class API {
                     .replacingOccurrences(of: "http://", with: "")
                     .trimmingCharacters(in: ["/"])
             }
+            
+            // MARK: - Verify
+            var surveyDates: [String] {
+                var surveyDates = [String]()
+                
+                if let date = tags?["survey:date"] {
+                    surveyDates.append(date)
+                }
+                
+                if let date = tags?["check_date"] {
+                    surveyDates.append(date)
+                }
+                
+                if let date = tags?["check_date:currency:XBT"] {
+                    surveyDates.append(date)
+                }
+                
+                return surveyDates
+            }
+            
+            var latestSurveyDate: Date? {
+                guard !surveyDates.isEmpty,
+                      let max = surveyDates.max() else {
+                    return nil }
+                
+                // NOTE: These dates come back as a simple string in formate `2022-11-22`. So need to massage to work for DateFormatter.
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                guard let date = formatter.date(from: max) else {
+                    return nil }
+            
+                return date
+            }
         }
         
         enum OsmType: String, Codable {

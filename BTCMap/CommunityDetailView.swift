@@ -13,15 +13,33 @@ struct CommunityDetailView: View {
     @EnvironmentObject var elementsRepo: ElementsRepository
     var communityDetailViewModel: CommunityDetailViewModel
     
-    var elements: Array<API.Element> {
-        guard let bounds = communityDetailViewModel.area.bounds else { return [] }
-        return elementsRepo.elements(from: bounds)
-            .filter { !$0.osmJson.name.isEmpty }
-            .sorted { $0.osmJson.name < $1.osmJson.name }
+    @State private var filteredElements: Array<API.Element> = []
+    private func filterElements() {
+        guard filteredElements.isEmpty else { return }
+
+        let filteredByArea = {
+            if let polygon = communityDetailViewModel.area.unionedPolygon {
+                return elementsRepo.elements(from: polygon)
+            } else if let bounds = communityDetailViewModel.area.bounds  {
+                return elementsRepo.elements(from: bounds)
+            } else { return [] }
+        }()
+                
+        filteredElements = filteredByArea.filter { !$0.osmJson.name.isEmpty }
+            .sorted { (element1, element2) in
+                if let surveyDate1 = element1.osmJson.latestSurveyDate,
+                   let surveyDate2 = element2.osmJson.latestSurveyDate {
+                    return surveyDate1 > surveyDate2
+                } else if element1.osmJson.latestSurveyDate != nil {
+                    return true
+                } else {
+                    return false
+                }
+            }
     }
     
-    // TODO: Not verified text pink like in ElementView    
-
+    // TODO: Not verified text pink like in ElementView
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -37,8 +55,8 @@ struct CommunityDetailView: View {
                                 appState.homeViewId = UUID()
                                 appState.mapState.bounds = bounds
                             }
-                        let placesText = elements.count == 1 ? "place_singular".localized : "places_plural".localized
-                        NavBarTitleSubtitle(title: communityDetailViewModel.area.name ?? "" , subtitle: "\(elements.count) \(placesText)")
+                        let placesText = filteredElements.count == 1 ? "place_singular".localized : "places_plural".localized
+                        NavBarTitleSubtitle(title: communityDetailViewModel.area.name ?? "" , subtitle: "\(filteredElements.count) \(placesText)")
                     }
                     .listRowSeparator(.hidden)
                     
@@ -63,17 +81,17 @@ struct CommunityDetailView: View {
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                     }
                     .frame(height: 45)
-
-
+                    
+                    
                     // MARK: - Elements
-                    if elements.isEmpty {
+                    if filteredElements.isEmpty {
                         Text("No Locations")
                             .listRowSeparator(.hidden)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                             .padding([.top, .bottom], 6)
                     }
                     
-                    ForEach(elements) { item in
+                    ForEach(filteredElements) { item in
                         NavigationLink(destination: CommunityElementView(communityDetailViewModel: communityDetailViewModel, element: item)) {
                             
                             let elementViewModel = ElementViewModel(element: item)
@@ -88,11 +106,15 @@ struct CommunityDetailView: View {
                                     Text(item.osmJson.name)
                                         .font(.system(size: 14))
                                     
-                                    let verifyText: String = elementViewModel.isVerified
-                                    ? "\("verified".localized): \(elementViewModel.verifyText!)"
-                                    : ElementViewModel.NotVerifiedTextType.short.text
-
-                                    Text(verifyText)
+                                    elementViewModel.isVerified ?
+                                    Text(Image(systemName: "checkmark.seal.fill"))
+                                        .font(.system(size: 10))
+                                    + Text(" ")
+                                    + Text(elementViewModel.verifyText ?? "")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.gray) :
+                                    
+                                    Text(ElementViewModel.NotVerifiedTextType.short.text)
                                         .font(.system(size: 12))
                                         .foregroundColor(.gray)
                                 }
@@ -105,6 +127,9 @@ struct CommunityDetailView: View {
                 .frame(maxWidth: .infinity)
                 .edgesIgnoringSafeArea(.horizontal)
             }
+        }
+        .onAppear {
+            filterElements()
         }
     }
 }

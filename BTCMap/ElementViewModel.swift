@@ -93,28 +93,10 @@ struct ElementViewModel {
     }
     
     // MARK: - Verify
-    private var surveyDates: [String] {
-        var surveyDates = [String]()
-        
-        if let date = element.osmJson.tags?["survey:date"] {
-            surveyDates.append(date)
-        }
-        
-        if let date = element.osmJson.tags?["check_date"] {
-            surveyDates.append(date)
-        }
-        
-        if let date = element.osmJson.tags?["check_date:currency:XBT"] {
-            surveyDates.append(date)
-        }
-        
-        return surveyDates
-    }
-    
-    var isVerified: Bool { !surveyDates.isEmpty }
+    var isVerified: Bool { return !element.osmJson.surveyDates.isEmpty }
     var verifyText: String? {
-        guard !surveyDates.isEmpty,
-              let max = surveyDates.max() else {
+        guard !element.osmJson.surveyDates.isEmpty,
+              let max = element.osmJson.surveyDates.max() else {
             return nil }
         
         // NOTE: These dates come back as a simple string in formate `2022-11-22`. So need to massage to work for DateFormatter.
