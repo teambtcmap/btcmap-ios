@@ -42,6 +42,7 @@
 		B17F30BA2963061900926E4F /* ElementSystemImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30B92963061900926E4F /* ElementSystemImages.swift */; };
 		B17F30BD2963196800926E4F /* CountClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BC2963196800926E4F /* CountClusterAnnotationView.swift */; };
 		B17F30BF296319B700926E4F /* MarkerAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */; };
+		B1926FBC29E3460C00512641 /* GEOSwift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1926FBB29E3460C00512641 /* GEOSwift+Extensions.swift */; };
 		B1AFEEA72954D90F007C2D0A /* Color+BTCMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */; };
 		B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEA82956BA4D007C2D0A /* ElementView.swift */; };
 		B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFEEAA29573EFB007C2D0A /* Home.swift */; };
@@ -102,6 +103,7 @@
 		B17F30B92963061900926E4F /* ElementSystemImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementSystemImages.swift; sourceTree = "<group>"; };
 		B17F30BC2963196800926E4F /* CountClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountClusterAnnotationView.swift; sourceTree = "<group>"; };
 		B17F30BE296319B700926E4F /* MarkerAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerAnnotationView.swift; sourceTree = "<group>"; };
+		B1926FBB29E3460C00512641 /* GEOSwift+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GEOSwift+Extensions.swift"; sourceTree = "<group>"; };
 		B1AFEEA62954D90F007C2D0A /* Color+BTCMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+BTCMap.swift"; sourceTree = "<group>"; };
 		B1AFEEA82956BA4D007C2D0A /* ElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementView.swift; sourceTree = "<group>"; };
 		B1AFEEAA29573EFB007C2D0A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				B17F30B5295A5C1300926E4F /* String+UIImage.swift */,
 				B1C35DE5297AE23F00D59008 /* MapCalculations.swift */,
 				B14855FA29E25A2E00613C6A /* CLLocationCoordinate2D+Extensions.swift */,
+				B1926FBB29E3460C00512641 /* GEOSwift+Extensions.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
 				B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */,
+				B1926FBC29E3460C00512641 /* GEOSwift+Extensions.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
 				B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,

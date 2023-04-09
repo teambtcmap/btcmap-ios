@@ -7,6 +7,7 @@
 
 import MapKit
 import SwiftUI
+import GEOSwift
 
 struct CommunityDetailView: View {
     @EnvironmentObject var appState: AppState
@@ -47,7 +48,9 @@ struct CommunityDetailView: View {
                     // MARK: - Map
                     ZStack(alignment: .top) {
                         let bounds = communityDetailViewModel.area.bounds
-                        BoundedMapView(region: BoundedMapView.region(from: bounds ?? Bounds.zeroBounds))
+                        BoundedMapView(region: BoundedMapView.region(from: bounds ?? Bounds.zeroBounds,
+                                                                     padding: 0.1),
+                                       polygonCoords: communityDetailViewModel.area.unionedPolygon?.coords)
                             .frame(height: geometry.size.height * 0.3)
                             .frame( maxWidth: .infinity)
                             .onTapGesture {
@@ -66,8 +69,9 @@ struct CommunityDetailView: View {
                         HStack {
                             ForEach(communityDetailViewModel.contacts, id: \.self) { contact in
                                 ImageCircle(image: contact.displayIcon,
-                                            diameter: 45,
-                                            imageColor: .white,
+                                            outerDiameter: 45,
+                                            innerDiameterScale: 0.6,                                
+                                            imageColor: .BTCMap_Links,
                                             backgroundColor: Color.BTCMap_DarkBeige)
                                 .padding(4)
                                 .onTapGesture {
@@ -97,14 +101,16 @@ struct CommunityDetailView: View {
                             let elementViewModel = ElementViewModel(element: item)
                             HStack {
                                 ImageCircle(image: ElementSystemImages.swiftUISystemImage(for: item, with: .template),
-                                            diameter: 40,
+                                            outerDiameter: 35,
+                                            innerDiameterScale: 0.6,
                                             imageColor: .white,
                                             backgroundColor: Color.BTCMap_DarkBeige)
                                 .padding(.trailing, 10)
                                 
                                 VStack(alignment: .leading) {
                                     Text(item.osmJson.name)
-                                        .font(.system(size: 14))
+                                        .font(.system(size: 18))
+                                        .bold()
                                     
                                     elementViewModel.isVerified ?
                                     Text(Image(systemName: "checkmark.seal.fill"))

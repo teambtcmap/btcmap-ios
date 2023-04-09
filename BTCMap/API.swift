@@ -319,11 +319,15 @@ class API {
         var name: String? { tags.name }
         var type: String? { tags.type }
         var bounds: Bounds? {
-            guard let boxEast = tags.boxEast, let boxWest = tags.boxWest, let boxSouth = tags.boxSouth, let boxNorth = tags.boxNorth else { return nil }
-            return Bounds(maxlat: max(boxSouth, boxNorth),
-                          maxlon: max(boxEast, boxWest),
-                          minlat: min(boxSouth, boxNorth),
-                          minlon: min(boxEast, boxWest))
+            if let polygons = polygons, let unionedPolygon = unionedPolygon {
+                return MapCalculations.bounds(from: unionedPolygon.coords)
+            } else if let boxEast = tags.boxEast, let boxWest = tags.boxWest, let boxSouth = tags.boxSouth, let boxNorth = tags.boxNorth {
+                return Bounds(maxlat: max(boxSouth, boxNorth),
+                              maxlon: max(boxEast, boxWest),
+                              minlat: min(boxSouth, boxNorth),
+                              minlon: min(boxEast, boxWest))
+            }
+            return nil
         }
         
         // MARK: Polygons

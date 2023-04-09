@@ -20,6 +20,14 @@ struct MapCalculations {
         let c = 2 * atan2(sqrt(a), sqrt(1-a))
         return earthRadius * c
     }
+    
+    static func bounds(from coords: [CLLocationCoordinate2D]) -> Bounds {
+        let minLat = coords.min(by: { $0.latitude < $1.latitude })?.latitude ?? 0
+        let maxLat = coords.max(by: { $0.latitude < $1.latitude })?.latitude ?? 0
+        let minLon = coords.min(by: { $0.longitude < $1.longitude })?.longitude ?? 0
+        let maxLon = coords.max(by: { $0.longitude < $1.longitude })?.longitude ?? 0
+        return Bounds(maxlat: maxLat, maxlon: maxLon, minlat: minLat, minlon: minLon)
+    }
 }
 
 extension CLLocationDegrees {
