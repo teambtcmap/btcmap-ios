@@ -259,13 +259,23 @@ class API {
                 func encode(to encoder: Encoder) throws {
                     var container = encoder.container(keyedBy: CodingKeys.self)
                     try container.encode(type, forKey: .type)
+                    
+                    guard let coordinates = coordinates else {
+                        try container.encodeNil(forKey: .coordinates); return }
+
+                    let rawCoordinates = coordinates.map {
+                        $0.map { coord in
+                            [coord.longitude, coord.latitude]
+                        }
+                    }
+                    try container.encode(rawCoordinates, forKey: .coordinates)
                 }
                 
-                struct Feature: Decodable {
+                struct Feature: Codable {
                     let type: String
                     let geometry: Geometry
                     let properties: Properties?
-
+                    
                     struct Properties: Codable, Hashable {
                         let osmId: Int?
                         let boundary: String?
@@ -276,7 +286,7 @@ class API {
                         let nameEn: String?
                     }
                     
-                    enum Geometry: Decodable {
+                    enum Geometry: Codable {
                         case polygon(Polygon)
                         case multiPolygon(MultiPolygon)
                         
@@ -307,6 +317,22 @@ class API {
                                 self = .multiPolygon(multiPolygon)
                             default:
                                 throw DecodingError.dataCorruptedError(forKey: .type, in: values, debugDescription: "Unsupported type")
+                            }
+                        }
+                        
+                        func encode(to encoder: Encoder) throws {
+                            var container = encoder.container(keyedBy: CodingKeys.self)
+                            switch self {
+                            case .polygon(let polygon):
+                                try container.encode("Polygon", forKey: .type)
+                                let coordinates = polygon.exterior.points.map { CLLocationCoordinate2D(latitude: $0.y, longitude: $0.x) }
+                                try container.encode(coordinates, forKey: .coordinates)
+                            case .multiPolygon(let multiPolygon):
+                                try container.encode("MultiPolygon", forKey: .type)
+                                let coordinates = multiPolygon.polygons.map { polygon in
+                                    polygon.exterior.points.map { CLLocationCoordinate2D(latitude: $0.y, longitude: $0.x) }
+                                }
+                                try container.encode(coordinates, forKey: .coordinates)
                             }
                         }
                     }

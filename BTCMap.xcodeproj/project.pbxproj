@@ -24,6 +24,7 @@
 		AD96B92E28E4B29400B558D4 /* ElementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD96B92C28E4B29400B558D4 /* ElementViewController.xib */; };
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
 		AD96B93428E4BC7400B558D4 /* ElementsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* ElementsRepository.swift */; };
+		B117CA9729E636C40011BF7E /* OneTimeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B117CA9629E636C40011BF7E /* OneTimeActions.swift */; };
 		B1459B5F2979FCC6006D376B /* AreasRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1459B5E2979FCC6006D376B /* AreasRepository.swift */; };
 		B1459B612979FCE9006D376B /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1459B602979FCE9006D376B /* RepositoryProtocol.swift */; };
 		B1459B63297A0F5F006D376B /* elements.json in Resources */ = {isa = PBXBuildFile; fileRef = B1459B62297A0F5F006D376B /* elements.json */; };
@@ -88,6 +89,7 @@
 		AD96B92C28E4B29400B558D4 /* ElementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ElementViewController.xib; sourceTree = "<group>"; };
 		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		AD96B93328E4BC7400B558D4 /* ElementsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementsRepository.swift; sourceTree = "<group>"; };
+		B117CA9629E636C40011BF7E /* OneTimeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeActions.swift; sourceTree = "<group>"; };
 		B1459B5E2979FCC6006D376B /* AreasRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreasRepository.swift; sourceTree = "<group>"; };
 		B1459B602979FCE9006D376B /* RepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
 		B1459B62297A0F5F006D376B /* elements.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = elements.json; sourceTree = "<group>"; };
@@ -172,11 +174,12 @@
 		AD6914E128E380B000D9F34E /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B117CA9529E636B70011BF7E /* Utilities */,
 				B155BADA2985F4D500A25265 /* AppState.swift */,
 				B1C35DE0297ADDDF00D59008 /* Managers */,
 				B1459B5D2979FC71006D376B /* Repositories */,
 				B1459B5C2979FC67006D376B /* Service */,
-				AD7E331728E831B4004B1DFE /* Helpers */,
+				AD7E331728E831B4004B1DFE /* Extensions */,
 				AD6914E428E380E300D9F34E /* Models */,
 				AD6914E528E380E800D9F34E /* Views & ViewModels */,
 				AD6914CD28E37F4600D9F34E /* AppDelegate.swift */,
@@ -242,7 +245,7 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
-		AD7E331728E831B4004B1DFE /* Helpers */ = {
+		AD7E331728E831B4004B1DFE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				AD7E331828E831C2004B1DFE /* Localizable.swift */,
@@ -253,7 +256,7 @@
 				B14855FA29E25A2E00613C6A /* CLLocationCoordinate2D+Extensions.swift */,
 				B1926FBB29E3460C00512641 /* GEOSwift+Extensions.swift */,
 			);
-			name = Helpers;
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		AD7E331C28E8D275004B1DFE /* Common */ = {
@@ -283,6 +286,14 @@
 				AD8193EE28F2C7D400CAB29C /* Views */,
 			);
 			name = Element;
+			sourceTree = "<group>";
+		};
+		B117CA9529E636B70011BF7E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B117CA9629E636C40011BF7E /* OneTimeActions.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		B1459B5C2979FC67006D376B /* Service */ = {
@@ -495,6 +506,7 @@
 				B17F30A02957789900926E4F /* BorderButtonStyle.swift in Sources */,
 				AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */,
 				B17F30A52957CA2000926E4F /* OptionsView.swift in Sources */,
+				B117CA9729E636C40011BF7E /* OneTimeActions.swift in Sources */,
 				B1926FBC29E3460C00512641 /* GEOSwift+Extensions.swift in Sources */,
 				B1926FBE29E3774400512641 /* SearchBar.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,

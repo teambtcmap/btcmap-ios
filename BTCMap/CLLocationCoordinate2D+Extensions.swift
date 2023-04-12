@@ -9,12 +9,18 @@ import Foundation
 import CoreLocation
 import GEOSwift
 
-extension CLLocationCoordinate2D: Decodable {
+extension CLLocationCoordinate2D: Codable {
     public init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
         let latitude = try container.decode(CLLocationDegrees.self)
         let longitude = try container.decode(CLLocationDegrees.self)
         self.init(latitude: latitude, longitude: longitude)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        try container.encode(longitude)
+        try container.encode(latitude)
     }
 }
 
