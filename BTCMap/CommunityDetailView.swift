@@ -71,8 +71,8 @@ struct CommunityDetailView: View {
                                 ImageCircle(image: contact.displayIcon,
                                             outerDiameter: 45,
                                             innerDiameterScale: 0.6,                                
-                                            imageColor: .BTCMap_Links,
-                                            backgroundColor: Color.BTCMap_DarkBeige)
+                                            imageColor: .black,
+                                            backgroundColor: .white)
                                 .padding(4)
                                 .onTapGesture {
                                     guard let url = contact.url(from: communityDetailViewModel.area) else { return }
@@ -103,8 +103,8 @@ struct CommunityDetailView: View {
                                 ImageCircle(image: ElementSystemImages.swiftUISystemImage(for: item, with: .template),
                                             outerDiameter: 35,
                                             innerDiameterScale: 0.6,
-                                            imageColor: .white,
-                                            backgroundColor: Color.BTCMap_DarkBeige)
+                                            imageColor: .black,
+                                            backgroundColor: .white)
                                 .padding(.trailing, 10)
                                 
                                 VStack(alignment: .leading) {

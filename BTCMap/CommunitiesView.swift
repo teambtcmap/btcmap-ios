@@ -40,6 +40,7 @@ struct CommunitiesView: View {
             }
         }()
         
+        // filter out for search
         let filteredCommunities = allCommunities.filter { community in
             searchText.isEmpty || (community.area.name?.localizedCaseInsensitiveContains(searchText) ?? false)
         }
