@@ -7,6 +7,7 @@
 
 import Foundation
 import os
+import GEOSwift
 
 class ElementsRepository: ObservableObject, Repository {
     typealias Item = API.Element
@@ -102,5 +103,15 @@ extension ElementsRepository {
             coord.longitude > bounds.minlon &&
             coord.longitude < bounds.maxlon
         }
+    }
+    
+    func elements(from polygon: Polygon) -> Array<API.Element> {
+        let filtered = items.filter {
+            guard let coord = $0.coord else { return false }
+            let contains = try? polygon.contains(coord.toPoint())
+            guard let contains = contains else { return true }
+            return contains
+        }
+        return filtered
     }
 }

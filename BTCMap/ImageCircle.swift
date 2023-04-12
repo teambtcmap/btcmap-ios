@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ImageCircle: View {
     let image: Image?
-    let diameter: Double
+    let outerDiameter: Double
+    let innerDiameterScale: Double
     let imageColor: Color
     let backgroundColor: Color
     
@@ -18,14 +19,14 @@ struct ImageCircle: View {
         ZStack(alignment: .center) {
             Circle()
                 .fill(backgroundColor)
-                .frame(width: diameter, height: diameter)
+                .frame(width: outerDiameter, height: outerDiameter)
             
             image?
                 .renderingMode(.template)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(imageColor)
-                .frame(width: diameter * 0.5, height: diameter * 0.5, alignment: .center)
+                .frame(width: outerDiameter * innerDiameterScale, height: outerDiameter * innerDiameterScale, alignment: .center)
         }
     }
 }
