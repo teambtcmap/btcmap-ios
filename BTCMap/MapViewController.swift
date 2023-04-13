@@ -27,11 +27,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     @IBOutlet weak var mapView: MKMapView!
     var mapState: MapState!
     var elementsRepo: ElementsRepository!
+    var areesRepo: AreasRepository!
     private var locationManager = CLLocationManager()
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
-    private var elementAnnotations: [String: ElementAnnotation] = [:]
+    private var elementAnnotations: [String: ElementAnnotation] {
+        guard let annotations = manager.annotations as? [ElementAnnotation] else { return [:] }
+        return annotations.compactMap {
+            return [$0.element.id : $0]
+        }.reduce(into: [String: ElementAnnotation]()) { (result, dict) in
+            result.merge(dict) { (_, new) in new }
+        }
+    }
+    
+    var glowingPolygons: [GlowingPolygon] = []
+    
     private let logger = Logger(subsystem: "org.btcmap.app", category: "Map")
-
+    
     private var cancellables = Set<AnyCancellable>()
     
     private func setupMapStateObservers() {
@@ -46,6 +57,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             self?.centerMapOnBounds(bounds)
         })
         .store(in: &cancellables)
+        
+        mapState.$style.sink(receiveValue: { [weak self] style in
+            self?.changeMapStyle(style)
+        })
+        .store(in: &cancellables)
+        
+        mapState.$visibleObjects.sink(receiveValue: { [weak self] visibleObjects in
+            self?.changeMapVisibleObjects(visibleObjects)
+        })
+        .store(in: &cancellables)
     }
     
     private lazy var manager: ClusterManager = { [unowned self] in
@@ -56,14 +77,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     private func setupElements() {
         elementsRepo.$items.sink(receiveValue: { [weak self] elements in
-              self?.elementsChanged(elements)
-          })
+            self?.elementsUpdatedFromAPI(elements)
+        })
+        .store(in: &cancellables)
+        
+        elementsRepo.$filteredItems.sink(receiveValue: { [weak self] elements in
+            self?.elementsUpdatedFromSearch(elements)
+        })
         .store(in: &cancellables)
     }
     
-    private func elementsChanged(_ elements: [API.Element]) {
-        var annotations = elementAnnotations
+    private func elementsUpdatedFromAPI(_ elements: [API.Element]) {
+        guard mapState.visibleObjects == .elements else { return }
+        
         elementsQueue.async {
+            let annotations = self.elementAnnotations
             var annotationsToAdd: [ElementAnnotation] = []
             var annotationsToRemove: [ElementAnnotation] = []
             
@@ -71,7 +99,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                 if !element.deletedAt.isEmpty {
                     if let annotation = annotations[element.id] {
                         annotationsToRemove.append(annotation)
-                        annotations.removeValue(forKey: element.id)
                     }
                 } else {
                     if element.coord?.latitude != nil,
@@ -82,14 +109,32 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                         
                         let annotation = ElementAnnotation(element: element)
                         annotationsToAdd.append(annotation)
-                        annotations[element.id] = annotation
                     }
                 }
             }
             
             DispatchQueue.main.async {
-                self.logger.log("elementsChanged - adding: \(annotationsToAdd.count) - removing: \(annotationsToRemove.count)")
-                self.elementAnnotations = annotations
+                self.logger.log("elementsUpdatedFromAPI - adding: \(annotationsToAdd.count) - removing: \(annotationsToRemove.count)")
+                self.removeThenAddAnnotations(remove: annotationsToRemove, add: annotationsToAdd)
+            }
+        }
+    }
+    
+    private func elementsUpdatedFromSearch(_ elements: [API.Element]) {
+        guard mapState.visibleObjects == .elements else { return }
+        
+        elementsQueue.async {
+            let annotations = self.elementAnnotations
+            let elementIds = Set(elements.map { $0.id })
+            
+            let annotationsToRemove = annotations.filter { !elementIds.contains($0.key) }.map { $0.value }
+            let annotationsToAdd = elements.compactMap { element -> ElementAnnotation? in
+                guard !annotations.keys.contains(element.id) else { return nil }
+                return ElementAnnotation(element: element)
+            }
+            
+            DispatchQueue.main.async {
+                self.logger.log("elementsUpdatedFromSearch - adding: \(annotationsToAdd.count) - removing: \(annotationsToRemove.count)")
                 self.removeThenAddAnnotations(remove: annotationsToRemove, add: annotationsToAdd)
             }
         }
@@ -111,6 +156,56 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         if let add = add { manager.add(add) }
         self.logger.log("removeThenAddAnnotations - remove: \(remove != nil ? remove!.count : 0) - then add: \(add != nil ? add!.count : 0) ")
         manager.reload(mapView: mapView)
+    }
+    
+    private func removeAllAnnotations() {
+        manager.removeAll()
+        manager.reload(mapView: mapView)
+    }
+    
+    private func addAllAnnotations() {
+        let allAnnotations = elementsRepo.filteredItems.map { ElementAnnotation(element: $0) }
+        manager.add(allAnnotations)
+        manager.reload(mapView: mapView)
+    }
+    
+    // MARK: - Polygons
+    private func addPolygon(_ coords: [CLLocationCoordinate2D]) {
+        let polygon = MKPolygon(coordinates: coords, count: coords.count)
+        mapView.addOverlay(polygon, level: .aboveLabels)
+    }
+    
+    private func addAllPolygons() {
+        let polygons = areesRepo.communities.compactMap { community -> MKPolygon? in
+            guard let coords = community.unionedPolygon?.coords else { return nil }
+            return MKPolygon(coordinates: coords, count: coords.count)
+        }
+        mapView.addOverlays(polygons, level: .aboveLabels)
+        startGlowingPolygons()
+    }
+    
+    private func removeAllPolygons() {
+        let polygonOverlays = mapView.overlays.filter { $0 is MKPolygon }
+        mapView.removeOverlays(polygonOverlays)
+    }
+    
+    private func startGlowingPolygons() {
+        let glowDuration: TimeInterval = 4.0
+        let glowSteps: CGFloat = 6
+        let timeInterval = glowDuration / TimeInterval(glowSteps)
+
+        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
+            let currentTime = Date().timeIntervalSince1970
+
+            for glowingPolygon in self.glowingPolygons {
+                let elapsedTime = currentTime.truncatingRemainder(dividingBy: glowingPolygon.randomInterval + glowDuration)
+                let glowProgress = CGFloat(elapsedTime) / CGFloat(glowDuration)
+                let glowAlpha = (sin(glowProgress * .pi) + 1) / 2
+
+                glowingPolygon.renderer.strokeColor = glowingPolygon.randomColor.withAlphaComponent(glowAlpha)
+                glowingPolygon.renderer.setNeedsDisplay()
+            }
+        }
     }
     
     // MARK: - MKMapViewDelegate
@@ -189,6 +284,44 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         }, completion: nil)
     }
     
+    // THIS IS WITHOUT THE GLOW EFFECT
+//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        if let polygon = overlay as? MKPolygon {
+//            let renderer = MKPolygonRenderer(polygon: polygon)
+//            renderer.fillColor = UIColor.clear
+//            renderer.strokeColor = randomColor(alpha: 1.0)
+//            renderer.lineWidth = 3
+//            return renderer
+//        }
+//
+//        return MKOverlayRenderer()
+//    }
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polygon = overlay as? MKPolygon {
+            let renderer = MKPolygonRenderer(polygon: polygon)
+            renderer.lineWidth = 3
+
+            let randomStrokeColor = randomColor(alpha: 1.0)
+            let randomGlowInterval = TimeInterval.random(in: 1...2)
+            let glowingPolygon = GlowingPolygon(renderer: renderer, randomColor: randomStrokeColor, randomInterval: randomGlowInterval)
+            glowingPolygons.append(glowingPolygon)
+
+            return renderer
+        }
+
+        return MKOverlayRenderer()
+    }
+    
+    // MARK: - Random Color
+    private func randomColor(alpha: CGFloat) -> UIColor {
+        let red = CGFloat.random(in: 0...1)
+        let green = CGFloat.random(in: 0...1)
+        let blue = CGFloat.random(in: 0...1)
+
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
     // MARK: - MapView Geometry
     
     func centerMapOnUserLocation() {
@@ -205,6 +338,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     func centerMapOnBounds(_ bounds: Bounds) {
         mapView.setRegion(bounds.toMKCoordinateRegion(), animated: true)
+    }
+    
+    func changeMapStyle(_ style: MapState.MapStyle) {
+        mapView.mapType = style.mapKit
+    }
+    
+    func changeMapVisibleObjects(_ visibleObjects: MapState.MapVisibleObjects) {
+        switch visibleObjects {
+        case .elements:
+            addAllAnnotations()
+            removeAllPolygons()
+        case.communities:
+            removeAllAnnotations()
+            addAllPolygons()
+        }
     }
     
     // MARK: - CLLocationManager Delegate
@@ -250,7 +398,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.allowsBackgroundLocationUpdates = false
-
+        
         mapView.register(MarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
         mapView.register(CountClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
         

@@ -13,24 +13,79 @@ struct Home: View {
     @StateObject var areasRepository = AreasRepository(api: API())
     @StateObject var elementsRepository = ElementsRepository(api: API())
     
+    // MARK: - Layers Button
+    @State private var areLayersButtonsVisible = false
+    @State private var mapStyleSelected: MapLayersButtons = .topo
+    @State private var mapObjectsSelected: MapLayersButtons = .elements
+    
+    // MARK: - Search
+    @State private var searchText = ""
+    func searchTextChanged(to text: String) {
+        elementsRepository.searchStringDidChange(text)
+    }
+    
+    
     func injectMapVCWrapper() {
         mapVCWrapper.mapViewController.mapState = appState.mapState
         mapVCWrapper.mapViewController.elementsRepo = elementsRepository
+        mapVCWrapper.mapViewController.areesRepo = areasRepository
     }
-    
     var mapVCWrapper = MapViewControllerWrapper()
-
+    
     var body: some View {
-        NavigationView {            
-            ZStack(alignment: .topTrailing) {
+        NavigationView {
+            ZStack(alignment: .top) {
                 let _ = injectMapVCWrapper()
                 mapVCWrapper
                     .edgesIgnoringSafeArea(.all)
                 
-                OptionsView(dismissElementView: mapVCWrapper.mapViewController.dismissElementDetail)
-                    .zIndex(100)
-                    .offset(x: -20, y: 30)
-                    .overlay(Color.clear)
+                // Search bar
+                HStack {
+                    SearchBar(searchText: $searchText, backgroundColor: .clear)
+                        .onChange(of: searchText) { newValue in
+                            searchTextChanged(to: newValue)
+                        }
+                    
+                    OptionsView(dismissElementView: mapVCWrapper.mapViewController.dismissElementDetail)
+                        .padding(.trailing, 20)
+                }
+                .zIndex(100)
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                .background(Color.black.opacity(0.4))
+                .cornerRadius(28)
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                
+                // Bottom-left layers buttons
+                Button(action: {
+                    areLayersButtonsVisible.toggle()
+                }) {
+                    Image(systemName: "square.3.layers.3d.top.filled")
+                        .font(.system(size: 24))
+                        .foregroundColor(.white)
+                        .frame(width: 50, height: 50)
+                        .background(.black).opacity(0.8)
+                        .cornerRadius(10)
+                }
+                .padding(.bottom, 20) // note: hardcoded to match the insets of the userLocationButton, which is in storyboard
+                .padding(.leading, 30)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                
+                // this is the pop-up button view
+                if areLayersButtonsVisible {
+                    LayersButtonsView(mapStyleSelected: $mapStyleSelected,
+                                      mapObjectsSelected: $mapObjectsSelected,
+                                      closure0: { appState.mapState.style = .topo },
+                                      closure1: { appState.mapState.style = .satellite },
+                                      closure2: { appState.mapState.visibleObjects = .elements },
+                                      closure3: { appState.mapState.visibleObjects = .communities },
+                                      hideButtons: { areLayersButtonsVisible.toggle() })
+                    .padding(.bottom, 85)
+                    .padding(.leading, 30)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                }
+                
+                // Bottom-right user location button is in the Map storyboard (legacy)
             }
             .navigationBarHidden(true).navigationBarTitle("")
             .navigationBarTitleDisplayMode(.inline)

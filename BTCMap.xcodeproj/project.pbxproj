@@ -66,6 +66,8 @@
 		B1C35DF0297C0E8C00D59008 /* BoundedMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */; };
 		B1C35DF2297C1A5000D59008 /* ElementVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */; };
 		B1C35DF4297C1AAB00D59008 /* ElementTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */; };
+		B1FAACE429E892C20020B3F1 /* LayersButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FAACE329E892C20020B3F1 /* LayersButtonsView.swift */; };
+		B1FAACE929E8DC910020B3F1 /* GlowingPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FAACE829E8DC910020B3F1 /* GlowingPolygon.swift */; };
 		ED3AEF7729BF5E70003A63FF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3AEF7629BF5E70003A63FF /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +131,8 @@
 		B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedMap.swift; sourceTree = "<group>"; };
 		B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementVerifyView.swift; sourceTree = "<group>"; };
 		B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTagsView.swift; sourceTree = "<group>"; };
+		B1FAACE329E892C20020B3F1 /* LayersButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersButtonsView.swift; sourceTree = "<group>"; };
+		B1FAACE829E8DC910020B3F1 /* GlowingPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingPolygon.swift; sourceTree = "<group>"; };
 		ED3AEF7629BF5E70003A63FF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -236,6 +240,7 @@
 		AD6914E628E3813B00D9F34E /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				B1FAACE529E8C54B0020B3F1 /* Polygon */,
 				B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */,
 				B17F30BB2963194700926E4F /* AnnotationViews */,
 				AD6914E728E3814F00D9F34E /* MapViewController.swift */,
@@ -331,6 +336,7 @@
 				B1C35DE7297B2EFF00D59008 /* NavBarTitleSubtitle.swift */,
 				B1C35DEB297B60E900D59008 /* ImageCircle.swift */,
 				B1926FBD29E3774400512641 /* SearchBar.swift */,
+				B1FAACE329E892C20020B3F1 /* LayersButtonsView.swift */,
 			);
 			name = SwiftUI;
 			sourceTree = "<group>";
@@ -385,6 +391,14 @@
 				B1C35DED297B6E5400D59008 /* CommunityElementView.swift */,
 			);
 			name = Communities;
+			sourceTree = "<group>";
+		};
+		B1FAACE529E8C54B0020B3F1 /* Polygon */ = {
+			isa = PBXGroup;
+			children = (
+				B1FAACE829E8DC910020B3F1 /* GlowingPolygon.swift */,
+			);
+			name = Polygon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -481,6 +495,7 @@
 				B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */,
 				B17F30A72957CB4300926E4F /* DonateView.swift in Sources */,
 				B1459B612979FCE9006D376B /* RepositoryProtocol.swift in Sources */,
+				B1FAACE429E892C20020B3F1 /* LayersButtonsView.swift in Sources */,
 				AD96B93428E4BC7400B558D4 /* ElementsRepository.swift in Sources */,
 				B17F30B6295A5C1300926E4F /* String+UIImage.swift in Sources */,
 				B155BADB2985F4D500A25265 /* AppState.swift in Sources */,
@@ -510,6 +525,7 @@
 				B1926FBC29E3460C00512641 /* GEOSwift+Extensions.swift in Sources */,
 				B1926FBE29E3774400512641 /* SearchBar.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
+				B1FAACE929E8DC910020B3F1 /* GlowingPolygon.swift in Sources */,
 				B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
