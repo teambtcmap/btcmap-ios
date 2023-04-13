@@ -34,7 +34,11 @@ class AreasRepository: ObservableObject, Repository {
     // MARK: Start
     internal func start() {
         do {
-            logger.log("Fetch local \(self.description)")
+            guard OneTimeActions.hasPerformed(.wipeAreasLocalForPolygonBug) else {
+                OneTimeAction_WipeAreasLocalForPolygonBug(areasRepository: self).perform()
+                throw OneTimeActionError.notPerformed }
+
+            logger.log("Fetch local \(self.description)")                        
             let items = try fetchLocal()
             logger.log("Fetched local \(self.description): \(items.count)")
             

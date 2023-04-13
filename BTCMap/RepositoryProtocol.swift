@@ -29,8 +29,10 @@ protocol Repository<Item> {
     func fetchBundledItemsIfNeeded() throws -> [Item]?
     func storeLocal(_ items: Array<Item>) throws
     func fetchLocal() throws -> Array<Item>
+    func deleteLocal() throws
     
     func calculateLastUpdate() -> String?
+    func clearLastUpdated()
     func fetchRemote(since: String?)
 }
 
@@ -64,7 +66,21 @@ extension Repository {
         return try api.decoder.decode([Item].self, from: data)
     }
     
+    internal func deleteLocal() throws {
+        guard let libraryURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first else { throw BadLibraryURLError() }
+        let url = libraryURL.appendingPathComponent(documentPath)
+        do {
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            throw NSError(domain: "com.example.MyApp", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to delete local file"])
+        }
+    }
+    
     var lastUpdated: String? {
         return defaults.string(forKey: defaultLastUpdatedKey) ?? calculateLastUpdate()
+    }
+    
+    func clearLastUpdated() {
+        defaults.removeObject(forKey: defaultLastUpdatedKey)
     }
 }

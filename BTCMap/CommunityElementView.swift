@@ -22,8 +22,10 @@ struct CommunityElementView: View {
                 List {
                     // MARK: - Map
                     ZStack(alignment: .top) {
+                        
                         BoundedMapView(element: element,
-                                       region: BoundedMapView.region(from: communityDetailViewModel.area.bounds ?? Bounds.zeroBounds))
+                                       region: BoundedMapView.region(from: communityDetailViewModel.area.bounds ?? Bounds.zeroBounds,
+                                                                     padding: 0.1))                                      
                         .frame(height: geometry.size.height * 0.3)
                         .frame( maxWidth: .infinity)
                         .onTapGesture {

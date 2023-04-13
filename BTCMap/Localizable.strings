@@ -7,7 +7,7 @@
 */
 
 // ELEMENT VIEW
-"verify" = "Verify";
+"verify" = "Verify or Report";
 "not_verified_by_supertaggers_short" = "Not verified";
 "not_verified_by_supertaggers_long" = "Not verified by \nSupertaggers";
 "supertagger_manual" = "Supertagger Manual";
@@ -23,6 +23,7 @@
 "facebook" = "Facebook";
 "twitter" = "Twitter";
 "opening_hours" = "Opening Hours";
+"select_navigation_app" = "Select Navigation App";
 
 // COMMUNITIES VIEW
 "km" = "km";
@@ -31,12 +32,16 @@
 "verified" = "Verified";
 
 // OPTIONS VIEW
-"add_place" = "Add place";
+"add_place" = "Add location";
 "communities" = "Communities";
 "trends" = "Trends";
 "top_supertaggers" = "Top supertaggers";
 "latest_changes" = "Latest changes";
 "settings" = "Settings";
+"connect_osm_account" = "Connect OSM account";
+"themed_pins" = "Themed pins";
+"dark_map" = "Dark map";
+"show_tags" = "Show tags";
 
 // DONATE
 "donate" = "Donate";

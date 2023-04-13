@@ -8,6 +8,24 @@
         "revision" : "3c70568c779456355895adf354a01e7fe5440ebf",
         "version" : "3.0.3"
       }
+    },
+    {
+      "identity" : "geos",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GEOSwift/geos.git",
+      "state" : {
+        "revision" : "f510e634c822116fca615064d889300dba40d761",
+        "version" : "8.1.0"
+      }
+    },
+    {
+      "identity" : "geoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GEOSwift/GEOSwift.git",
+      "state" : {
+        "revision" : "e55eef92fb533107b43e30fcf275223a5055797e",
+        "version" : "10.0.0"
+      }
     }
   ],
   "version" : 2

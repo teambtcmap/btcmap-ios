@@ -12,6 +12,7 @@ struct OptionsView: View {
     @EnvironmentObject var areasRepo: AreasRepository
 
     @State private var showingOptions = false
+    @State private var showingSettings = false
     @State private var showingCommunities = false
     @State private var showingDonate = false
     @State private var showingNotImplementedAlert = false
@@ -69,11 +70,10 @@ struct OptionsView: View {
 //                    // TODO: Implement
 //                    showingNotImplementedAlert = true
 //                }
-//
-//                Button("settings".localized) {
-//                    // TODO: Implement
-//                    showingNotImplementedAlert = true
-//                }
+
+                Button("settings".localized) {
+                    showingSettings = true
+                }
             }
             // TODO: Temp
             .alert("Not yet implemented.", isPresented: $showingNotImplementedAlert) {
@@ -81,6 +81,7 @@ struct OptionsView: View {
             }
             
             NavigationLink(destination: DonateView(), isActive: $showingDonate) { }
+            NavigationLink(destination: SettingsView(), isActive: $showingSettings) { }
         }
         .padding(14)
         .background(Color.black.opacity(0.7))
