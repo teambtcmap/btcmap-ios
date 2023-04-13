@@ -29,7 +29,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     var elementsRepo: ElementsRepository!
     private var locationManager = CLLocationManager()
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
-    private var elementAnnotations: [String: ElementAnnotation] = [:]
+    private var elementAnnotations: [String: ElementAnnotation] {
+        guard let annotations = manager.annotations as? [ElementAnnotation] else { return [:] }
+        return annotations.compactMap {
+            return [$0.element.id : $0]
+        }.reduce(into: [String: ElementAnnotation]()) { (result, dict) in
+            result.merge(dict) { (_, new) in new }
+        }
+    }
+    
     private let logger = Logger(subsystem: "org.btcmap.app", category: "Map")
 
     private var cancellables = Set<AnyCancellable>()
@@ -56,14 +64,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     private func setupElements() {
         elementsRepo.$items.sink(receiveValue: { [weak self] elements in
-              self?.elementsChanged(elements)
+              self?.elementsUpdatedFromAPI(elements)
+          })
+        .store(in: &cancellables)
+        
+        elementsRepo.$filteredItems.sink(receiveValue: { [weak self] elements in
+              self?.elementsUpdatedFromSearch(elements)
           })
         .store(in: &cancellables)
     }
     
-    private func elementsChanged(_ elements: [API.Element]) {
-        var annotations = elementAnnotations
+    private func elementsUpdatedFromAPI(_ elements: [API.Element]) {
         elementsQueue.async {
+            let annotations = self.elementAnnotations
             var annotationsToAdd: [ElementAnnotation] = []
             var annotationsToRemove: [ElementAnnotation] = []
             
@@ -71,7 +84,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                 if !element.deletedAt.isEmpty {
                     if let annotation = annotations[element.id] {
                         annotationsToRemove.append(annotation)
-                        annotations.removeValue(forKey: element.id)
                     }
                 } else {
                     if element.coord?.latitude != nil,
@@ -82,19 +94,35 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                         
                         let annotation = ElementAnnotation(element: element)
                         annotationsToAdd.append(annotation)
-                        annotations[element.id] = annotation
                     }
                 }
             }
             
             DispatchQueue.main.async {
-                self.logger.log("elementsChanged - adding: \(annotationsToAdd.count) - removing: \(annotationsToRemove.count)")
-                self.elementAnnotations = annotations
+                self.logger.log("elementsUpdatedFromAPI - adding: \(annotationsToAdd.count) - removing: \(annotationsToRemove.count)")
                 self.removeThenAddAnnotations(remove: annotationsToRemove, add: annotationsToAdd)
             }
         }
     }
     
+    private func elementsUpdatedFromSearch(_ elements: [API.Element]) {
+        elementsQueue.async {
+            let annotations = self.elementAnnotations
+            let elementIds = Set(elements.map { $0.id })
+            
+            let annotationsToRemove = annotations.filter { !elementIds.contains($0.key) }.map { $0.value }
+            let annotationsToAdd = elements.compactMap { element -> ElementAnnotation? in
+                guard !annotations.keys.contains(element.id) else { return nil }
+                return ElementAnnotation(element: element)
+            }
+
+            DispatchQueue.main.async {
+                self.logger.log("elementsUpdatedFromSearch - adding: \(annotationsToAdd.count) - removing: \(annotationsToRemove.count)")
+                self.removeThenAddAnnotations(remove: annotationsToRemove, add: annotationsToAdd)
+            }
+        }
+    }
+
     // MARK: - Annotations
     private func addAnnotations(_ annotations: [MKAnnotation]) {
         manager.add(annotations)
