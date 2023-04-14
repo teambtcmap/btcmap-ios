@@ -19,9 +19,9 @@ struct CommunityDetailView: View {
         guard filteredElements.isEmpty else { return }
 
         let filteredByArea = {
-            if let polygon = communityDetailViewModel.area.unionedPolygon {
+            if let polygon = communityDetailViewModel.areaWithDistance.area.unionedPolygon {
                 return elementsRepo.elements(from: polygon)
-            } else if let bounds = communityDetailViewModel.area.bounds  {
+            } else if let bounds = communityDetailViewModel.areaWithDistance.area.bounds  {
                 return elementsRepo.elements(from: bounds)
             } else { return [] }
         }()
@@ -47,10 +47,10 @@ struct CommunityDetailView: View {
                 List {
                     // MARK: - Map
                     ZStack(alignment: .top) {
-                        let bounds = communityDetailViewModel.area.bounds
+                        let bounds = communityDetailViewModel.areaWithDistance.area.bounds
                         BoundedMapView(region: BoundedMapView.region(from: bounds ?? Bounds.zeroBounds,
                                                                      padding: 0.1),
-                                       polygonCoords: communityDetailViewModel.area.unionedPolygon?.coords)
+                                       polygonCoords: communityDetailViewModel.areaWithDistance.area.unionedPolygon?.coords)
                             .frame(height: geometry.size.height * 0.3)
                             .frame( maxWidth: .infinity)
                             .onTapGesture {
@@ -59,7 +59,7 @@ struct CommunityDetailView: View {
                                 appState.mapState.bounds = bounds
                             }
                         let placesText = filteredElements.count == 1 ? "place_singular".localized : "places_plural".localized
-                        NavBarTitleSubtitle(title: communityDetailViewModel.area.name ?? "" , subtitle: "\(filteredElements.count) \(placesText)")
+                        NavBarTitleSubtitle(title: communityDetailViewModel.areaWithDistance.area.name ?? "" , subtitle: "\(filteredElements.count) \(placesText)")
                     }
                     .listRowSeparator(.hidden)
                     
@@ -75,7 +75,7 @@ struct CommunityDetailView: View {
                                             backgroundColor: .white)
                                 .padding(4)
                                 .onTapGesture {
-                                    guard let url = contact.url(from: communityDetailViewModel.area) else { return }
+                                    guard let url = contact.url(from: communityDetailViewModel.areaWithDistance.area) else { return }
                                     UIApplication.shared.open(url)
                                 }
                             }
@@ -142,8 +142,8 @@ struct CommunityDetailView: View {
 
 struct CommunityDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let community = CommunityPlusDistance(area: API.Area.mock!, distance: nil)
-        let viewModel = CommunityDetailViewModel(communityPlusDistance: community)
+        let community = AreaWithDistance(area: API.Area.mock!, distance: nil)
+        let viewModel = CommunityDetailViewModel(areaWithDistance: community)
         CommunityDetailView(communityDetailViewModel: viewModel)
     }
 }
