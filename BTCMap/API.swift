@@ -200,6 +200,7 @@ class API {
             let iconSquare: String?
             let name: String?
             let type: String?
+            let amenity: String?
             
             private enum CodingKeys: String, CodingKey {
                 case boxEast = "box:east"
@@ -213,7 +214,7 @@ class API {
                 case website = "contact:website"
                 case youtube = "contact:youtube"
                 case iconSquare = "icon:square"
-                case name, type
+                case name, type, amenity
             }
             
             init(from decoder: Decoder) throws {
@@ -231,6 +232,7 @@ class API {
                 iconSquare = try container.decodeIfPresent(String.self, forKey: .iconSquare)
                 name = try container.decodeIfPresent(String.self, forKey: .name)
                 type = try container.decodeIfPresent(String.self, forKey: .type)
+                amenity = try container.decodeIfPresent(String.self, forKey: .amenity)
                 geoJson = try container.decodeIfPresent(GeoJson.self, forKey: .geoJson)
             }
             
