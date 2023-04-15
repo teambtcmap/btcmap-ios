@@ -109,7 +109,9 @@ struct Home: View {
             // Community Detail sheet
             .sheet(isPresented: $showCommunityDetail, content: {
                 if let communityDetailView = communityDetailView() {
-                    communityDetailView
+                    NavigationView {                        
+                        communityDetailView
+                    }
                 }
             })
         }
