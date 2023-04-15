@@ -24,11 +24,26 @@ struct Home: View {
         elementsRepository.searchStringDidChange(text)
     }
     
+    // MARK: - CommunityDetail
+    @State private var showCommunityDetail = false
+    @State private var selectedCommunity: API.Area?
+    private func communityDetailView() -> CommunityDetailView? {
+        if let community = selectedCommunity {
+            let viewModel = CommunityDetailViewModel(areaWithDistance: AreaWithDistance(area: community))
+            return CommunityDetailView(communityDetailViewModel: viewModel)
+        }
+        return nil
+    }
     
+    // MARK: - MapViewVC Wrapper
     func injectMapVCWrapper() {
         mapVCWrapper.mapViewController.mapState = appState.mapState
         mapVCWrapper.mapViewController.elementsRepo = elementsRepository
-        mapVCWrapper.mapViewController.areesRepo = areasRepository
+        mapVCWrapper.mapViewController.areasRepo = areasRepository
+        mapVCWrapper.mapViewController.onCommunityTapped = { community in
+            self.selectedCommunity = community
+            self.showCommunityDetail.toggle()
+        }
     }
     var mapVCWrapper = MapViewControllerWrapper()
     
@@ -90,6 +105,15 @@ struct Home: View {
             .navigationBarHidden(true).navigationBarTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .id(appState.homeViewId)
+            
+            // Community Detail sheet
+            .sheet(isPresented: $showCommunityDetail, content: {
+                if let communityDetailView = communityDetailView() {
+                    NavigationView {                        
+                        communityDetailView
+                    }
+                }
+            })
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(appState)

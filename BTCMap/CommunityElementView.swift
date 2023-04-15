@@ -24,7 +24,7 @@ struct CommunityElementView: View {
                     ZStack(alignment: .top) {
                         
                         BoundedMapView(element: element,
-                                       region: BoundedMapView.region(from: communityDetailViewModel.area.bounds ?? Bounds.zeroBounds,
+                                       region: BoundedMapView.region(from: communityDetailViewModel.areaWithDistance.area.bounds ?? Bounds.zeroBounds,
                                                                      padding: 0.1))                                      
                         .frame(height: geometry.size.height * 0.3)
                         .frame( maxWidth: .infinity)
@@ -72,8 +72,8 @@ struct CommunityElementView: View {
 
 struct CommunityElementView_Previews: PreviewProvider {
     static var previews: some View {
-        let community = CommunityPlusDistance(area: API.Area.mock!, distance: nil)
-        let viewModel = CommunityDetailViewModel(communityPlusDistance: community)
+        let community = AreaWithDistance(area: API.Area.mock!, distance: nil)
+        let viewModel = CommunityDetailViewModel(areaWithDistance: community)
         let element = API.Element.mock!
         CommunityElementView(communityDetailViewModel: viewModel, element: element)
     }

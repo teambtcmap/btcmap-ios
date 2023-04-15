@@ -55,6 +55,7 @@
 		B1AFEEB729575004007C2D0A /* mock_user.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEB629575004007C2D0A /* mock_user.json */; };
 		B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEBA29575036007C2D0A /* mock_area.json */; };
 		B1AFEEBD29575053007C2D0A /* mock_report.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEBC29575053007C2D0A /* mock_report.json */; };
+		B1BD47E629E9A0DB0035E0CC /* MKPolygon+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD47E529E9A0DB0035E0CC /* MKPolygon+Extensions.swift */; };
 		B1C35DDB297AD71A00D59008 /* CommunityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DDA297AD71A00D59008 /* CommunityDetailView.swift */; };
 		B1C35DE2297ADDEC00D59008 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DE1297ADDEC00D59008 /* LocationManager.swift */; };
 		B1C35DE4297ADF6C00D59008 /* CommunityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DE3297ADF6C00D59008 /* CommunityDetailViewModel.swift */; };
@@ -67,7 +68,7 @@
 		B1C35DF2297C1A5000D59008 /* ElementVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */; };
 		B1C35DF4297C1AAB00D59008 /* ElementTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */; };
 		B1FAACE429E892C20020B3F1 /* LayersButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FAACE329E892C20020B3F1 /* LayersButtonsView.swift */; };
-		B1FAACE929E8DC910020B3F1 /* GlowingPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FAACE829E8DC910020B3F1 /* GlowingPolygon.swift */; };
+		B1FAACE929E8DC910020B3F1 /* GlowingPolygonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FAACE829E8DC910020B3F1 /* GlowingPolygonRenderer.swift */; };
 		ED3AEF7729BF5E70003A63FF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3AEF7629BF5E70003A63FF /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +121,7 @@
 		B1AFEEB629575004007C2D0A /* mock_user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_user.json; sourceTree = "<group>"; };
 		B1AFEEBA29575036007C2D0A /* mock_area.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_area.json; sourceTree = "<group>"; };
 		B1AFEEBC29575053007C2D0A /* mock_report.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_report.json; sourceTree = "<group>"; };
+		B1BD47E529E9A0DB0035E0CC /* MKPolygon+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPolygon+Extensions.swift"; sourceTree = "<group>"; };
 		B1C35DDA297AD71A00D59008 /* CommunityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailView.swift; sourceTree = "<group>"; };
 		B1C35DE1297ADDEC00D59008 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B1C35DE3297ADF6C00D59008 /* CommunityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailViewModel.swift; sourceTree = "<group>"; };
@@ -132,7 +134,7 @@
 		B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementVerifyView.swift; sourceTree = "<group>"; };
 		B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTagsView.swift; sourceTree = "<group>"; };
 		B1FAACE329E892C20020B3F1 /* LayersButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersButtonsView.swift; sourceTree = "<group>"; };
-		B1FAACE829E8DC910020B3F1 /* GlowingPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingPolygon.swift; sourceTree = "<group>"; };
+		B1FAACE829E8DC910020B3F1 /* GlowingPolygonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingPolygonRenderer.swift; sourceTree = "<group>"; };
 		ED3AEF7629BF5E70003A63FF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -396,7 +398,8 @@
 		B1FAACE529E8C54B0020B3F1 /* Polygon */ = {
 			isa = PBXGroup;
 			children = (
-				B1FAACE829E8DC910020B3F1 /* GlowingPolygon.swift */,
+				B1FAACE829E8DC910020B3F1 /* GlowingPolygonRenderer.swift */,
+				B1BD47E529E9A0DB0035E0CC /* MKPolygon+Extensions.swift */,
 			);
 			name = Polygon;
 			sourceTree = "<group>";
@@ -524,8 +527,9 @@
 				B117CA9729E636C40011BF7E /* OneTimeActions.swift in Sources */,
 				B1926FBC29E3460C00512641 /* GEOSwift+Extensions.swift in Sources */,
 				B1926FBE29E3774400512641 /* SearchBar.swift in Sources */,
+				B1BD47E629E9A0DB0035E0CC /* MKPolygon+Extensions.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
-				B1FAACE929E8DC910020B3F1 /* GlowingPolygon.swift in Sources */,
+				B1FAACE929E8DC910020B3F1 /* GlowingPolygonRenderer.swift in Sources */,
 				B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,

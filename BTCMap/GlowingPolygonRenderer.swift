@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-class GlowingPolygon {
+class GlowingPolygonRenderer {
     let renderer: MKPolygonRenderer
     let randomColor: UIColor
     let randomInterval: TimeInterval

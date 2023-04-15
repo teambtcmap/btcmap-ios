@@ -23,11 +23,21 @@ class ElementAnnotation: NSObject, MKAnnotation, Identifiable {
     }
 }
 
+class CommunityPolygon {
+    let community: API.Area
+    let polygon: MKPolygon
+    
+    init(community: API.Area, polygon: MKPolygon) {
+        self.community = community
+        self.polygon = polygon
+    }
+}
+
 class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate, ClusterManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     var mapState: MapState!
     var elementsRepo: ElementsRepository!
-    var areesRepo: AreasRepository!
+    var areasRepo: AreasRepository!
     private var locationManager = CLLocationManager()
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] {
@@ -39,7 +49,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         }
     }
     
-    var glowingPolygons: [GlowingPolygon] = []
+    private var communityPolygons: [CommunityPolygon] = []
+    private var glowingOverlayRenderers: [GlowingPolygonRenderer] = []
+    var onCommunityTapped: ((API.Area) -> Void)? = nil
     
     private let logger = Logger(subsystem: "org.btcmap.app", category: "Map")
     
@@ -176,10 +188,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     private func addAllPolygons() {
-        let polygons = areesRepo.communities.compactMap { community -> MKPolygon? in
+        communityPolygons = areasRepo.communities.compactMap { community -> CommunityPolygon? in
             guard let coords = community.unionedPolygon?.coords else { return nil }
-            return MKPolygon(coordinates: coords, count: coords.count)
+            let polygon = MKPolygon(coordinates: coords, count: coords.count)
+            return CommunityPolygon(community: community, polygon: polygon)
         }
+        
+        let polygons = communityPolygons.map { $0.polygon }
         mapView.addOverlays(polygons, level: .aboveLabels)
         startGlowingPolygons()
     }
@@ -187,25 +202,58 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     private func removeAllPolygons() {
         let polygonOverlays = mapView.overlays.filter { $0 is MKPolygon }
         mapView.removeOverlays(polygonOverlays)
+        communityPolygons = []
     }
     
     private func startGlowingPolygons() {
         let glowDuration: TimeInterval = 4.0
         let glowSteps: CGFloat = 6
         let timeInterval = glowDuration / TimeInterval(glowSteps)
-
+        
         Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
             let currentTime = Date().timeIntervalSince1970
-
-            for glowingPolygon in self.glowingPolygons {
+            
+            for glowingPolygon in self.glowingOverlayRenderers {
                 let elapsedTime = currentTime.truncatingRemainder(dividingBy: glowingPolygon.randomInterval + glowDuration)
                 let glowProgress = CGFloat(elapsedTime) / CGFloat(glowDuration)
                 let glowAlpha = (sin(glowProgress * .pi) + 1) / 2
-
+                
                 glowingPolygon.renderer.strokeColor = glowingPolygon.randomColor.withAlphaComponent(glowAlpha)
                 glowingPolygon.renderer.setNeedsDisplay()
             }
         }
+    }
+    
+    // MARK: Random Color
+    private func randomColor(alpha: CGFloat) -> UIColor {
+        let red = CGFloat.random(in: 0.5...1)
+        let green = CGFloat.random(in: 0.5...1)
+        let blue = CGFloat.random(in: 0.5...1)
+        
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
+    // MARK: Overlay Touches
+    
+    private func setupTapGestureRecognizer() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        mapView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc private func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        let tapPoint = gestureRecognizer.location(in: mapView)
+        let tapCoordinate = mapView.convert(tapPoint, toCoordinateFrom: mapView)
+        
+        for communityPolygon in communityPolygons {
+            if communityPolygon.polygon.contains(coordinate: tapCoordinate, in: mapView) {
+                onTapPolygon(communityPolygon) // Closure implementation
+                break
+            }
+        }
+    }
+    
+    private func onTapPolygon(_ communityPolygon: CommunityPolygon) {
+        onCommunityTapped?(communityPolygon.community)
     }
     
     // MARK: - MKMapViewDelegate
@@ -285,43 +333,35 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     // THIS IS WITHOUT THE GLOW EFFECT
-//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-//        if let polygon = overlay as? MKPolygon {
-//            let renderer = MKPolygonRenderer(polygon: polygon)
-//            renderer.fillColor = UIColor.clear
-//            renderer.strokeColor = randomColor(alpha: 1.0)
-//            renderer.lineWidth = 3
-//            return renderer
-//        }
-//
-//        return MKOverlayRenderer()
-//    }
-
+    //    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+    //        if let polygon = overlay as? MKPolygon {
+    //            let renderer = MKPolygonRenderer(polygon: polygon)
+    //            renderer.fillColor = UIColor.clear
+    //            renderer.strokeColor = randomColor(alpha: 1.0)
+    //            renderer.lineWidth = 3
+    //            return renderer
+    //        }
+    //
+    //        return MKOverlayRenderer()
+    //    }
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let polygon = overlay as? MKPolygon {
             let renderer = MKPolygonRenderer(polygon: polygon)
             renderer.lineWidth = 3
-
+            
             let randomStrokeColor = randomColor(alpha: 1.0)
             let randomGlowInterval = TimeInterval.random(in: 1...2)
-            let glowingPolygon = GlowingPolygon(renderer: renderer, randomColor: randomStrokeColor, randomInterval: randomGlowInterval)
-            glowingPolygons.append(glowingPolygon)
-
+            let glowingPolygon = GlowingPolygonRenderer(renderer: renderer, randomColor: randomStrokeColor, randomInterval: randomGlowInterval)
+            glowingOverlayRenderers.append(glowingPolygon)
+            
             return renderer
         }
-
+        
         return MKOverlayRenderer()
     }
     
-    // MARK: - Random Color
-    private func randomColor(alpha: CGFloat) -> UIColor {
-        let red = CGFloat.random(in: 0...1)
-        let green = CGFloat.random(in: 0...1)
-        let blue = CGFloat.random(in: 0...1)
 
-        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
-    }
-    
     // MARK: - MapView Geometry
     
     func centerMapOnUserLocation() {
@@ -354,6 +394,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             addAllPolygons()
         }
     }
+    
     
     // MARK: - CLLocationManager Delegate
     
@@ -409,6 +450,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         
         setupElements()
         setupMapStateObservers()
+        setupTapGestureRecognizer()
     }
     
     // MARK: - User Location Button
