@@ -33,7 +33,7 @@ final class MapState: ObservableObject {
         var mapKit: MKMapType {
             switch self {
             case .topo: return .standard
-            case .satellite: return .satellite
+            case .satellite: return .hybrid
             }
         }
     }
