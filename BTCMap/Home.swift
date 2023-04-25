@@ -75,7 +75,7 @@ struct Home: View {
                 Button(action: {
                     areLayersButtonsVisible.toggle()
                 }) {
-                    Image(systemName: "square.3.layers.3d.top.filled")
+                    Image(systemName: "square.3.stack.3d.top.filled")
                         .font(.system(size: 24))
                         .foregroundColor(.white)
                         .frame(width: 50, height: 50)
