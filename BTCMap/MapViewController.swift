@@ -110,6 +110,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             for element in elements {
                 if !element.deletedAt.isEmpty {
                     if let annotation = annotations[element.id] {
+                        self.logger.error("There is a deleted element that should be filtered before")
                         annotationsToRemove.append(annotation)
                     }
                 } else {
