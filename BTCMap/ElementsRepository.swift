@@ -54,10 +54,12 @@ class ElementsRepository: ObservableObject, Repository {
                 }
             }()
             
+            let notDeletedItems = items.filter({ $0.deletedAt == "" })
+            
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.items = items
-                self.filteredItems = items
+                self.items = notDeletedItems
+                self.filteredItems = notDeletedItems
                 self.queue.async { self.fetchRemote(since: self.lastUpdated) }
             }
         } catch {
