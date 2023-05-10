@@ -83,13 +83,17 @@ class ElementsRepository: ObservableObject, Repository {
         api.elements(since) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let items):
-                self.logger.log("Loaded created and changed \(self.description): \(items.count)")
-                guard !items.isEmpty else { return }
+            case .success(let remoteItems):
+                self.logger.log("Loaded created and changed \(self.description): \(remoteItems.count)")
+                guard !remoteItems.isEmpty else { return }
+                
+                let notDeletedRemoteItems = remoteItems.filter({ $0.deletedAt == "" })
                 var currentItems = self.items
+                
                 self.queue.async {
-                    let itemsId = items.reduce(into: Set<String>()) { $0.insert($1.id) }
-                    currentItems = currentItems.filter { !itemsId.contains($0.id) } + items
+                    let remoteItemsIds = notDeletedRemoteItems.reduce(into: Set<String>()) { $0.insert($1.id) }
+                    
+                    currentItems = currentItems.filter { !remoteItemsIds.contains($0.id) } + notDeletedRemoteItems
                     DispatchQueue.main.async {
                         self.items = currentItems
                         self.filteredItems = currentItems
