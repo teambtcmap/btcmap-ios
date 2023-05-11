@@ -54,7 +54,7 @@ class ElementsRepository: ObservableObject, Repository {
                 }
             }()
             
-            let notDeletedItems = items.filter({ $0.deletedAt.count == 0 })
+            let notDeletedItems = items.filter({ $0.deletedAt.isEmpty })
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -87,7 +87,7 @@ class ElementsRepository: ObservableObject, Repository {
                 self.logger.log("Loaded created and changed \(self.description): \(remoteItems.count)")
                 guard !remoteItems.isEmpty else { return }
                 
-                let notDeletedRemoteItems = remoteItems.filter({ $0.deletedAt.count == 0 })
+                let notDeletedRemoteItems = remoteItems.filter({ $0.deletedAt.isEmpty })
                 var currentItems = self.items
                 
                 self.queue.async {
