@@ -72,10 +72,8 @@ struct ElementViewModel {
     }
 
     var verifyLink: URL? {
-        guard let name = element.osmJson.tags?["name"],
-              let lat = element.osmJson.lat,
-              let lon = element.osmJson.lon,
-              let url = "https://btcmap.org/verify-location?&name=\(name)&lat=\(lat)&long=\(lon)&\(element.osmJson.type.rawValue)=\(element.osmJson.id)".urlEncoded() else { return nil }
+        guard let id = element.id,
+              let url = "https://btcmap.org/verify-location?id=\(id) else { return nil }
         
         return URL(string: url)
     }
