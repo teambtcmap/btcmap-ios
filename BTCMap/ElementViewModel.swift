@@ -72,9 +72,8 @@ struct ElementViewModel {
     }
 
     var verifyLink: URL? {
-        guard let id = element.id,
-              let url = "https://btcmap.org/verify-location?id=\(id)" else { return nil }
-        
+        let id = element.id
+        let url = "https://btcmap.org/verify-location?id=\(id)"
         return URL(string: url)
     }
     
