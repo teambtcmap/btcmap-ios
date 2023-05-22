@@ -7,7 +7,7 @@
 */
 
 // ELEMENT VIEW
-"verify" = "Verify or Report";
+"verify" = "Verify";
 "not_verified_by_supertaggers_short" = "Not verified";
 "not_verified_by_supertaggers_long" = "Not verified by \nSupertaggers";
 "supertagger_manual" = "Supertagger Manual";
