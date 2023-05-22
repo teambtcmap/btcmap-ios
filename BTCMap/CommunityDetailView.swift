@@ -25,8 +25,10 @@ struct CommunityDetailView: View {
                 return elementsRepo.elements(from: bounds)
             } else { return [] }
         }()
-                
-        filteredElements = filteredByArea.filter { !$0.osmJson.name.isEmpty }
+        
+        let nonDeleted = filteredByArea.filter { $0.deletedAt.isEmpty }
+                 
+        filteredElements = nonDeleted.filter { !$0.osmJson.name.isEmpty }
             .sorted { (element1, element2) in
                 if let surveyDate1 = element1.osmJson.latestSurveyDate,
                    let surveyDate2 = element2.osmJson.latestSurveyDate {

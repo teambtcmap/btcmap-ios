@@ -88,51 +88,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }()
     
     private func setupElements() {
-        elementsRepo.$items.sink(receiveValue: { [weak self] elements in
-            self?.elementsUpdatedFromAPI(elements)
-        })
-        .store(in: &cancellables)
-        
         elementsRepo.$filteredItems.sink(receiveValue: { [weak self] elements in
-            self?.elementsUpdatedFromSearch(elements)
+            self?.elementsUpdated(elements)
         })
         .store(in: &cancellables)
     }
     
-    private func elementsUpdatedFromAPI(_ elements: [API.Element]) {
-        guard mapState.visibleObjects == .elements else { return }
-        
-        elementsQueue.async {
-            let annotations = self.elementAnnotations
-            var annotationsToAdd: [ElementAnnotation] = []
-            var annotationsToRemove: [ElementAnnotation] = []
-            
-            for element in elements {
-                if !element.deletedAt.isEmpty {
-                    if let annotation = annotations[element.id] {
-                        annotationsToRemove.append(annotation)
-                    }
-                } else {
-                    if element.coord?.latitude != nil,
-                       element.coord?.longitude != nil {
-                        if let annotation = annotations[element.id] {
-                            annotationsToRemove.append(annotation)
-                        }
-                        
-                        let annotation = ElementAnnotation(element: element)
-                        annotationsToAdd.append(annotation)
-                    }
-                }
-            }
-            
-            DispatchQueue.main.async {
-                self.logger.log("elementsUpdatedFromAPI - adding: \(annotationsToAdd.count) - removing: \(annotationsToRemove.count)")
-                self.removeThenAddAnnotations(remove: annotationsToRemove, add: annotationsToAdd)
-            }
-        }
-    }
-    
-    private func elementsUpdatedFromSearch(_ elements: [API.Element]) {
+    private func elementsUpdated(_ elements: [API.Element]) {
         guard mapState.visibleObjects == .elements else { return }
         
         elementsQueue.async {
@@ -142,6 +104,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             let annotationsToRemove = annotations.filter { !elementIds.contains($0.key) }.map { $0.value }
             let annotationsToAdd = elements.compactMap { element -> ElementAnnotation? in
                 guard !annotations.keys.contains(element.id) else { return nil }
+                guard element.coord?.latitude != nil && element.coord?.longitude != nil else { return nil }
                 return ElementAnnotation(element: element)
             }
             

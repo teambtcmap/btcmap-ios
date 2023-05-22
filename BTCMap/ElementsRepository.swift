@@ -32,7 +32,7 @@ class ElementsRepository: ObservableObject, Repository {
         queue.async { self.start() }
     }
         
-    @Published private(set) var items: Array<API.Element> = [] {
+    private(set) var items: Array<API.Element> = [] {
         didSet {
             filteredItems = filterItems(by: searchText)
         }
@@ -57,7 +57,6 @@ class ElementsRepository: ObservableObject, Repository {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.items = items
-                self.filteredItems = items
                 self.queue.async { self.fetchRemote(since: self.lastUpdated) }
             }
         } catch {
@@ -90,7 +89,6 @@ class ElementsRepository: ObservableObject, Repository {
                     currentItems = currentItems.filter { !itemsId.contains($0.id) } + items
                     DispatchQueue.main.async {
                         self.items = currentItems
-                        self.filteredItems = currentItems
                     }
                     do {
                         self.logger.log("Store created and changed \(self.description): \(currentItems.count)")
@@ -115,7 +113,7 @@ extension ElementsRepository {
     fileprivate func filterItems(by searchText: String) -> Array<API.Element> {
         return items.filter { element in
             searchText.isEmpty || (element.osmJson.name.localizedCaseInsensitiveContains(searchText))
-        }
+        }.filter { $0.deletedAt.isEmpty }
     }
 }
 
