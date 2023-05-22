@@ -19,7 +19,7 @@ struct ElementView: View {
                 // MARK: - Title, Options Button
                 HStack {
                     Text(elementViewModel.element.osmJson.name)
-                        .fontWeight(.black)
+                        .fontWeight(.medium)
                         .font(.title)
                         .lineLimit(2)
                         .minimumScaleFactor(0.6)
