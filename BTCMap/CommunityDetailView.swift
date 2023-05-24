@@ -60,8 +60,6 @@ struct CommunityDetailView: View {
                                 appState.homeViewId = UUID()
                                 appState.mapState.bounds = bounds
                             }
-                        let placesText = filteredElements.count == 1 ? "place_singular".localized : "places_plural".localized
-                        NavBarTitleSubtitle(title: communityDetailViewModel.areaWithDistance.area.name ?? "" , subtitle: "\(filteredElements.count) \(placesText)")
                     }
                     .listRowSeparator(.hidden)
                     
