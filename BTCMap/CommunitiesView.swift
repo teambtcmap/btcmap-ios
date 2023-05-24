@@ -54,8 +54,7 @@ struct CommunitiesView: View {
     
     var body: some View {
         VStack {
-            SearchBar(searchText: $searchText, backgroundColor: Color.BTCMap_BackgroundBlue.opacity(0.5))
-
+            SearchBar(searchText: $searchText, backgroundColor: Color.BTCMap_DiscordLightBlack)
             List(communities, id: \.area.id) { item in
                 let communityDetailViewModel = CommunityDetailViewModel(areaWithDistance: item)
                 NavigationLink(destination: CommunityDetailView(communityDetailViewModel: communityDetailViewModel)) {
@@ -75,12 +74,30 @@ struct CommunitiesView: View {
                         }
                     }
                 }
-                .listRowSeparator(.hidden)
+                .listRowSeparator(.visible)
+                .listRowSeparatorTint(Color.BTCMap_DiscordLightBlack)
+                .listRowBackground(Color.BTCMap_DiscordDarkBlack)
             }
+            /// Show a background color overlay when results are empty
+            .overlay(Group {
+                if communities.isEmpty {
+                    ZStack() {
+                        Color.BTCMap_DiscordDarkBlack.ignoresSafeArea()
+                        
+                        VStack {
+                            Text("No results")
+                            Spacer()
+                        }
+                    }
+                }
+            })
+            .background(Color.BTCMap_DiscordDarkBlack)
             .listStyle(.plain)
+            .edgesIgnoringSafeArea(.bottom)
         }
         .navigationBarHidden(false)
         .navigationBarTitle("Communities", displayMode: .inline)
+        .background(Color.BTCMap_DiscordDarkBlack)
     }
 }
 
