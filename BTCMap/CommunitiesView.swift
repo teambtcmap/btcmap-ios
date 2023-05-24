@@ -58,7 +58,8 @@ struct CommunitiesView: View {
 
             List(communities, id: \.area.id) { item in
                 let communityDetailViewModel = CommunityDetailViewModel(areaWithDistance: item)
-                NavigationLink(destination: CommunityDetailView(communityDetailViewModel: communityDetailViewModel)) {
+                let areaName = communityDetailViewModel.areaWithDistance.area.name ?? ""
+                NavigationLink(destination: CommunityDetailView(communityDetailViewModel: communityDetailViewModel).navigationBarTitle(areaName, displayMode: .large)) {
                     HStack {
                         AsyncImage(url: item.area.iconUrl)
                             .frame(width: 40, height: 40)
