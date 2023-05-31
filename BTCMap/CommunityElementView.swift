@@ -17,56 +17,38 @@ struct CommunityElementView: View {
     
     var body: some View {
         let elementViewModel = ElementViewModel(element: element)
-        GeometryReader { geometry in
-            VStack {
-                List {
-                    // MARK: - Map
-                    ZStack(alignment: .top) {
-                        
-                        BoundedMapView(element: element,
-                                       region: BoundedMapView.region(from: communityDetailViewModel.areaWithDistance.area.bounds ?? Bounds.zeroBounds,
-                                                                     padding: 0.1))                                      
-                        .frame(height: geometry.size.height * 0.3)
-                        .frame( maxWidth: .infinity)
-                        .onTapGesture {
-                            // hack to pop back to home. see note in AppState
-                            appState.homeViewId = UUID()
-                            appState.mapState.centerCoordinate = element.coord
-                        }
-                        
-                        NavBarTitleSubtitle(title: element.osmJson.name, subtitle: "")
-                    }
-                    .listRowSeparator(.hidden)
-                    
-                    // MARK: - Name
-                    Text(element.osmJson.name)
-                        .font(.title2)
-                        .padding(.horizontal)
-                        .listRowSeparator(.hidden)
-                    
-                    // MARK: - Verified
-                    HStack {
-                        ElementVerifyView(elementViewModel: elementViewModel,
-                                          notVerifiedTextType: .long)
-                    }
-                    .listRowSeparator(.hidden)
-                    .padding(.horizontal)
-                    
-                    
-                    // MARK: - Details
-                    HStack {
-                        ElementTagsView(elementViewModel: elementViewModel)
-                    }
-                    .listRowSeparator(.hidden)
-                    .padding(.horizontal)
-                    
-                }
-                .listStyle(.plain)
-                .frame( maxWidth: .infinity)
-                .edgesIgnoringSafeArea(.horizontal)
-                
+        List {
+            // MARK: - Map
+            BoundedMapView(element: element,
+                           region: BoundedMapView.region(from: communityDetailViewModel.areaWithDistance.area.bounds ?? Bounds.zeroBounds,
+                                                         padding: 0.1))
+            .frame(height: UIScreen.main.bounds.height * 0.23)
+            .frame( maxWidth: .infinity)
+            .onTapGesture {
+                // hack to pop back to home. see note in AppState
+                appState.homeViewId = UUID()
+                appState.mapState.centerCoordinate = element.coord
             }
+            .listRowSeparator(.hidden)
+            
+            // MARK: - Verified
+            HStack {
+                ElementVerifyView(elementViewModel: elementViewModel,
+                                  notVerifiedTextType: .long)
+            }
+            .listRowSeparator(.hidden)
+            .padding(.horizontal)
+            
+            // MARK: - Details
+            HStack {
+                ElementTagsView(elementViewModel: elementViewModel)
+            }
+            .listRowSeparator(.hidden)
+            .padding(.horizontal)
         }
+        .listStyle(.plain)
+        .frame( maxWidth: .infinity)
+        .edgesIgnoringSafeArea(.horizontal)
     }
 }
 
