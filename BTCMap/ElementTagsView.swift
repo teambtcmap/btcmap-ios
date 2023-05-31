@@ -33,13 +33,10 @@ struct ElementTagsView: View {
                             case .email:
                                 return URL(string: "mailto:\(detail.value)")
                             case .facebook:
-                                print(detail.value)
                                 return URL(string: "https://www.facebook.com/\(detail.value)")
                             case .instagram:
-                                print(detail.value)
                                 return URL(string: "https://www.instagram.com/\(detail.value)")
                             case .twitter:
-                                print(detail.value)
                                 return URL(string: "https://twitter.com/\(detail.value)")
                             //The case .address: is handled in the next if block
                             default: return nil
