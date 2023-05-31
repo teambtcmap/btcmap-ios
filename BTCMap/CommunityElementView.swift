@@ -30,6 +30,7 @@ struct CommunityElementView: View {
                 appState.mapState.centerCoordinate = element.coord
             }
             .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
             
             // MARK: - Verified
             HStack {
@@ -38,6 +39,7 @@ struct CommunityElementView: View {
             }
             .listRowSeparator(.hidden)
             .padding(.horizontal)
+            .listRowBackground(Color.clear)
             
             // MARK: - Details
             HStack {
@@ -45,7 +47,9 @@ struct CommunityElementView: View {
             }
             .listRowSeparator(.hidden)
             .padding(.horizontal)
+            .listRowBackground(Color.clear)
         }
+        .background(Color.BTCMap_DiscordDarkBlack)
         .listStyle(.plain)
         .frame( maxWidth: .infinity)
         .edgesIgnoringSafeArea(.horizontal)
