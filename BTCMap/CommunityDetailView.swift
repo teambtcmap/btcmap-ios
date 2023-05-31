@@ -44,96 +44,88 @@ struct CommunityDetailView: View {
     // TODO: Not verified text pink like in ElementView
     
     var body: some View {
-        GeometryReader { geometry in
+        List {
+            // MARK: - Map
+            let bounds = communityDetailViewModel.areaWithDistance.area.bounds
+            BoundedMapView(region: BoundedMapView.region(from: bounds ?? Bounds.zeroBounds,
+                                                         padding: 0.1),
+                           polygonCoords: communityDetailViewModel.areaWithDistance.area.unionedPolygon?.coords)
+                .frame(height: UIScreen.main.bounds.height * 0.23)
+                .frame( maxWidth: .infinity)
+                .onTapGesture {
+                    // hack to pop back to home. see note in AppState
+                    appState.homeViewId = UUID()
+                    appState.mapState.bounds = bounds
+                }
+            .listRowSeparator(.hidden)
+            
+            // MARK: - Contact Buttons
             VStack {
-                List {
-                    // MARK: - Map
-                    ZStack(alignment: .top) {
-                        let bounds = communityDetailViewModel.areaWithDistance.area.bounds
-                        BoundedMapView(region: BoundedMapView.region(from: bounds ?? Bounds.zeroBounds,
-                                                                     padding: 0.1),
-                                       polygonCoords: communityDetailViewModel.areaWithDistance.area.unionedPolygon?.coords)
-                            .frame(height: geometry.size.height * 0.3)
-                            .frame( maxWidth: .infinity)
-                            .onTapGesture {
-                                // hack to pop back to home. see note in AppState
-                                appState.homeViewId = UUID()
-                                appState.mapState.bounds = bounds
-                            }
-                    }
-                    .listRowSeparator(.hidden)
-                    
-                    
-                    // MARK: - Contact Buttons
-                    VStack {
-                        HStack {
-                            ForEach(communityDetailViewModel.contacts, id: \.self) { contact in
-                                ImageCircle(image: contact.displayIcon,
-                                            outerDiameter: 45,
-                                            innerDiameterScale: 0.6,                                
-                                            imageColor: .black,
-                                            backgroundColor: .white)
-                                .padding(4)
-                                .onTapGesture {
-                                    guard let url = contact.url(from: communityDetailViewModel.areaWithDistance.area) else { return }
-                                    UIApplication.shared.open(url)
-                                }
-                            }
+                HStack {
+                    ForEach(communityDetailViewModel.contacts, id: \.self) { contact in
+                        ImageCircle(image: contact.displayIcon,
+                                    outerDiameter: 45,
+                                    innerDiameterScale: 0.6,
+                                    imageColor: .black,
+                                    backgroundColor: .white)
+                        .padding(4)
+                        .onTapGesture {
+                            guard let url = contact.url(from: communityDetailViewModel.areaWithDistance.area) else { return }
+                            UIApplication.shared.open(url)
                         }
-                        .listRowSeparator(.hidden)
-                        .padding([.top, .bottom], 6)
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                    }
-                    .frame(height: 45)
-                    
-                    
-                    // MARK: - Elements
-                    if filteredElements.isEmpty {
-                        Text("No Locations")
-                            .listRowSeparator(.hidden)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                            .padding([.top, .bottom], 6)
-                    }
-                    
-                    ForEach(filteredElements) { item in
-                        NavigationLink(destination: CommunityElementView(communityDetailViewModel: communityDetailViewModel, element: item)) {
-                            
-                            let elementViewModel = ElementViewModel(element: item)
-                            HStack {
-                                ImageCircle(image: ElementSystemImages.swiftUISystemImage(for: item, with: .template),
-                                            outerDiameter: 35,
-                                            innerDiameterScale: 0.6,
-                                            imageColor: .black,
-                                            backgroundColor: .white)
-                                .padding(.trailing, 10)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(item.osmJson.name)
-                                        .font(.system(size: 18))
-                                        .bold()
-                                    
-                                    elementViewModel.isVerified ?
-                                    Text(Image(systemName: "checkmark.seal.fill"))
-                                        .font(.system(size: 10))
-                                    + Text(" ")
-                                    + Text(elementViewModel.verifyText ?? "")
-                                        .font(.system(size: 12))
-                                        .foregroundColor(.gray) :
-                                    
-                                    Text(ElementViewModel.NotVerifiedTextType.short.text)
-                                        .font(.system(size: 12))
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                        }
-                        .listRowSeparator(.hidden)
                     }
                 }
-                .listStyle(.plain)
-                .frame(maxWidth: .infinity)
-                .edgesIgnoringSafeArea(.horizontal)
+                .listRowSeparator(.hidden)
+                .padding([.top, .bottom], 6)
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+            }
+            .frame(height: 45)
+            
+            // MARK: - Elements
+            if filteredElements.isEmpty {
+                Text("No Locations")
+                    .listRowSeparator(.hidden)
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                    .padding([.top, .bottom], 6)
+            }
+            
+            ForEach(filteredElements) { item in
+                NavigationLink(destination: CommunityElementView(communityDetailViewModel: communityDetailViewModel, element: item).navigationBarTitle(item.osmJson.name, displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode.large)) {
+                    
+                    let elementViewModel = ElementViewModel(element: item)
+                    HStack {
+                        ImageCircle(image: ElementSystemImages.swiftUISystemImage(for: item, with: .template),
+                                    outerDiameter: 35,
+                                    innerDiameterScale: 0.6,
+                                    imageColor: .black,
+                                    backgroundColor: .white)
+                        .padding(.trailing, 10)
+                        
+                        VStack(alignment: .leading) {
+                            Text(item.osmJson.name)
+                                .font(.system(size: 18))
+                                .bold()
+                            
+                            elementViewModel.isVerified ?
+                            Text(Image(systemName: "checkmark.seal.fill"))
+                                .font(.system(size: 10))
+                            + Text(" ")
+                            + Text(elementViewModel.verifyText ?? "")
+                                .font(.system(size: 12))
+                                .foregroundColor(.gray) :
+                            
+                            Text(ElementViewModel.NotVerifiedTextType.short.text)
+                                .font(.system(size: 12))
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }
+                .listRowSeparator(.hidden)
             }
         }
+        .listStyle(.plain)
+        .frame(maxWidth: .infinity)
+        .edgesIgnoringSafeArea(.horizontal)
         .onAppear {
             filterElements()
         }
