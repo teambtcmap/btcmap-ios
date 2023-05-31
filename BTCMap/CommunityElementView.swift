@@ -53,6 +53,7 @@ struct CommunityElementView: View {
         .listStyle(.plain)
         .frame( maxWidth: .infinity)
         .edgesIgnoringSafeArea(.horizontal)
+        .navigationBarTitle(element.osmJson.name, displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode.large)
     }
 }
 

@@ -92,7 +92,7 @@ struct CommunityDetailView: View {
             }
             
             ForEach(filteredElements) { item in
-                NavigationLink(destination: CommunityElementView(communityDetailViewModel: communityDetailViewModel, element: item).navigationBarTitle(item.osmJson.name, displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode.large)) {
+                NavigationLink(destination: CommunityElementView(communityDetailViewModel: communityDetailViewModel, element: item)) {
                     
                     let elementViewModel = ElementViewModel(element: item)
                     HStack {
