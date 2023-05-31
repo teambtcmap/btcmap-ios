@@ -58,6 +58,7 @@ struct CommunityDetailView: View {
                     appState.mapState.bounds = bounds
                 }
             .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
             
             // MARK: - Contact Buttons
             VStack {
@@ -80,6 +81,7 @@ struct CommunityDetailView: View {
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
             }
             .frame(height: 45)
+            .listRowBackground(Color.clear)
             
             // MARK: - Elements
             if filteredElements.isEmpty {
@@ -120,9 +122,11 @@ struct CommunityDetailView: View {
                         }
                     }
                 }
-                .listRowSeparator(.hidden)
             }
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
         }
+        .background(Color.BTCMap_DiscordDarkBlack)
         .listStyle(.plain)
         .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea(.horizontal)
