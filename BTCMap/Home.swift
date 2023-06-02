@@ -26,9 +26,9 @@ struct Home: View {
     
     // MARK: - CommunityDetail
     @State private var showCommunityDetail = false
-    @State private var selectedCommunity: API.Area?
+
     private func communityDetailView() -> CommunityDetailView? {
-        if let community = selectedCommunity {
+        if let community = appState.mapState.selectedCommunity {
             let viewModel = CommunityDetailViewModel(areaWithDistance: AreaWithDistance(area: community))
             return CommunityDetailView(communityDetailViewModel: viewModel)
         }
@@ -40,8 +40,7 @@ struct Home: View {
         mapVCWrapper.mapViewController.mapState = appState.mapState
         mapVCWrapper.mapViewController.elementsRepo = elementsRepository
         mapVCWrapper.mapViewController.areasRepo = areasRepository
-        mapVCWrapper.mapViewController.onCommunityTapped = { community in
-            self.selectedCommunity = community
+        mapVCWrapper.mapViewController.onCommunityTapped = { _ in
             self.showCommunityDetail.toggle()
         }
     }
@@ -108,9 +107,13 @@ struct Home: View {
             
             // Community Detail sheet
             .sheet(isPresented: $showCommunityDetail, content: {
+                // TODO: - understand why this is called 5 times on each $showCommunityDetail value changes
                 if let communityDetailView = communityDetailView() {
-                    NavigationView {                        
+                    NavigationView {
                         communityDetailView
+                    }
+                    .onDisappear() {
+                        appState.mapState.selectedCommunity = nil
                     }
                 }
             })
