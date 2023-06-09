@@ -77,7 +77,7 @@ struct ElementViewModel {
         return URL(string: url)
     }
     
-    var superTaggerManualLink: URL = URL(string: "https://github.com/teambtcmap/btcmap-data/wiki/Tagging-Instructions")!
+    var superTaggerManualLink: URL = URL(string: "https://wiki.btcmap.org/general/tagging-instructions.html")!
     var viewOnOSMLink: URL? {
         let id = element.id.replacingOccurrences(of: ":", with: "/")
         let string = "https://www.openstreetmap.org/\(id)"

@@ -10,7 +10,7 @@ import os
 import CoreLocation
 import GEOSwift
 
-// API Documentation: https://github.com/teambtcmap/btcmap-api/wiki
+// API Documentation: https://wiki.btcmap.org/api/introduction.html
 class API {
     let logger = Logger(subsystem: "org.btcmap.app", category: "API")
     let rest: REST = .init(base: URL(string: "https://api.btcmap.org/")!)
