@@ -122,6 +122,7 @@ struct Home: View {
         .environmentObject(appState)
         .environmentObject(areasRepository)
         .environmentObject(elementsRepository)
+        .accentColor(.white)
     }
 }
 
