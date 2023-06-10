@@ -20,6 +20,7 @@ final class MapState: ObservableObject {
     @Published var bounds: Bounds?
     @Published var style: MapStyle = .topo
     @Published var visibleObjects: MapVisibleObjects = .elements
+    @Published var selectedCommunity: API.Area?
 
     init(centerCoordinate: CLLocationCoordinate2D? = nil, bounds: Bounds? = nil) {
         self.centerCoordinate = centerCoordinate

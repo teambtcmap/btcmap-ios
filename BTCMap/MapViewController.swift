@@ -216,6 +216,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     private func onTapPolygon(_ communityPolygon: CommunityPolygon) {
+        mapState.selectedCommunity = communityPolygon.community
         onCommunityTapped?(communityPolygon.community)
     }
     
