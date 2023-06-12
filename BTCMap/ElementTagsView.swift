@@ -138,7 +138,7 @@ struct ElementTagsView: View {
             alert.addAction(button)
         }
         
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
         alert.addAction(cancel)
         if var topController = UIApplication.shared.keyWindow?.rootViewController  {
             while let presentedViewController = topController.presentedViewController {

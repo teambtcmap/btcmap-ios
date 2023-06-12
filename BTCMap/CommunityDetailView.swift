@@ -85,7 +85,7 @@ struct CommunityDetailView: View {
             
             // MARK: - Elements
             if filteredElements.isEmpty {
-                Text("No Locations")
+                Text("no_locations".localized)
                     .listRowSeparator(.hidden)
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                     .padding([.top, .bottom], 6)

@@ -41,7 +41,7 @@ struct OptionsView: View {
                     .foregroundColor(.white)
             }
             .rotationEffect(.degrees(90))
-            .confirmationDialog("Options", isPresented: $showingOptions, titleVisibility: .hidden) {
+            .confirmationDialog("options".localized, isPresented: $showingOptions, titleVisibility: .hidden) {
                 Button("communities".localized) {
                     showingCommunities = true
                 }
