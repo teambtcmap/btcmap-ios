@@ -76,6 +76,8 @@
 		2C8D8B862A37AE4D005A48CF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2C8D8B882A37AE7C005A48CF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2C8D8B8A2A37AE89005A48CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C8D8B8B2A385047005A48CF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		2C8D8B8C2A385047005A48CF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AD6914CA28E37F4600D9F34E /* BTCMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BTCMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD6914CD28E37F4600D9F34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				en,
 				Base,
 				fr,
+				es,
 			);
 			mainGroup = AD6914C128E37F4600D9F34E;
 			packageReferences = (
@@ -555,6 +558,7 @@
 			children = (
 				2C8D8B882A37AE7C005A48CF /* fr */,
 				2C8D8B8A2A37AE89005A48CF /* en */,
+				2C8D8B8C2A385047005A48CF /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -564,6 +568,7 @@
 			children = (
 				AD6914D928E37F4800D9F34E /* Base */,
 				2C8D8B862A37AE4D005A48CF /* fr */,
+				2C8D8B8B2A385047005A48CF /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
