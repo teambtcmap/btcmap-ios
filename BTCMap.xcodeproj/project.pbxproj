@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C2922582A3A1B4400189C5E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C29225A2A3A1B4400189C5E /* InfoPlist.strings */; };
 		2C8D8B872A37AE7C005A48CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C8D8B892A37AE7C005A48CF /* Localizable.strings */; };
 		AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914CD28E37F4600D9F34E /* AppDelegate.swift */; };
 		AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */; };
@@ -73,6 +74,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C2922592A3A1B4400189C5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225B2A3A1B4700189C5E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225C2A3A1B4900189C5E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225D2A3A1B4A00189C5E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2C29225E2A3A1B4B00189C5E /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2C29225F2A3A1B4B00189C5E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C2922602A3A1D0700189C5E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C2922612A3A1D0700189C5E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2C8D8B882A37AE7C005A48CF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2C8D8B8A2A37AE89005A48CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2C8D8B8C2A385047005A48CF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -215,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				AD6914DB28E37F4800D9F34E /* Info.plist */,
+				2C29225A2A3A1B4400189C5E /* InfoPlist.strings */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -460,6 +470,7 @@
 				"pt-PT",
 				"pt-BR",
 				de,
+				it,
 			);
 			mainGroup = AD6914C128E37F4600D9F34E;
 			packageReferences = (
@@ -483,6 +494,7 @@
 				B1AFEEB729575004007C2D0A /* mock_user.json in Resources */,
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
 				B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */,
+				2C2922582A3A1B4400189C5E /* InfoPlist.strings in Resources */,
 				2C8D8B872A37AE7C005A48CF /* Localizable.strings in Resources */,
 				B1AFEEB529574FE7007C2D0A /* mock_event.json in Resources */,
 				AD8193F228F2C84400CAB29C /* ElementDetailsItemView.xib in Resources */,
@@ -557,6 +569,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		2C29225A2A3A1B4400189C5E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C2922592A3A1B4400189C5E /* en */,
+				2C29225B2A3A1B4700189C5E /* fr */,
+				2C29225C2A3A1B4900189C5E /* de */,
+				2C29225D2A3A1B4A00189C5E /* pt-BR */,
+				2C29225E2A3A1B4B00189C5E /* pt-PT */,
+				2C29225F2A3A1B4B00189C5E /* es */,
+				2C2922612A3A1D0700189C5E /* it */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		2C8D8B892A37AE7C005A48CF /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -566,6 +592,7 @@
 				2C8D8B8E2A3851D7005A48CF /* pt-PT */,
 				2C8D8B902A3852FE005A48CF /* pt-BR */,
 				2C8D8B922A3858E6005A48CF /* de */,
+				2C2922602A3A1D0700189C5E /* it */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -705,11 +732,12 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = X2ZH23CYYJ;
+				DEVELOPMENT_TEAM = DFZ4MU84W6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "BTCMaps uses your location to center the map and to filter Communities and Elements close to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -721,7 +749,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2.3;
-				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app;
+				PRODUCT_BUNDLE_IDENTIFIER = berserk21.btcmap.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -738,11 +766,12 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = X2ZH23CYYJ;
+				DEVELOPMENT_TEAM = DFZ4MU84W6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "BTCMaps uses your location to center the map and to filter Communities and Elements close to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -754,7 +783,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2.3;
-				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app;
+				PRODUCT_BUNDLE_IDENTIFIER = berserk21.btcmap.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
