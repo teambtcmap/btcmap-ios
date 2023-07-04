@@ -732,7 +732,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = DFZ4MU84W6;
+				DEVELOPMENT_TEAM = X2ZH23CYYJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
@@ -749,7 +749,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2.3;
-				PRODUCT_BUNDLE_IDENTIFIER = berserk21.btcmap.app;
+				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
