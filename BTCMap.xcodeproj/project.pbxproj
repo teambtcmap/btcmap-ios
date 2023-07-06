@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C2922582A3A1B4400189C5E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C29225A2A3A1B4400189C5E /* InfoPlist.strings */; };
+		2C8D8B872A37AE7C005A48CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C8D8B892A37AE7C005A48CF /* Localizable.strings */; };
 		AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914CD28E37F4600D9F34E /* AppDelegate.swift */; };
 		AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */; };
 		AD6914D728E37F4800D9F34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD6914D628E37F4800D9F34E /* Assets.xcassets */; };
@@ -14,7 +16,6 @@
 		AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914E728E3814F00D9F34E /* MapViewController.swift */; };
 		AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD6914E828E3814F00D9F34E /* MapViewController.xib */; };
 		AD7E331428E8278D004B1DFE /* REST.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331328E8278D004B1DFE /* REST.swift */; };
-		AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD7E331528E831A6004B1DFE /* Localizable.strings */; };
 		AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331828E831C2004B1DFE /* Localizable.swift */; };
 		AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */; };
 		AD7E331E28E8D2CF004B1DFE /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */; };
@@ -73,6 +74,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C2922592A3A1B4400189C5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225B2A3A1B4700189C5E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225C2A3A1B4900189C5E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225D2A3A1B4A00189C5E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2C29225E2A3A1B4B00189C5E /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2C29225F2A3A1B4B00189C5E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C2922602A3A1D0700189C5E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C2922612A3A1D0700189C5E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C8D8B882A37AE7C005A48CF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C8D8B8A2A37AE89005A48CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C8D8B8C2A385047005A48CF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C8D8B8E2A3851D7005A48CF /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2C8D8B902A3852FE005A48CF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2C8D8B922A3858E6005A48CF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AD6914CA28E37F4600D9F34E /* BTCMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BTCMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD6914CD28E37F4600D9F34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,7 +97,6 @@
 		AD6914E728E3814F00D9F34E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		AD6914E828E3814F00D9F34E /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		AD7E331328E8278D004B1DFE /* REST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REST.swift; sourceTree = "<group>"; };
-		AD7E331528E831A6004B1DFE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		AD7E331828E831C2004B1DFE /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementMarkerEmoji.swift; sourceTree = "<group>"; };
 		AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledLabel.swift; sourceTree = "<group>"; };
@@ -197,7 +211,7 @@
 		AD6914E228E380CA00D9F34E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AD7E331528E831A6004B1DFE /* Localizable.strings */,
+				2C8D8B892A37AE7C005A48CF /* Localizable.strings */,
 				AD6914D628E37F4800D9F34E /* Assets.xcassets */,
 				AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */,
 				B1AFEEB1295747AD007C2D0A /* Mocks */,
@@ -210,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				AD6914DB28E37F4800D9F34E /* Info.plist */,
+				2C29225A2A3A1B4400189C5E /* InfoPlist.strings */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -450,6 +465,12 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				es,
+				"pt-PT",
+				"pt-BR",
+				de,
+				it,
 			);
 			mainGroup = AD6914C128E37F4600D9F34E;
 			packageReferences = (
@@ -473,7 +494,8 @@
 				B1AFEEB729575004007C2D0A /* mock_user.json in Resources */,
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
 				B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */,
-				AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */,
+				2C2922582A3A1B4400189C5E /* InfoPlist.strings in Resources */,
+				2C8D8B872A37AE7C005A48CF /* Localizable.strings in Resources */,
 				B1AFEEB529574FE7007C2D0A /* mock_event.json in Resources */,
 				AD8193F228F2C84400CAB29C /* ElementDetailsItemView.xib in Resources */,
 				B1AFEEB3295747D8007C2D0A /* mock_element.json in Resources */,
@@ -547,6 +569,34 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		2C29225A2A3A1B4400189C5E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C2922592A3A1B4400189C5E /* en */,
+				2C29225B2A3A1B4700189C5E /* fr */,
+				2C29225C2A3A1B4900189C5E /* de */,
+				2C29225D2A3A1B4A00189C5E /* pt-BR */,
+				2C29225E2A3A1B4B00189C5E /* pt-PT */,
+				2C29225F2A3A1B4B00189C5E /* es */,
+				2C2922612A3A1D0700189C5E /* it */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2C8D8B892A37AE7C005A48CF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C8D8B882A37AE7C005A48CF /* fr */,
+				2C8D8B8A2A37AE89005A48CF /* en */,
+				2C8D8B8C2A385047005A48CF /* es */,
+				2C8D8B8E2A3851D7005A48CF /* pt-PT */,
+				2C8D8B902A3852FE005A48CF /* pt-BR */,
+				2C8D8B922A3858E6005A48CF /* de */,
+				2C2922602A3A1D0700189C5E /* it */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -562,6 +612,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -622,6 +673,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -685,6 +737,7 @@
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "BTCMaps uses your location to center the map and to filter Communities and Elements close to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -718,6 +771,7 @@
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "BTCMaps uses your location to center the map and to filter Communities and Elements close to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

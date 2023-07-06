@@ -14,7 +14,7 @@ struct SearchBar: View {
     var foregroundColor: Color = .white
     
     var body: some View {
-        TextField("Search", text: $searchText)
+        TextField("search".localized, text: $searchText)
             .padding(14)
             .background(backgroundColor)
             .cornerRadius(28)

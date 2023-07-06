@@ -30,6 +30,15 @@
 "place_singular" = "place";
 "places_plural" = "places";
 "verified" = "Verified";
+"no_results" = "No results";
+"communities" = "Communities";
+
+
+// COMMUNITY DETAIL VIEW
+"no_locations" = "No locations";
+
+// SETTINGS VIEW
+"settings" = "Settings";
 
 // OPTIONS VIEW
 "add_place" = "Add location";
@@ -42,6 +51,7 @@
 "themed_pins" = "Themed pins";
 "dark_map" = "Dark map";
 "show_tags" = "Show tags";
+"options" = "Options";
 
 // DONATE
 "donate" = "Donate";
@@ -49,3 +59,10 @@
 "copy_lnurl" = "Copy LNURL";
 "copy_btc_address" = "Copy Address";
 "pay" = "Pay";
+
+// SEARCH BAR
+"search" = "Search";
+
+// Element Tags View
+"cancel" = "Cancel";
+

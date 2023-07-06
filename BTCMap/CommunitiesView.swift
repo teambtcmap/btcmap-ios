@@ -86,7 +86,7 @@ struct CommunitiesView: View {
                         Color.BTCMap_DiscordDarkBlack.ignoresSafeArea()
                         
                         VStack {
-                            Text("No results")
+                            Text("no_results".localized)
                             Spacer()
                         }
                     }
@@ -97,7 +97,7 @@ struct CommunitiesView: View {
             .edgesIgnoringSafeArea(.bottom)
         }
         .navigationBarHidden(false)
-        .navigationBarTitle("Communities", displayMode: .inline)
+        .navigationBarTitle("communities".localized, displayMode: .inline)
         .background(Color.BTCMap_DiscordDarkBlack)
     }
 }

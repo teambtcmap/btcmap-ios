@@ -1,0 +1,68 @@
+/* 
+  Localizable.strings
+  BTC Map
+
+  Created by Vitaly Berg on 10/1/22.
+  
+*/
+
+// ELEMENT VIEW
+"verify" = "Vérifier";
+"not_verified_by_supertaggers_short" = "Non vérifié";
+"not_verified_by_supertaggers_long" = "Non vérifié par les \nSupertaggers";
+"supertagger_manual" = "Manuel du Supertagger";
+"view_on_osm" = "Voir sur OSM";
+"edit_on_osm" = "Modifier sur OSM";
+"edit_tags" = "Modifier les tags";
+"tags" = "Tags";
+
+"address" = "Adress";
+"phone" = "Téléphone";
+"website" = "Site web";
+"email" = "Email";
+"facebook" = "Facebook";
+"twitter" = "Twitter";
+"opening_hours" = "Horaires d'ouverture";
+"select_navigation_app" = "Sélectionner une app de navigation";
+
+// COMMUNITIES VIEW
+"km" = "km";
+"place_singular" = "Lieu";
+"places_plural" = "Lieux";
+"verified" = "Vérifié";
+"no_results" = "Pas de résultats";
+"communities" = "Communautés";
+
+
+// COMMUNITY DETAIL VIEW
+"no_locations" = "Aucun lieu";
+
+// SETTINGS VIEW
+"settings" = "Réglages";
+
+// OPTIONS VIEW
+"add_place" = "Ajouter un lieu";
+"communities" = "Communautés";
+"trends" = "Tendances";
+"top_supertaggers" = "Top supertaggers";
+"latest_changes" = "Changements récents";
+"settings" = "Réglages";
+"connect_osm_account" = "Connecter son compte OSM";
+"themed_pins" = "Épingles à thème";
+"dark_map" = "Carte sombre";
+"show_tags" = "Montrer les tags";
+"options" = "Options";
+
+// DONATE
+"donate" = "Faire un don";
+"donate_headline" = "Aidez-nous à améliorer BTCMap";
+"copy_lnurl" = "Copier LNURL";
+"copy_btc_address" = "Copier l'adresse";
+"pay" = "Payer";
+
+// SEARCH BAR
+"search" = "Rechercher";
+
+// Element Tags View
+"cancel" = "Annuler";
+

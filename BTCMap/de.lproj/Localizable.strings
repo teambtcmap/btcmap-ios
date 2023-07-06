@@ -1,0 +1,66 @@
+/* 
+  Localizable.strings
+  BTC Map
+
+  Created by Vitaly Berg on 10/1/22.
+  
+*/
+
+// ELEMENT VIEW
+"verify" = "Überprüfen";
+"not_verified_by_supertaggers_short" = "Nicht überprüft";
+"not_verified_by_supertaggers_long" = "Nicht von Supertaggers überprüft";
+"supertagger_manual" = "Supertagger-Handbuch";
+"view_on_osm" = "Auf OSM anzeigen";
+"edit_on_osm" = "Auf OSM bearbeiten";
+"edit_tags" = "Tags bearbeiten";
+"tags" = "Tags";
+
+"address" = "Adresse";
+"phone" = "Telefon";
+"website" = "Website";
+"email" = "E-Mail";
+"facebook" = "Facebook";
+"twitter" = "Twitter";
+"opening_hours" = "Öffnungszeiten";
+"select_navigation_app" = "Navigations-App auswählen";
+
+// COMMUNITIES VIEW
+"km" = "km";
+"place_singular" = "Ort";
+"places_plural" = "Orte";
+"verified" = "Verifiziert";
+"no_results" = "Keine Ergebnisse";
+"communities" = "Gemeinschaften";
+
+// COMMUNITY DETAIL VIEW
+"no_locations" = "Keine Standorte";
+
+// SETTINGS VIEW
+"settings" = "Einstellungen";
+
+// OPTIONS VIEW
+"add_place" = "Ort hinzufügen";
+"communities" = "Gemeinschaften";
+"trends" = "Trends";
+"top_supertaggers" = "Top-Supertaggers";
+"latest_changes" = "Letzte Änderungen";
+"settings" = "Einstellungen";
+"connect_osm_account" = "OSM-Konto verbinden";
+"themed_pins" = "Thematische Pins";
+"dark_map" = "Dunkle Karte";
+"show_tags" = "Tags anzeigen";
+"options" = "Optionen";
+
+// DONATE
+"donate" = "Spenden";
+"donate_headline" = "Helfen Sie uns, BTCMap zu verbessern";
+"copy_lnurl" = "LNURL kopieren";
+"copy_btc_address" = "Adresse kopieren";
+"pay" = "Bezahlen";
+
+// SEARCH BAR
+"search" = "Suche";
+
+// Element Tags View
+"cancel" = "Abbrechen";
