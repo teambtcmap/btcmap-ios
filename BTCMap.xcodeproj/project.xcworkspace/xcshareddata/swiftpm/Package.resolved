@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/GEOSwift/GEOSwift.git",
       "state" : {
-        "revision" : "e55eef92fb533107b43e30fcf275223a5055797e",
-        "version" : "10.0.0"
+        "revision" : "2d23ede8c82c067655d3a9f0221bc73f08cd399a",
+        "version" : "10.1.0"
       }
     }
   ],

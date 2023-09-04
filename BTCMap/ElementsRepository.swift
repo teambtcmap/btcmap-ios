@@ -32,7 +32,7 @@ class ElementsRepository: ObservableObject, Repository {
         queue.async { self.start() }
     }
         
-    @Published private(set) var items: Array<API.Element> = [] {
+    private(set) var items: Array<API.Element> = [] {
         didSet {
             filteredItems = filterItems(by: searchText)
         }
@@ -115,7 +115,7 @@ extension ElementsRepository {
     fileprivate func filterItems(by searchText: String) -> Array<API.Element> {
         return items.filter { element in
             searchText.isEmpty || (element.osmJson.name.localizedCaseInsensitiveContains(searchText))
-        }
+        }.filter { $0.deletedAt.isEmpty }
     }
 }
 

@@ -47,17 +47,20 @@ enum CommunityContactType: CaseIterable {
     }
 }
 
-typealias CommunityPlusDistance = (area: API.Area, distance: CLLocationDistance?)
+struct AreaWithDistance {
+    let area: API.Area
+    var distance: CLLocationDistance?
+}
 
 struct CommunityDetailViewModel {
-    var area: API.Area { communityPlusDistance.area }
-    let communityPlusDistance: CommunityPlusDistance
+    let areaWithDistance: AreaWithDistance
+    
     var distanceText: String? {
-        guard let distance = communityPlusDistance.distance else { return nil }
+        guard let distance = areaWithDistance.distance else { return nil }
         return "\(String(format: "%.1f", distance)) \("km".localized)"
     }
     
     var contacts: Array<CommunityContactType> {
-        return CommunityContactType.codedContacts.filter { $0.url(from: area) != nil }
+        return CommunityContactType.codedContacts.filter { $0.url(from: areaWithDistance.area) != nil }
     }
 }

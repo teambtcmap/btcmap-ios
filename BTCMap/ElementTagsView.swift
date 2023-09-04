@@ -33,38 +33,39 @@ struct ElementTagsView: View {
                             case .email:
                                 return URL(string: "mailto:\(detail.value)")
                             case .facebook:
-                                print(detail.value)
                                 return URL(string: "https://www.facebook.com/\(detail.value)")
                             case .instagram:
-                                print(detail.value)
                                 return URL(string: "https://www.instagram.com/\(detail.value)")
                             case .twitter:
-                                print(detail.value)
                                 return URL(string: "https://twitter.com/\(detail.value)")
                             //The case .address: is handled in the next if block
                             default: return nil
                             }
                         }()
 
-                        if detail.type == .address {
-                            Button(action: {
-                                openMapButtonAction(address: detail.value)
-                            }) {
-                                Text(detail.title)
-                                    .foregroundColor(Color.BTCMap_DarkBeige)
-                                    .font(.system(size: 18, weight: .black))
+                        VStack(alignment: .leading) {                            
+                            if detail.type == .address {
+                                Button(action: {
+                                    openMapButtonAction(address: detail.value)
+                                }) {
+                                    Text(detail.title)
+                                        .foregroundColor(Color.BTCMap_DarkBeige)
+                                        .font(.system(size: 16, weight: .medium))
+                                        .multilineTextAlignment(.leading)
+                                }
+                            } else if let url = url {
+                                Button(action: {
+                                    openURL(url)
+                                }) {
+                                    Text(detail.title)
+                                        .foregroundColor(Color.BTCMap_DarkBeige)
+                                        .font(.system(size: 16, weight: .medium))
+                                        .multilineTextAlignment(.leading)                         
+                                }
+                            } else {
+                                Text(detail.value)
+                                    .font(.system(size: 16, weight: .medium))
                             }
-                        } else if let url = url {
-                            Button(action: {
-                                openURL(url)
-                            }) {
-                                Text(detail.title)
-                                    .foregroundColor(Color.BTCMap_DarkBeige)
-                                    .font(.system(size: 18, weight: .black))
-                            }
-                        } else {
-                            Text(detail.value)
-                                .font(.system(size: 18, weight: .black))
                         }
                     }
                 }
@@ -80,6 +81,7 @@ struct ElementTagsView: View {
                             Text("tags".localized)
                                 .fontWeight(.bold)
                                 .font(.subheadline)
+                                .foregroundColor(.white.opacity(0.9))
                         }
                         ForEach(Array(tags.keys), id: \.self) { key in
                             HStack {
@@ -90,7 +92,7 @@ struct ElementTagsView: View {
                                         .foregroundColor(.gray)
                                     Text(value)
                                         .font(.system(size: 12))
-                                        .foregroundColor(Color.BTCMap_LightTeal)
+                                        .foregroundColor(.white)
                                 }
                             }
                           
@@ -136,7 +138,7 @@ struct ElementTagsView: View {
             alert.addAction(button)
         }
         
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
         alert.addAction(cancel)
         if var topController = UIApplication.shared.keyWindow?.rootViewController  {
             while let presentedViewController = topController.presentedViewController {

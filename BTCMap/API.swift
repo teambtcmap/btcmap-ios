@@ -10,7 +10,7 @@ import os
 import CoreLocation
 import GEOSwift
 
-// API Documentation: https://github.com/teambtcmap/btcmap-api/wiki
+// API Documentation: https://wiki.btcmap.org/api/introduction.html
 class API {
     let logger = Logger(subsystem: "org.btcmap.app", category: "API")
     let rest: REST = .init(base: URL(string: "https://api.btcmap.org/")!)
@@ -250,11 +250,26 @@ class API {
                     let values = try decoder.container(keyedBy: CodingKeys.self)
                     type = try values.decode(String.self, forKey: .type)
                     features = try values.decodeIfPresent([Feature].self, forKey: .features)
-                    guard let rawCoordinates = try? values.decode([[[Double]]].self, forKey: .coordinates) else { coordinates = nil; return }
-                    coordinates = rawCoordinates.map {
-                        $0.map {
-                            CLLocationCoordinate2D(latitude: $0[1], longitude: $0[0])
+                    
+                    // separate decoding paths for "Polygon" and "MultiPolygon" types
+                    switch type {
+                    case "Polygon":
+                        guard let rawCoordinates = try? values.decode([[[Double]]].self, forKey: .coordinates) else {
+                            coordinates = nil; return }
+                        
+                        coordinates = [rawCoordinates[0].map {
+                            return CLLocationCoordinate2D(latitude: $0[1], longitude: $0[0])
+                        }]
+                    case "MultiPolygon":
+                        guard let rawCoordinates = try? values.decode([[[[Double]]]].self, forKey: .coordinates) else {
+                            coordinates = nil; return }
+                
+                        coordinates = rawCoordinates[0].map { polygon in
+                            polygon.map {
+                                return CLLocationCoordinate2D(latitude: $0[1], longitude: $0[0])
+                            }
                         }
+                    default: coordinates = nil; return
                     }
                 }
                 

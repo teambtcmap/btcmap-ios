@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C2922582A3A1B4400189C5E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C29225A2A3A1B4400189C5E /* InfoPlist.strings */; };
+		2C8D8B872A37AE7C005A48CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C8D8B892A37AE7C005A48CF /* Localizable.strings */; };
 		AD6914CE28E37F4600D9F34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914CD28E37F4600D9F34E /* AppDelegate.swift */; };
 		AD6914D028E37F4600D9F34E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */; };
 		AD6914D728E37F4800D9F34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD6914D628E37F4800D9F34E /* Assets.xcassets */; };
@@ -14,7 +16,6 @@
 		AD6914E928E3814F00D9F34E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6914E728E3814F00D9F34E /* MapViewController.swift */; };
 		AD6914EA28E3814F00D9F34E /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD6914E828E3814F00D9F34E /* MapViewController.xib */; };
 		AD7E331428E8278D004B1DFE /* REST.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331328E8278D004B1DFE /* REST.swift */; };
-		AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD7E331528E831A6004B1DFE /* Localizable.strings */; };
 		AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331828E831C2004B1DFE /* Localizable.swift */; };
 		AD7E331B28E8679D004B1DFE /* ElementMarkerEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */; };
 		AD7E331E28E8D2CF004B1DFE /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */; };
@@ -55,6 +56,7 @@
 		B1AFEEB729575004007C2D0A /* mock_user.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEB629575004007C2D0A /* mock_user.json */; };
 		B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEBA29575036007C2D0A /* mock_area.json */; };
 		B1AFEEBD29575053007C2D0A /* mock_report.json in Resources */ = {isa = PBXBuildFile; fileRef = B1AFEEBC29575053007C2D0A /* mock_report.json */; };
+		B1BD47E629E9A0DB0035E0CC /* MKPolygon+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD47E529E9A0DB0035E0CC /* MKPolygon+Extensions.swift */; };
 		B1C35DDB297AD71A00D59008 /* CommunityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DDA297AD71A00D59008 /* CommunityDetailView.swift */; };
 		B1C35DE2297ADDEC00D59008 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DE1297ADDEC00D59008 /* LocationManager.swift */; };
 		B1C35DE4297ADF6C00D59008 /* CommunityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DE3297ADF6C00D59008 /* CommunityDetailViewModel.swift */; };
@@ -67,10 +69,26 @@
 		B1C35DF2297C1A5000D59008 /* ElementVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */; };
 		B1C35DF4297C1AAB00D59008 /* ElementTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */; };
 		ED08162B29C2AD630050EDAE /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED08162A29C2AD630050EDAE /* FilterView.swift */; };
+		B1FAACE429E892C20020B3F1 /* LayersButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FAACE329E892C20020B3F1 /* LayersButtonsView.swift */; };
+		B1FAACE929E8DC910020B3F1 /* GlowingPolygonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FAACE829E8DC910020B3F1 /* GlowingPolygonRenderer.swift */; };
 		ED3AEF7729BF5E70003A63FF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3AEF7629BF5E70003A63FF /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C2922592A3A1B4400189C5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225B2A3A1B4700189C5E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225C2A3A1B4900189C5E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C29225D2A3A1B4A00189C5E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2C29225E2A3A1B4B00189C5E /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2C29225F2A3A1B4B00189C5E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C2922602A3A1D0700189C5E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C2922612A3A1D0700189C5E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2C8D8B882A37AE7C005A48CF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C8D8B8A2A37AE89005A48CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C8D8B8C2A385047005A48CF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2C8D8B8E2A3851D7005A48CF /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2C8D8B902A3852FE005A48CF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2C8D8B922A3858E6005A48CF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AD6914CA28E37F4600D9F34E /* BTCMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BTCMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD6914CD28E37F4600D9F34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD6914CF28E37F4600D9F34E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,7 +98,6 @@
 		AD6914E728E3814F00D9F34E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		AD6914E828E3814F00D9F34E /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		AD7E331328E8278D004B1DFE /* REST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REST.swift; sourceTree = "<group>"; };
-		AD7E331528E831A6004B1DFE /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		AD7E331828E831C2004B1DFE /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		AD7E331A28E8679D004B1DFE /* ElementMarkerEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementMarkerEmoji.swift; sourceTree = "<group>"; };
 		AD7E331D28E8D2CF004B1DFE /* StyledLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledLabel.swift; sourceTree = "<group>"; };
@@ -119,6 +136,7 @@
 		B1AFEEB629575004007C2D0A /* mock_user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_user.json; sourceTree = "<group>"; };
 		B1AFEEBA29575036007C2D0A /* mock_area.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_area.json; sourceTree = "<group>"; };
 		B1AFEEBC29575053007C2D0A /* mock_report.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mock_report.json; sourceTree = "<group>"; };
+		B1BD47E529E9A0DB0035E0CC /* MKPolygon+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPolygon+Extensions.swift"; sourceTree = "<group>"; };
 		B1C35DDA297AD71A00D59008 /* CommunityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailView.swift; sourceTree = "<group>"; };
 		B1C35DE1297ADDEC00D59008 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B1C35DE3297ADF6C00D59008 /* CommunityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailViewModel.swift; sourceTree = "<group>"; };
@@ -131,6 +149,8 @@
 		B1C35DF1297C1A5000D59008 /* ElementVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementVerifyView.swift; sourceTree = "<group>"; };
 		B1C35DF3297C1AAB00D59008 /* ElementTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTagsView.swift; sourceTree = "<group>"; };
 		ED08162A29C2AD630050EDAE /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		B1FAACE329E892C20020B3F1 /* LayersButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersButtonsView.swift; sourceTree = "<group>"; };
+		B1FAACE829E8DC910020B3F1 /* GlowingPolygonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingPolygonRenderer.swift; sourceTree = "<group>"; };
 		ED3AEF7629BF5E70003A63FF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,7 +213,7 @@
 		AD6914E228E380CA00D9F34E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AD7E331528E831A6004B1DFE /* Localizable.strings */,
+				2C8D8B892A37AE7C005A48CF /* Localizable.strings */,
 				AD6914D628E37F4800D9F34E /* Assets.xcassets */,
 				AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */,
 				B1AFEEB1295747AD007C2D0A /* Mocks */,
@@ -206,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				AD6914DB28E37F4800D9F34E /* Info.plist */,
+				2C29225A2A3A1B4400189C5E /* InfoPlist.strings */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -239,6 +260,7 @@
 		AD6914E628E3813B00D9F34E /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				B1FAACE529E8C54B0020B3F1 /* Polygon */,
 				B1C35DEF297C0E8C00D59008 /* BoundedMap.swift */,
 				B17F30BB2963194700926E4F /* AnnotationViews */,
 				AD6914E728E3814F00D9F34E /* MapViewController.swift */,
@@ -334,6 +356,7 @@
 				B1C35DE7297B2EFF00D59008 /* NavBarTitleSubtitle.swift */,
 				B1C35DEB297B60E900D59008 /* ImageCircle.swift */,
 				B1926FBD29E3774400512641 /* SearchBar.swift */,
+				B1FAACE329E892C20020B3F1 /* LayersButtonsView.swift */,
 			);
 			name = SwiftUI;
 			sourceTree = "<group>";
@@ -390,6 +413,15 @@
 			name = Communities;
 			sourceTree = "<group>";
 		};
+		B1FAACE529E8C54B0020B3F1 /* Polygon */ = {
+			isa = PBXGroup;
+			children = (
+				B1FAACE829E8DC910020B3F1 /* GlowingPolygonRenderer.swift */,
+				B1BD47E529E9A0DB0035E0CC /* MKPolygon+Extensions.swift */,
+			);
+			name = Polygon;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -436,6 +468,12 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				es,
+				"pt-PT",
+				"pt-BR",
+				de,
+				it,
 			);
 			mainGroup = AD6914C128E37F4600D9F34E;
 			packageReferences = (
@@ -459,7 +497,8 @@
 				B1AFEEB729575004007C2D0A /* mock_user.json in Resources */,
 				AD6914DA28E37F4800D9F34E /* LaunchScreen.storyboard in Resources */,
 				B1AFEEBB29575036007C2D0A /* mock_area.json in Resources */,
-				AD7E331628E831A6004B1DFE /* Localizable.strings in Resources */,
+				2C2922582A3A1B4400189C5E /* InfoPlist.strings in Resources */,
+				2C8D8B872A37AE7C005A48CF /* Localizable.strings in Resources */,
 				B1AFEEB529574FE7007C2D0A /* mock_event.json in Resources */,
 				AD8193F228F2C84400CAB29C /* ElementDetailsItemView.xib in Resources */,
 				B1AFEEB3295747D8007C2D0A /* mock_element.json in Resources */,
@@ -484,6 +523,7 @@
 				B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */,
 				B17F30A72957CB4300926E4F /* DonateView.swift in Sources */,
 				B1459B612979FCE9006D376B /* RepositoryProtocol.swift in Sources */,
+				B1FAACE429E892C20020B3F1 /* LayersButtonsView.swift in Sources */,
 				AD96B93428E4BC7400B558D4 /* ElementsRepository.swift in Sources */,
 				B17F30B6295A5C1300926E4F /* String+UIImage.swift in Sources */,
 				B155BADB2985F4D500A25265 /* AppState.swift in Sources */,
@@ -512,7 +552,9 @@
 				B117CA9729E636C40011BF7E /* OneTimeActions.swift in Sources */,
 				B1926FBC29E3460C00512641 /* GEOSwift+Extensions.swift in Sources */,
 				B1926FBE29E3774400512641 /* SearchBar.swift in Sources */,
+				B1BD47E629E9A0DB0035E0CC /* MKPolygon+Extensions.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
+				B1FAACE929E8DC910020B3F1 /* GlowingPolygonRenderer.swift in Sources */,
 				B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,
@@ -531,6 +573,34 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		2C29225A2A3A1B4400189C5E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C2922592A3A1B4400189C5E /* en */,
+				2C29225B2A3A1B4700189C5E /* fr */,
+				2C29225C2A3A1B4900189C5E /* de */,
+				2C29225D2A3A1B4A00189C5E /* pt-BR */,
+				2C29225E2A3A1B4B00189C5E /* pt-PT */,
+				2C29225F2A3A1B4B00189C5E /* es */,
+				2C2922612A3A1D0700189C5E /* it */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2C8D8B892A37AE7C005A48CF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C8D8B882A37AE7C005A48CF /* fr */,
+				2C8D8B8A2A37AE89005A48CF /* en */,
+				2C8D8B8C2A385047005A48CF /* es */,
+				2C8D8B8E2A3851D7005A48CF /* pt-PT */,
+				2C8D8B902A3852FE005A48CF /* pt-BR */,
+				2C8D8B922A3858E6005A48CF /* de */,
+				2C2922602A3A1D0700189C5E /* it */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		AD6914D828E37F4800D9F34E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -546,6 +616,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -606,6 +677,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -663,12 +735,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = X2ZH23CYYJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "BTCMaps uses your location to center the map and to filter Communities and Elements close to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -679,7 +752,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -696,12 +769,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = X2ZH23CYYJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BTCMap/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "BTC Map";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "BTCMaps uses your location to center the map and to filter Communities and Elements close to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -712,7 +786,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.btcmap.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

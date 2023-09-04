@@ -17,63 +17,50 @@ struct CommunityElementView: View {
     
     var body: some View {
         let elementViewModel = ElementViewModel(element: element)
-        GeometryReader { geometry in
-            VStack {
-                List {
-                    // MARK: - Map
-                    ZStack(alignment: .top) {
-                        
-                        BoundedMapView(element: element,
-                                       region: BoundedMapView.region(from: communityDetailViewModel.area.bounds ?? Bounds.zeroBounds,
-                                                                     padding: 0.1))                                      
-                        .frame(height: geometry.size.height * 0.3)
-                        .frame( maxWidth: .infinity)
-                        .onTapGesture {
-                            // hack to pop back to home. see note in AppState
-                            appState.homeViewId = UUID()
-                            appState.mapState.centerCoordinate = element.coord
-                        }
-                        
-                        NavBarTitleSubtitle(title: element.osmJson.name, subtitle: "")
-                    }
-                    .listRowSeparator(.hidden)
-                    
-                    // MARK: - Name
-                    Text(element.osmJson.name)
-                        .font(.title2)
-                        .padding(.horizontal)
-                        .listRowSeparator(.hidden)
-                    
-                    // MARK: - Verified
-                    HStack {
-                        ElementVerifyView(elementViewModel: elementViewModel,
-                                          notVerifiedTextType: .long)
-                    }
-                    .listRowSeparator(.hidden)
-                    .padding(.horizontal)
-                    
-                    
-                    // MARK: - Details
-                    HStack {
-                        ElementTagsView(elementViewModel: elementViewModel)
-                    }
-                    .listRowSeparator(.hidden)
-                    .padding(.horizontal)
-                    
-                }
-                .listStyle(.plain)
-                .frame( maxWidth: .infinity)
-                .edgesIgnoringSafeArea(.horizontal)
-                
+        List {
+            // MARK: - Map
+            BoundedMapView(element: element,
+                           region: BoundedMapView.region(from: communityDetailViewModel.areaWithDistance.area.bounds ?? Bounds.zeroBounds,
+                                                         padding: 0.1))
+            .frame(height: UIScreen.main.bounds.height * 0.23)
+            .frame( maxWidth: .infinity)
+            .onTapGesture {
+                // hack to pop back to home. see note in AppState
+                appState.homeViewId = UUID()
+                appState.mapState.centerCoordinate = element.coord
             }
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+            
+            // MARK: - Verified
+            HStack {
+                ElementVerifyView(elementViewModel: elementViewModel,
+                                  notVerifiedTextType: .long)
+            }
+            .listRowSeparator(.hidden)
+            .padding(.horizontal)
+            .listRowBackground(Color.clear)
+            
+            // MARK: - Details
+            HStack {
+                ElementTagsView(elementViewModel: elementViewModel)
+            }
+            .listRowSeparator(.hidden)
+            .padding(.horizontal)
+            .listRowBackground(Color.clear)
         }
+        .background(Color.BTCMap_DiscordDarkBlack)
+        .listStyle(.plain)
+        .frame( maxWidth: .infinity)
+        .edgesIgnoringSafeArea(.horizontal)
+        .navigationBarTitle(element.osmJson.name, displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode.large)
     }
 }
 
 struct CommunityElementView_Previews: PreviewProvider {
     static var previews: some View {
-        let community = CommunityPlusDistance(area: API.Area.mock!, distance: nil)
-        let viewModel = CommunityDetailViewModel(communityPlusDistance: community)
+        let community = AreaWithDistance(area: API.Area.mock!, distance: nil)
+        let viewModel = CommunityDetailViewModel(areaWithDistance: community)
         let element = API.Element.mock!
         CommunityElementView(communityDetailViewModel: viewModel, element: element)
     }

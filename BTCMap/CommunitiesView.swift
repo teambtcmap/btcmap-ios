@@ -13,23 +13,23 @@ struct CommunitiesView: View {
     @State private var searchText = ""
 
     /// Returns communities with a distance value, which can then be sorted by proximity to current user location.
-    private var communitiesWithDistance: [CommunityPlusDistance] {
-        guard let currentLoc = locationManager.location else { return areasRepo.communities.map { CommunityPlusDistance(area: $0, distance: nil) } }
+    private var communitiesWithDistance: [AreaWithDistance] {
+        guard let currentLoc = locationManager.location else { return areasRepo.communities.map { AreaWithDistance(area: $0, distance: nil) } }
         return areasRepo.communities.map { (area) in
-            guard let areaCoord = area.centerCoord else { return CommunityPlusDistance(area: area, distance: nil) }
-            return CommunityPlusDistance(area: area,
+            guard let areaCoord = area.centerCoord else { return AreaWithDistance(area: area, distance: nil) }
+            return AreaWithDistance(area: area,
                                          distance: MapCalculations.haversineDistance(coord1: currentLoc.coordinate,
                                                                                      coord2: areaCoord))
         }
     }
     
     /// Returns communities without a distance value. This is used when a user has not authorized user location.
-    private var communitiesWithoutDistance: [CommunityPlusDistance] {
-        return areasRepo.communities.map { CommunityPlusDistance(area: $0, distance: nil) }
+    private var communitiesWithoutDistance: [AreaWithDistance] {
+        return areasRepo.communities.map { AreaWithDistance(area: $0, distance: nil) }
     }
 
-    private var communities: [CommunityPlusDistance] {
-        let allCommunities: [CommunityPlusDistance] = {
+    private var communities: [AreaWithDistance] {
+        let allCommunities: [AreaWithDistance] = {
             switch locationManager.status {
                 case .authorizedAlways, .authorizedWhenInUse:
                 return communitiesWithDistance
@@ -54,11 +54,11 @@ struct CommunitiesView: View {
     
     var body: some View {
         VStack {
-            SearchBar(searchText: $searchText, backgroundColor: Color.BTCMap_BackgroundBlue.opacity(0.5))
-
+            SearchBar(searchText: $searchText, backgroundColor: Color.BTCMap_DiscordLightBlack)
             List(communities, id: \.area.id) { item in
-                let communityDetailViewModel = CommunityDetailViewModel(communityPlusDistance: item)
-                NavigationLink(destination: CommunityDetailView(communityDetailViewModel: communityDetailViewModel)) {
+                let communityDetailViewModel = CommunityDetailViewModel(areaWithDistance: item)
+                let areaName = communityDetailViewModel.areaWithDistance.area.name ?? ""
+                NavigationLink(destination: CommunityDetailView(communityDetailViewModel: communityDetailViewModel).navigationBarTitle(areaName, displayMode: .large)) {
                     HStack {
                         AsyncImage(url: item.area.iconUrl)
                             .frame(width: 40, height: 40)
@@ -75,12 +75,30 @@ struct CommunitiesView: View {
                         }
                     }
                 }
-                .listRowSeparator(.hidden)
+                .listRowSeparator(.visible)
+                .listRowSeparatorTint(Color.BTCMap_DiscordLightBlack)
+                .listRowBackground(Color.BTCMap_DiscordDarkBlack)
             }
+            /// Show a background color overlay when results are empty
+            .overlay(Group {
+                if communities.isEmpty {
+                    ZStack() {
+                        Color.BTCMap_DiscordDarkBlack.ignoresSafeArea()
+                        
+                        VStack {
+                            Text("no_results".localized)
+                            Spacer()
+                        }
+                    }
+                }
+            })
+            .background(Color.BTCMap_DiscordDarkBlack)
             .listStyle(.plain)
+            .edgesIgnoringSafeArea(.bottom)
         }
         .navigationBarHidden(false)
-        .navigationBarTitle("Communities", displayMode: .inline)
+        .navigationBarTitle("communities".localized, displayMode: .inline)
+        .background(Color.BTCMap_DiscordDarkBlack)
     }
 }
 
