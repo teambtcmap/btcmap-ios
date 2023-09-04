@@ -24,7 +24,7 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Section(header: Text("settings".localized)) {
+            Section {
                 /*
                  * TODO: Implement in the future
                  Toggle("themed_pins".localized, isOn: $isThemedPinsOn)
@@ -46,9 +46,11 @@ struct SettingsView: View {
                 }
                  */
             }
+            .listRowBackground(Color.BTCMap_DiscordDarkBlack)
         }
-        .listStyle(GroupedListStyle())
-        .navigationBarTitle("Settings")
+        .listStyle(.plain)
+        .background(Color.BTCMap_DiscordLightBlack)
+        .navigationBarTitle("settings".localized)
     }
 }
 

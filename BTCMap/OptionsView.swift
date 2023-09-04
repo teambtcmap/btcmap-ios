@@ -27,7 +27,7 @@ struct OptionsView: View {
                     dismissElementView?()
                     showingCommunities = true
                 }) {
-                    Image("btc_logo")
+                    Image(systemName: "person.3.fill")
                         .foregroundColor(.white)
                 }
             }
@@ -41,7 +41,7 @@ struct OptionsView: View {
                     .foregroundColor(.white)
             }
             .rotationEffect(.degrees(90))
-            .confirmationDialog("Options", isPresented: $showingOptions, titleVisibility: .hidden) {
+            .confirmationDialog("options".localized, isPresented: $showingOptions, titleVisibility: .hidden) {
                 Button("communities".localized) {
                     showingCommunities = true
                 }
@@ -83,11 +83,10 @@ struct OptionsView: View {
             NavigationLink(destination: DonateView(), isActive: $showingDonate) { }
             NavigationLink(destination: SettingsView(), isActive: $showingSettings) { }
         }
-        .padding(14)
-        .background(Color.black.opacity(0.7))
-        .cornerRadius(28)
+        .background(Color.clear)
     }
 }
+
 
 //struct OptionsView_Previews: PreviewProvider {
 //    static var previews: some View {

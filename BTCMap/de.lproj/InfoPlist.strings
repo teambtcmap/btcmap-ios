@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  BTCMap
+
+  Created by Berserk on 14/06/2023.
+  
+*/
+
+"CFBundleDisplayName" = "BTCMap";
+"CFBundleName" = "BTCMap";
+"NSLocationWhenInUseUsageDescription" = "BTCMap verwendet Ihren Standort, um die Karte zu zentrieren und Gemeinschaften und Elemente in Ihrer Nähe zu filtern.";

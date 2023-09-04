@@ -21,14 +21,24 @@ class ElementsRepository: ObservableObject, Repository {
     let documentPath: String = "elements"
     let description: String = "elements"
     
+    private var searchText: String = "" {
+        didSet {
+            filteredItems = filterItems(by: searchText) }
+    }
+    
     required init(api: API) {
         logger.log("Init")
         self.api = api
         queue.async { self.start() }
     }
         
-    @Published private(set) var items: Array<API.Element> = []
-        
+    private(set) var items: Array<API.Element> = [] {
+        didSet {
+            filteredItems = filterItems(by: searchText)
+        }
+    }
+    @Published private(set) var filteredItems: Array<API.Element> = []
+
     internal func start() {
         do {
             let items = try {
@@ -94,6 +104,20 @@ class ElementsRepository: ObservableObject, Repository {
     }
 }
 
+// MARK: - Filter elements by search
+extension ElementsRepository {
+    func searchStringDidChange(_ searchText: String) {
+        self.searchText = searchText
+    }
+    
+    fileprivate func filterItems(by searchText: String) -> Array<API.Element> {
+        return items.filter { element in
+            searchText.isEmpty || (element.osmJson.name.localizedCaseInsensitiveContains(searchText))
+        }.filter { $0.deletedAt.isEmpty }
+    }
+}
+
+// MARK: - Filter elements by geometry
 extension ElementsRepository {
     func elements(from bounds: Bounds) -> Array<API.Element> {
         return items.filter {

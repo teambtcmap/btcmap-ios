@@ -14,3 +14,7 @@ extension Polygon {
         return exterior.points.map { CLLocationCoordinate2D(latitude: $0.x, longitude: $0.y) }
     }
 }
+
+extension Point {
+    var coord: CLLocationCoordinate2D { CLLocationCoordinate2D(latitude: x, longitude: y) }
+}

@@ -42,6 +42,7 @@ struct ElementVerifyView: View {
             }) {
                 Text("verify".localized.uppercased())
                     .foregroundColor(Color.BTCMap_DarkBeige)
+                    .font(.system(size: 14)) 
             }
             .buttonStyle(BorderButtonStyle(foregroundColor: .white, strokeColor: Color.gray.opacity(0.5), padding: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)))
         }

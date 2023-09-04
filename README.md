@@ -20,7 +20,7 @@ Run `elements.js` to calculate statistics about elements and tags.
 
 ### Where does BTC Map take its data from?
 
-The data is provided by Open Street Map:
+The data is provided by OpenStreetMap:
 
 https://www.openstreetmap.org
 
@@ -28,15 +28,15 @@ https://www.openstreetmap.org
 
 Absolutely, you are very welcome to do that. This is a good place to start: 
 
-[Tagging Instructions](https://github.com/teambtcmap/btcmap-data/wiki/Tagging-Instructions)
+[Tagging Instructions](https://wiki.btcmap.org/general/tagging-instructions.html)
 
 ### BTC Map shows a place which doesn't exist, how can I delete it?
 
-You can delete such places from Open Street Map and BTC Map will pick up all your changes within 10 minutes.
+You can delete such places from OpenStreetMap and BTC Map will pick up all your changes within 10 minutes.
 
 ### I've found a place on BTC Map but it doesn't accept bitcoins
 
-Open Street Map might have outdated information about some places, you can delete the following tags to remove this place from BTC Map:
+OpenStreetMap might have outdated information about some places, you can delete the following tags to remove this place from BTC Map:
 
 ```
 currency:XBT
