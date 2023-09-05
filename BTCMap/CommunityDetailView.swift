@@ -89,7 +89,7 @@ struct CommunityDetailView: View {
                     .listRowSeparator(.hidden)
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                     .padding([.top, .bottom], 6)
-                    .listRowBackground(Color.BTCMap_DiscordDarkBlack)
+                    .listRowBackground(Color.clear)
             }
             
             ForEach(filteredElements) { item in
