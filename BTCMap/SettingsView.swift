@@ -50,7 +50,7 @@ struct SettingsView: View {
         }
         .listStyle(.plain)
         .background(Color.BTCMap_DiscordLightBlack)
-        .navigationBarTitle("Settings")
+        .navigationBarTitle("settings".localized)
     }
 }
 
