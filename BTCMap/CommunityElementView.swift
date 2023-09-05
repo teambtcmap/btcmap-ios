@@ -19,9 +19,9 @@ struct CommunityElementView: View {
         let elementViewModel = ElementViewModel(element: element)
         List {
             // MARK: - Map
+            let bounds = communityDetailViewModel.areaWithDistance.area.bounds
             BoundedMapView(element: element,
-                           region: BoundedMapView.region(from: communityDetailViewModel.areaWithDistance.area.bounds ?? Bounds.zeroBounds,
-                                                         padding: 0.1))
+                           region: BoundedMapView.region(from: bounds ?? Bounds.zeroBounds, coordinates: element.coord, padding: 0.1))
             .frame(height: UIScreen.main.bounds.height * 0.23)
             .frame( maxWidth: .infinity)
             .onTapGesture {

@@ -20,7 +20,11 @@ struct BoundedMapView: UIViewRepresentable {
     ///   - bounds: A Bounds object containing the minimum and maximum latitudes and longitudes of the region.
     ///   - padding: A value between 0 and 1, representing the percentage to pad the MKCoordinateRegion.
     /// - Returns: An MKCoordinateRegion adjusted for the specified padding.
-    static func region(from bounds: Bounds, padding: Double) -> MKCoordinateRegion {
+    static func region(from bounds: Bounds, coordinates: CLLocationCoordinate2D? = nil, padding: Double) -> MKCoordinateRegion {
+        if let center = coordinates {
+            return MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        }
+        
         let clampedPadding = max(min(padding, 1), 0)
         let center = CLLocationCoordinate2D(latitude: (bounds.maxlat + bounds.minlat) / 2, longitude: (bounds.maxlon + bounds.minlon) / 2)
         let latitudeDelta = (bounds.maxlat - bounds.minlat) * (1 + clampedPadding)
