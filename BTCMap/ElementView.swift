@@ -44,10 +44,14 @@ struct ElementView: View {
                             }
                         }
                         
-                        if let url = elementViewModel.ediotOnOSMLink {
+                        if let url = elementViewModel.editOnOSMLink {
                             Button("edit_on_osm".localized) {
                                 openURL(url)
                             }
+                        }
+                        
+                        if let url = elementViewModel.shareLink {
+                            ShareLink("share".localized, item: url, message: Text("\("share_prompt".localized) \(elementViewModel.element.osmJson.name)!"))
                         }
                     }
                 }
