@@ -83,10 +83,13 @@ struct ElementViewModel {
         let string = "https://www.openstreetmap.org/\(id)"
         return URL(string: string)
     }
-    var ediotOnOSMLink: URL? {
+    var editOnOSMLink: URL? {
         let id = element.id.replacingOccurrences(of: ":", with: "=")
         let string = "https://www.openstreetmap.org/edit?\(id)"
         return URL(string: string)
+    }
+    var shareLink: URL? {
+        return URL(string: "https://btcmap.org/merchant/\(element.id)")
     }
     
     // MARK: - Verify

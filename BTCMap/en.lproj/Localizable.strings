@@ -13,6 +13,8 @@
 "supertagger_manual" = "Supertagger Manual";
 "view_on_osm" = "View on OSM";
 "edit_on_osm" = "Edit on OSM";
+"share" = "Share";
+"share_prompt" = "We accept sats at";
 "edit_tags" = "Edit tags";
 "tags" = "Tags";
 
