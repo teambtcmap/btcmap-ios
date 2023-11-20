@@ -217,7 +217,8 @@ struct ElementSystemImages {
         "training": "figure.strengthtraining.traditional",
         "bitcoin_office": "bitcoinsign.circle.fill",
         "office": "building.2.crop.circle",
-        "language_school": "globe.americas.fill"
+        "language_school": "globe.americas.fill",
+        "community_centre": "person.2.circle.fill"
     ]
     static let place = [
         "farm": "carrot.fill"

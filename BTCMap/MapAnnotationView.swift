@@ -62,6 +62,12 @@ class MapAnnotationView: MKAnnotationView {
             glyphImageView?.image = glyphImage
         }
     }
+    
+    var markerTintColor: UIColor = .BTCMap_Links {
+         didSet {
+             updateMarkerTintColor()
+         }
+     }
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -101,5 +107,11 @@ class MapAnnotationView: MKAnnotationView {
             bounds = imageView.bounds
             markerImageView = imageView
         }
+    }
+    
+    private func updateMarkerTintColor() {
+        guard type == .marker else { return }
+        let tintedImage = UIImage(named: "marker")?.withTintColor(markerTintColor)
+        markerImageView?.image = tintedImage
     }
 }
