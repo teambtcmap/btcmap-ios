@@ -21,6 +21,21 @@ class ElementAnnotation: NSObject, MKAnnotation, Identifiable {
         self.element = element
         self.coordinate = self.element.coord ?? CLLocationCoordinate2D()
     }
+    
+    public var markerTintColor: UIColor {
+        // special case because "community_center" is the tag for Bitcoin Centers
+        guard element.osmJson.tags?["amenity"] != "community_centre" else {
+            return .orange
+        }
+        return .BTCMap_Links
+    }
+    
+    public var priority: MKFeatureDisplayPriority {
+        guard element.osmJson.tags?["amenity"] != "community_centre" else {
+            return .defaultHigh
+        }
+        return .defaultLow
+    }
 }
 
 class CommunityPolygon {
@@ -274,8 +289,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? ElementAnnotation {
             let marker = mapView.dequeueReusableAnnotationView(withIdentifier: "element", for: annotation) as! MarkerAnnotationView
+            marker.markerTintColor = annotation.markerTintColor
             marker.glyphImage = ElementSystemImages.systemImage(for: annotation.element, with: .alwaysTemplate)
-            marker.displayPriority = .defaultLow
+            marker.displayPriority = annotation.priority
             return marker
         }
         else if let annotation = annotation as? ClusterAnnotation {
