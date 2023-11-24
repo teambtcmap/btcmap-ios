@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CommunitiesView: View {
     let locationManager = LocationManager()
-    @EnvironmentObject var areasRepo: AreasRepository
+    @EnvironmentObject var appState: AppState
+    var areasRepo: AreasRepository { appState.areasRepository }
     @State private var searchText = ""
 
     /// Returns communities with a distance value, which can then be sorted by proximity to current user location.

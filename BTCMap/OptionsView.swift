@@ -21,7 +21,7 @@ struct OptionsView: View {
     
     var body: some View {
         HStack {
-            // MARK: - Donate Button
+            // MARK: - Communities Button
             NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) {
                 Button(action: {
                     dismissElementView?()

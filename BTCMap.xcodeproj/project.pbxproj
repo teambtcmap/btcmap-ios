@@ -26,6 +26,9 @@
 		AD96B93228E4BB7100B558D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93128E4BB7100B558D4 /* API.swift */; };
 		AD96B93428E4BC7400B558D4 /* ElementsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD96B93328E4BC7400B558D4 /* ElementsRepository.swift */; };
 		B117CA9729E636C40011BF7E /* OneTimeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B117CA9629E636C40011BF7E /* OneTimeActions.swift */; };
+		B12C38002B10DFE5002B0352 /* ElementRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C37FF2B10DFE5002B0352 /* ElementRowView.swift */; };
+		B12C38032B10E0F5002B0352 /* NoElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C38022B10E0F5002B0352 /* NoElementsView.swift */; };
+		B139597F2B0EB780000874B4 /* ElementsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B139597E2B0EB780000874B4 /* ElementsListView.swift */; };
 		B1459B5F2979FCC6006D376B /* AreasRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1459B5E2979FCC6006D376B /* AreasRepository.swift */; };
 		B1459B612979FCE9006D376B /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1459B602979FCE9006D376B /* RepositoryProtocol.swift */; };
 		B1459B63297A0F5F006D376B /* elements.json in Resources */ = {isa = PBXBuildFile; fileRef = B1459B62297A0F5F006D376B /* elements.json */; };
@@ -107,6 +110,9 @@
 		AD96B93128E4BB7100B558D4 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		AD96B93328E4BC7400B558D4 /* ElementsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementsRepository.swift; sourceTree = "<group>"; };
 		B117CA9629E636C40011BF7E /* OneTimeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeActions.swift; sourceTree = "<group>"; };
+		B12C37FF2B10DFE5002B0352 /* ElementRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRowView.swift; sourceTree = "<group>"; };
+		B12C38022B10E0F5002B0352 /* NoElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoElementsView.swift; sourceTree = "<group>"; };
+		B139597E2B0EB780000874B4 /* ElementsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementsListView.swift; sourceTree = "<group>"; };
 		B1459B5E2979FCC6006D376B /* AreasRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreasRepository.swift; sourceTree = "<group>"; };
 		B1459B602979FCE9006D376B /* RepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
 		B1459B62297A0F5F006D376B /* elements.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = elements.json; sourceTree = "<group>"; };
@@ -242,6 +248,8 @@
 		AD6914E528E380E800D9F34E /* Views & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B12C38012B10E0E6002B0352 /* ElementsList */,
+				B139597D2B0EB635000874B4 /* Home */,
 				B1CE7E5E29772FCD0099AC1C /* Communities */,
 				B17F30A62957CB4300926E4F /* DonateView.swift */,
 				B17F30A42957CA2000926E4F /* OptionsView.swift */,
@@ -249,7 +257,6 @@
 				AD7E331C28E8D275004B1DFE /* Common */,
 				AD6914E628E3813B00D9F34E /* Map */,
 				AD96B92A28E4B28600B558D4 /* Element */,
-				B1AFEEAA29573EFB007C2D0A /* Home.swift */,
 			);
 			name = "Views & ViewModels";
 			sourceTree = "<group>";
@@ -316,6 +323,24 @@
 				B117CA9629E636C40011BF7E /* OneTimeActions.swift */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		B12C38012B10E0E6002B0352 /* ElementsList */ = {
+			isa = PBXGroup;
+			children = (
+				B139597E2B0EB780000874B4 /* ElementsListView.swift */,
+				B12C37FF2B10DFE5002B0352 /* ElementRowView.swift */,
+				B12C38022B10E0F5002B0352 /* NoElementsView.swift */,
+			);
+			name = ElementsList;
+			sourceTree = "<group>";
+		};
+		B139597D2B0EB635000874B4 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B1AFEEAA29573EFB007C2D0A /* Home.swift */,
+			);
+			name = Home;
 			sourceTree = "<group>";
 		};
 		B1459B5C2979FC67006D376B /* Service */ = {
@@ -518,6 +543,7 @@
 				B17F30AE2959530300926E4F /* CommunitiesView.swift in Sources */,
 				B1AFEEA92956BA4D007C2D0A /* ElementView.swift in Sources */,
 				B17F30A92957CBD000926E4F /* RoundedPillButton.swift in Sources */,
+				B12C38032B10E0F5002B0352 /* NoElementsView.swift in Sources */,
 				B17F30A72957CB4300926E4F /* DonateView.swift in Sources */,
 				B1459B612979FCE9006D376B /* RepositoryProtocol.swift in Sources */,
 				B1FAACE429E892C20020B3F1 /* LayersButtonsView.swift in Sources */,
@@ -537,6 +563,7 @@
 				B1459B5F2979FCC6006D376B /* AreasRepository.swift in Sources */,
 				B1C35DE4297ADF6C00D59008 /* CommunityDetailViewModel.swift in Sources */,
 				B1C35DE2297ADDEC00D59008 /* LocationManager.swift in Sources */,
+				B139597F2B0EB780000874B4 /* ElementsListView.swift in Sources */,
 				ED3AEF7729BF5E70003A63FF /* SettingsView.swift in Sources */,
 				B1AFEEAB29573EFB007C2D0A /* Home.swift in Sources */,
 				B1C35DE8297B2EFF00D59008 /* NavBarTitleSubtitle.swift in Sources */,
@@ -552,6 +579,7 @@
 				B1BD47E629E9A0DB0035E0CC /* MKPolygon+Extensions.swift in Sources */,
 				AD8193F028F2C7ED00CAB29C /* ElementDetailsItemView.swift in Sources */,
 				B1FAACE929E8DC910020B3F1 /* GlowingPolygonRenderer.swift in Sources */,
+				B12C38002B10DFE5002B0352 /* ElementRowView.swift in Sources */,
 				B17F30AC2958FCE900926E4F /* String+URLEncode.swift in Sources */,
 				AD96B92D28E4B29400B558D4 /* ElementViewController.swift in Sources */,
 				AD7E331928E831C2004B1DFE /* Localizable.swift in Sources */,

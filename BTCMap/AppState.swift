@@ -13,18 +13,21 @@ final class AppState: ObservableObject {
     // Hack to pop to root/home view until apple implements a better way. Resetting Id of the Home View will cause it to refresh, and pop off the existing stack.
     @Published var homeViewId = UUID()
     @Published var mapState = MapState()
+    
+    @Published var areasRepository = AreasRepository(api: API())
+    @Published var elementsRepository = ElementsRepository(api: API())
 }
 
 final class MapState: ObservableObject {
     @Published var centerCoordinate: CLLocationCoordinate2D?
-    @Published var bounds: Bounds?
+    @Published var bounds: Bounds
     @Published var style: MapStyle = .topo
     @Published var visibleObjects: MapVisibleObjects = .elements
     @Published var selectedCommunity: API.Area?
 
     init(centerCoordinate: CLLocationCoordinate2D? = nil, bounds: Bounds? = nil) {
         self.centerCoordinate = centerCoordinate
-        self.bounds = bounds
+        self.bounds = bounds ?? Bounds(maxlat: 0, maxlon: 0, minlat: 0, minlon: 0)
     }
     
     enum MapStyle {

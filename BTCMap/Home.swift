@@ -9,10 +9,7 @@ import SwiftUI
 
 struct Home: View {
     @StateObject var appState = AppState()
-    // TODO: Add to AppState?
-    @StateObject var areasRepository = AreasRepository(api: API())
-    @StateObject var elementsRepository = ElementsRepository(api: API())
-    
+
     // MARK: - Layers Button
     @State private var areLayersButtonsVisible = false
     @State private var mapStyleSelected: MapLayersButtons = .topo
@@ -21,27 +18,20 @@ struct Home: View {
     // MARK: - Search
     @State private var searchText = ""
     func searchTextChanged(to text: String) {
-        elementsRepository.searchStringDidChange(text)
+        appState.elementsRepository.searchStringDidChange(text)
     }
     
-    // MARK: - CommunityDetail
-    @State private var showCommunityDetail = false
-
-    private func communityDetailView() -> CommunityDetailView? {
-        if let community = appState.mapState.selectedCommunity {
-            let viewModel = CommunityDetailViewModel(areaWithDistance: AreaWithDistance(area: community))
-            return CommunityDetailView(communityDetailViewModel: viewModel)
-        }
-        return nil
-    }
+    // MARK: - Sheets
+    @State private var activeSheet: ActiveSheet? = .mainList
+    @State private var currentMainListDetent: PresentationDetent = .fraction(0.1)
     
     // MARK: - MapViewVC Wrapper
     func injectMapVCWrapper() {
         mapVCWrapper.mapViewController.mapState = appState.mapState
-        mapVCWrapper.mapViewController.elementsRepo = elementsRepository
-        mapVCWrapper.mapViewController.areasRepo = areasRepository
+        mapVCWrapper.mapViewController.elementsRepo = appState.elementsRepository
+        mapVCWrapper.mapViewController.areasRepo = appState.areasRepository
         mapVCWrapper.mapViewController.onCommunityTapped = { _ in
-            self.showCommunityDetail.toggle()
+            activeSheet = .communityDetail
         }
     }
     var mapVCWrapper = MapViewControllerWrapper()
@@ -81,10 +71,10 @@ struct Home: View {
                         .background(.black).opacity(0.8)
                         .cornerRadius(10)
                 }
-                .padding(.bottom, 20) // note: hardcoded to match the insets of the userLocationButton, which is in storyboard
+                .padding(.bottom, 100) // note: hardcoded to match the insets of the userLocationButton, which is in storyboard
                 .padding(.leading, 30)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                
+                                
                 // this is the pop-up button view
                 if areLayersButtonsVisible {
                     LayersButtonsView(mapStyleSelected: $mapStyleSelected,
@@ -94,7 +84,7 @@ struct Home: View {
                                       closure2: { appState.mapState.visibleObjects = .elements },
                                       closure3: { appState.mapState.visibleObjects = .communities },
                                       hideButtons: { areLayersButtonsVisible.toggle() })
-                    .padding(.bottom, 85)
+                    .padding(.bottom, 165)
                     .padding(.leading, 30)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                 }
@@ -104,27 +94,52 @@ struct Home: View {
             .navigationBarHidden(true).navigationBarTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .id(appState.homeViewId)
-            
-            // Community Detail sheet
-            .sheet(isPresented: $showCommunityDetail, content: {
-                // TODO: - understand why this is called 5 times on each $showCommunityDetail value changes
-                if let communityDetailView = communityDetailView() {
-                    NavigationView {
-                        communityDetailView
+                        
+            // Sheets
+            .onAppear {
+                activeSheet = .mainList
+            }
+            .sheet(item: $activeSheet) { item in
+                switch item {
+                    
+                // Main Sorted Merchants List
+                case .mainList:
+                    ElementsListView()
+                        .presentationDetents([.fraction(0.1), .fraction(0.4), .large],
+                                             selection: $currentMainListDetent)
+                        .interactiveDismissDisabled(true)
+                        .presentationBackgroundInteraction(.enabled)
+                    
+                // Community Detail sheet
+                case .communityDetail:
+                    if let community = appState.mapState.selectedCommunity {
+                        let viewModel = CommunityDetailViewModel(areaWithDistance: AreaWithDistance(area: community))
+                        NavigationView {
+                            CommunityDetailView(communityDetailViewModel: viewModel)
+                                .onDisappear() {
+                                    appState.mapState.selectedCommunity = nil
+                                    activeSheet = .mainList
+                                }
+                        }
                     }
-                    .onDisappear() {
-                        appState.mapState.selectedCommunity = nil
-                    }
+                case .none: EmptyView()
                 }
-            })
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(appState)
-        .environmentObject(areasRepository)
-        .environmentObject(elementsRepository)
         .accentColor(.white)
     }
 }
+
+enum ActiveSheet: Identifiable {
+    case mainList, communityDetail, none
+
+    var id: Int {
+        self.hashValue
+    }
+}
+
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {

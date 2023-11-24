@@ -171,6 +171,16 @@ struct ElementViewModel {
         
         return string
     }
+    
+    //MARK: Distance
+    func distanceFromCurrentLocation(location: CLLocationCoordinate2D) -> String? {
+        guard let currentLoc = LocationManager().location else {
+              return nil }
+        
+        //TODO: Change when we have a settings toggle between miles/km
+        let distanceInKm = MapCalculations.distanceInKilometers(coord1: location, coord2: currentLoc.coordinate)
+        return String(format: "%.2f km", distanceInKm)
+    }
 }
 
 

@@ -11,18 +11,21 @@ import GEOSwift
 
 struct CommunityDetailView: View {
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var elementsRepo: ElementsRepository
+    var elementsRepo: ElementsRepository { appState.elementsRepository }
     var communityDetailViewModel: CommunityDetailViewModel
     
     @State private var filteredElements: Array<API.Element> = []
     private func filterElements() {
         guard filteredElements.isEmpty else { return }
-
+        
+        
         let filteredByArea = {
             if let polygon = communityDetailViewModel.areaWithDistance.area.unionedPolygon {
-                return elementsRepo.elements(from: polygon)
+                return ElementsRepository.elements(elements: elementsRepo.allItems,
+                                                   within: polygon)
             } else if let bounds = communityDetailViewModel.areaWithDistance.area.bounds  {
-                return elementsRepo.elements(from: bounds)
+                return ElementsRepository.elements(elements: elementsRepo.allItems,
+                                                   within: bounds)
             } else { return [] }
         }()
         
@@ -46,8 +49,8 @@ struct CommunityDetailView: View {
     var body: some View {
         List {
             // MARK: - Map
-            let bounds = communityDetailViewModel.areaWithDistance.area.bounds
-            BoundedMapView(region: BoundedMapView.region(from: bounds ?? Bounds.zeroBounds,
+            let bounds = communityDetailViewModel.areaWithDistance.area.bounds ?? Bounds.zeroBounds
+            BoundedMapView(region: BoundedMapView.region(from: bounds,
                                                          padding: 0.1),
                            polygonCoords: communityDetailViewModel.areaWithDistance.area.unionedPolygon?.coords)
                 .frame(height: UIScreen.main.bounds.height * 0.23)
@@ -84,44 +87,11 @@ struct CommunityDetailView: View {
             .listRowBackground(Color.clear)
             
             // MARK: - Elements
-            if filteredElements.isEmpty {
-                Text("no_locations".localized)
-                    .listRowSeparator(.hidden)
-                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                    .padding([.top, .bottom], 6)
-                    .listRowBackground(Color.clear)
-            }
-            
+            if filteredElements.isEmpty { NoElementsView() }
+
             ForEach(filteredElements) { item in
                 NavigationLink(destination: CommunityElementView(communityDetailViewModel: communityDetailViewModel, element: item)) {
-                    
-                    let elementViewModel = ElementViewModel(element: item)
-                    HStack {
-                        ImageCircle(image: ElementSystemImages.swiftUISystemImage(for: item, with: .template),
-                                    outerDiameter: 35,
-                                    innerDiameterScale: 0.6,
-                                    imageColor: .black,
-                                    backgroundColor: .white)
-                        .padding(.trailing, 10)
-                        
-                        VStack(alignment: .leading) {
-                            Text(item.osmJson.name)
-                                .font(.system(size: 18))
-                                .bold()
-                            
-                            elementViewModel.isVerified ?
-                            Text(Image(systemName: "checkmark.seal.fill"))
-                                .font(.system(size: 10))
-                            + Text(" ")
-                            + Text(elementViewModel.verifyText ?? "")
-                                .font(.system(size: 12))
-                                .foregroundColor(.gray) :
-                            
-                            Text(ElementViewModel.NotVerifiedTextType.short.text)
-                                .font(.system(size: 12))
-                                .foregroundColor(.gray)
-                        }
-                    }
+                    ElementRowView(element: item)
                 }
             }
             .listRowSeparator(.hidden)

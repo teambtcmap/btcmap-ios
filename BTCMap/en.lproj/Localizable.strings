@@ -6,6 +6,9 @@
   
 */
 
+// ELEMENT LIST VIEW
+"nearby_merchants" = "Nearby Merchants";
+
 // ELEMENT VIEW
 "verify" = "Verify";
 "not_verified_by_supertaggers_short" = "Not verified";

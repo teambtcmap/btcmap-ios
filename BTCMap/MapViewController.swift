@@ -80,7 +80,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         .store(in: &cancellables)
         
         mapState.$bounds.sink(receiveValue: { [weak self] bounds in
-            guard let bounds = bounds else { return }
             self?.centerMapOnBounds(bounds)
         })
         .store(in: &cancellables)
@@ -263,8 +262,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             }
             
             // show new annotationView
-            let elementViewModel = ElementViewModel(element: annotation.element)
-            let elementDetailHostedVC = UIHostingController(rootView: ElementView(elementViewModel: elementViewModel))
+            let elementDetailHostedVC = UIHostingController(rootView: ElementView(element: annotation.element))
             if let sheet = elementDetailHostedVC.sheetPresentationController {
                 sheet.delegate = self
                 sheet.prefersGrabberVisible = true
@@ -302,6 +300,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        mapState.bounds = Bounds.fromMKCoordinateRegion(mapView.region)
         manager.reload(mapView: mapView)
     }
     
