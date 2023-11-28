@@ -13,8 +13,7 @@ struct ElementsListView: View {
     var elementsRepo: ElementsRepository { appState.elementsRepository }
     
     @State private var elements: [API.Element] = []
-//
-    //HERE: TODO: When select an item and on that merchant detail view, hightlight pin
+    var didSelectElement: (API.Element) -> Void
     
     var body: some View {
         NavigationView {
@@ -33,6 +32,9 @@ struct ElementsListView: View {
                 ForEach(elements) { element in
                     NavigationLink(destination: ElementView(element: element)) {
                         ElementRowView(element: element)
+                            .onTapGesture {
+                                self.didSelectElement(element)
+                            }
                     }
                 }
                 .listRowSeparator(.visible)

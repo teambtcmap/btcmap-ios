@@ -17,6 +17,7 @@ struct OptionsView: View {
     @State private var showingDonate = false
     @State private var showingNotImplementedAlert = false
     
+    // NOTE: Hack to dismiss element sheet because that's in the MapVC which is still UIKit
     var dismissElementView: (() -> Void)?
     
     var body: some View {

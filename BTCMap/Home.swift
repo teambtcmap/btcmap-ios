@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Home: View {
     @StateObject var appState = AppState()
+    @ObservedObject private var viewModel: HomeViewModel
 
     // MARK: - Layers Button
     @State private var areLayersButtonsVisible = false
@@ -22,8 +24,26 @@ struct Home: View {
     }
     
     // MARK: - Sheets
-    @State private var activeSheet: ActiveSheet? = .mainList
+    @State private var activeSheet: ActiveSheet? = .mainList {
+        didSet {
+            if activeSheet == .mainList { currentMainListDetent = PresentationDetent.fraction(0.1) }
+            
+            isMainListSheetPresented = (activeSheet == .mainList)
+            
+            //HACK: This is added on a delay because for some reason the element detail and community detail sheets, when presented, didn't animate. Probably the dismissal of .mainList sheet interferred with animation.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                isElementDetailSheetPresented = (activeSheet == .elementDetail)
+                isCommunityDetailSheetPresented = (activeSheet == .communityDetail)
+            }
+        }
+    }
+    
+    @State private var isMainListSheetPresented = false
+    @State private var isElementDetailSheetPresented = false
+    @State private var isCommunityDetailSheetPresented = false
+    
     @State private var currentMainListDetent: PresentationDetent = .fraction(0.1)
+    
     
     // MARK: - MapViewVC Wrapper
     func injectMapVCWrapper() {
@@ -31,10 +51,17 @@ struct Home: View {
         mapVCWrapper.mapViewController.elementsRepo = appState.elementsRepository
         mapVCWrapper.mapViewController.areasRepo = appState.areasRepository
         mapVCWrapper.mapViewController.onCommunityTapped = { _ in
-            activeSheet = .communityDetail
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                activeSheet = .communityDetail
+            }
         }
     }
     var mapVCWrapper = MapViewControllerWrapper()
+    
+    init() {
+        viewModel = HomeViewModel(mapViewController: mapVCWrapper.mapViewController)
+    }
+    
     
     var body: some View {
         NavigationView {
@@ -99,30 +126,54 @@ struct Home: View {
             .onAppear {
                 activeSheet = .mainList
             }
-            .sheet(item: $activeSheet) { item in
-                switch item {
-                    
-                // Main Sorted Merchants List
-                case .mainList:
-                    ElementsListView()
-                        .presentationDetents([.fraction(0.1), .fraction(0.4), .large],
-                                             selection: $currentMainListDetent)
-                        .interactiveDismissDisabled(true)
+            .onReceive(viewModel.$selectedElement) { element in
+                if element != nil {
+                    activeSheet = .elementDetail
+                }
+            }
+            .onReceive(viewModel.$deselectedElement) { element in
+                if element != nil {
+                    activeSheet = .mainList
+                }
+            }
+            
+            // Sheet for Main List
+            .sheet(isPresented: $isMainListSheetPresented) {
+                ElementsListView() { element in 
+                    self.mapVCWrapper.mapViewController.selectedElementPublisher.send(element)
+                }
+                .presentationDetents([.fraction(0.1), .fraction(0.4), .large],
+                                     selection: $currentMainListDetent)
+                .interactiveDismissDisabled(true)
+                .presentationBackgroundInteraction(.enabled)
+            }
+
+            // Sheet for Element Detail
+            .sheet(isPresented: $isElementDetailSheetPresented) {
+                if let selectedElement = viewModel.selectedElement {
+                    ElementView(element: selectedElement)
+                        .presentationDetents([.medium])
                         .presentationBackgroundInteraction(.enabled)
-                    
-                // Community Detail sheet
-                case .communityDetail:
-                    if let community = appState.mapState.selectedCommunity {
-                        let viewModel = CommunityDetailViewModel(areaWithDistance: AreaWithDistance(area: community))
-                        NavigationView {
-                            CommunityDetailView(communityDetailViewModel: viewModel)
-                                .onDisappear() {
-                                    appState.mapState.selectedCommunity = nil
-                                    activeSheet = .mainList
-                                }
+                        .onDisappear() {
+                            self.mapVCWrapper.mapViewController.deselectedElementPublisher.send(selectedElement)
+                            activeSheet = .mainList
                         }
+                }
+
+            }
+
+            // Sheet for Community Detail
+            .sheet(isPresented: $isCommunityDetailSheetPresented) {
+                if let community = appState.mapState.selectedCommunity {
+                    let viewModel = CommunityDetailViewModel(areaWithDistance: AreaWithDistance(area: community))
+                    NavigationView {
+                        CommunityDetailView(communityDetailViewModel: viewModel)
+                            .presentationBackgroundInteraction(.enabled)
+                            .onDisappear() {
+                                appState.mapState.selectedCommunity = nil
+                                activeSheet = .mainList
+                            }
                     }
-                case .none: EmptyView()
                 }
             }
         }
@@ -133,7 +184,7 @@ struct Home: View {
 }
 
 enum ActiveSheet: Identifiable {
-    case mainList, communityDetail, none
+    case mainList, elementDetail, communityDetail, none
 
     var id: Int {
         self.hashValue
