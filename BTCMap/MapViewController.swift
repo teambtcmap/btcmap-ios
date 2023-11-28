@@ -77,6 +77,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     let selectedElementPublisher = PassthroughSubject<API.Element, Never>()
     var deselectedElementPublisher = PassthroughSubject<API.Element, Never>()
     
+    // Flags
+    /// One-time to center the map on the user location on app start. Should remain false after the initial centering.
+    var shouldCenterOnUserLocationAppState = true
     
     private func setupMapStateObservers() {
         // map state
@@ -415,7 +418,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        centerMapOnUserLocation()
+        guard shouldCenterOnUserLocationAppState else {
+            return }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.centerMapOnUserLocation()
+            self?.shouldCenterOnUserLocationAppState = false
+        }
     }
     
     
@@ -442,6 +451,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.allowsBackgroundLocationUpdates = false
+        locationManager.startUpdatingLocation()
         
         mapView.register(MarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
         mapView.register(CountClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
