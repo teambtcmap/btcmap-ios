@@ -18,6 +18,7 @@
 "edit_on_osm" = "Editar en OSM";
 "edit_tags" = "Editar etiquetas";
 "tags" = "Etiquetas";
+"directions" = "Direcciones";
 
 "address" = "Dirección";
 "phone" = "Teléfono";

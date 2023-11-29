@@ -121,7 +121,7 @@ struct ElementViewModel {
         }
     }
     
-    // MARK: - Details (Tags)    
+    // MARK: - Details (Tags)
     var elementDetails: [ElementDetail] {
         var details = [ElementDetail]()
         
@@ -163,6 +163,12 @@ struct ElementViewModel {
         
         return details
     }
+    
+    // MARK: - Address
+    var address: String? {
+        return element.osmJson.address.isEmpty ? nil : element.osmJson.address
+    }
+
     
     var prettyPrintTags: String? {
         guard let tags = element.osmJson.tags,

@@ -23,29 +23,24 @@ struct ElementVerifyView: View {
                 .foregroundColor(.gray)
         }
         Spacer()
-        if elementViewModel.hasPouchLink {
-            Button(action: {
-                if let url = elementViewModel.payLink {
-                    openURL(url)
-                }
-            }) {
-                Text("pay".localized.uppercased())
-                    .foregroundColor(Color.BTCMap_DarkBeige)
-            }
-            .buttonStyle(BorderButtonStyle(foregroundColor: .white, strokeColor: Color.gray.opacity(0.5), padding: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)))
+        Button(action: {
+            if let url = elementViewModel.hasPouchLink ? elementViewModel.payLink : elementViewModel.verifyLink {
+                openURL(url)
+            }        }) {
+                Text((elementViewModel.hasPouchLink ? "pay" : "verify").localized)
+                .padding(10)
+                .font(.system(size: 14))
+                .foregroundColor(Color.gray)
+                   .background(
+                       RoundedRectangle(
+                           cornerRadius: 6,
+                           style: .continuous
+                       )
+                       .stroke(Color.gray, lineWidth: 1)
+
+                   )
         }
-        else {
-            Button(action: {
-                if let url = elementViewModel.verifyLink {
-                    openURL(url)
-                }
-            }) {
-                Text("verify".localized.uppercased())
-                    .foregroundColor(Color.BTCMap_DarkBeige)
-                    .font(.system(size: 14)) 
-            }
-            .buttonStyle(BorderButtonStyle(foregroundColor: .white, strokeColor: Color.gray.opacity(0.5), padding: EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)))
-        }
+        .controlSize(.small)
     }
 }
 

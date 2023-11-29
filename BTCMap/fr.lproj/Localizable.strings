@@ -18,6 +18,7 @@
 "edit_on_osm" = "Modifier sur OSM";
 "edit_tags" = "Modifier les tags";
 "tags" = "Tags";
+"directions" = "Itinéraire";
 
 "address" = "Adress";
 "phone" = "Téléphone";

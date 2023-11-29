@@ -30,12 +30,13 @@ struct ElementView: View {
                         .lineLimit(2)
                         .minimumScaleFactor(0.6)
                         .padding()
+                        .foregroundColor(.BTCMap_WarmWhite)
                     Spacer()
                     Button(action: {
                         showingOptions = true
                     }) {
                         Image(systemName: "ellipsis")
-                            .foregroundColor(.white)
+                            .foregroundColor(.BTCMap_WarmWhite)
                     }
                     .rotationEffect(.degrees(90))
                     

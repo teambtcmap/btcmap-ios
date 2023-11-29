@@ -18,6 +18,7 @@
 "edit_on_osm" = "Modifica su OSM";
 "edit_tags" = "Modifica tag";
 "tags" = "Tag";
+"directions" = "Indicazioni";
 
 "address" = "Indirizzo";
 "phone" = "Telefono";
