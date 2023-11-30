@@ -21,7 +21,7 @@ protocol Repository<Item> {
     
     var lastUpdated: String? { get }
 
-    var items: Array<Item> {get}
+    var allItems: Array<Item> {get}
     
     init(api: API)
     

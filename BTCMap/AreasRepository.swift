@@ -28,8 +28,8 @@ class AreasRepository: ObservableObject, Repository {
         queue.async { self.start() }
     }
         
-    @Published private(set) var items: Array<API.Area> = []
-    lazy var communities: Array<API.Area> = { items.filter { $0.type != "country" } }()
+    @Published private(set) var allItems: Array<API.Area> = []
+    lazy var communities: Array<API.Area> = { allItems.filter { $0.type != "country" } }()
 
     // MARK: Start
     internal func start() {
@@ -44,7 +44,7 @@ class AreasRepository: ObservableObject, Repository {
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.items = items
+                self.allItems = items
                 self.queue.async { self.fetchRemote(since: self.lastUpdated) }
             }
         } catch {
@@ -55,7 +55,7 @@ class AreasRepository: ObservableObject, Repository {
     
     // MARK: Remote
     internal func calculateLastUpdate() -> String? {
-        let items = self.items
+        let items = self.allItems
         guard !items.isEmpty else { return nil }
         let since = items.sorted { $0.updatedAt > $1.updatedAt }.first?.updatedAt
         logger.log("Calculate last update: \(String(describing: since))")
@@ -71,12 +71,12 @@ class AreasRepository: ObservableObject, Repository {
             case .success(let items):
                 self.logger.log("Loaded created and changed \(self.description): \(items.count)")
                 guard !items.isEmpty else { return }
-                var currentItems = self.items
+                var currentItems = self.allItems
                 self.queue.async {
                     let itemsId = items.reduce(into: Set<String>()) { $0.insert($1.id) }
                     currentItems = currentItems.filter { !itemsId.contains($0.id) } + items
                     DispatchQueue.main.async {
-                        self.items = currentItems
+                        self.allItems = currentItems
                     }
                     do {
                         self.logger.log("Store created and changed \(self.description): \(currentItems.count)")

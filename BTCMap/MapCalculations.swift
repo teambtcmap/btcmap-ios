@@ -9,6 +9,12 @@ import Foundation
 import CoreLocation
 
 struct MapCalculations {
+    static func distanceInKilometers(coord1: CLLocationCoordinate2D, coord2: CLLocationCoordinate2D) -> CLLocationDistance {
+        let location1 = CLLocation(latitude: coord1.latitude, longitude: coord1.longitude)
+        let location2 = CLLocation(latitude: coord2.latitude, longitude: coord2.longitude)
+        return location1.distance(from: location2) / 1000  // Convert to kilometers
+    }
+
     static func haversineDistance(coord1: CLLocationCoordinate2D, coord2: CLLocationCoordinate2D) -> Double {
         let earthRadius = 6371.0
         let dLat = (coord2.latitude - coord1.latitude).toRadians()

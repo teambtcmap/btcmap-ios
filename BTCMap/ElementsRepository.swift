@@ -31,12 +31,14 @@ class ElementsRepository: ObservableObject, Repository {
         self.api = api
         queue.async { self.start() }
     }
-        
-    private(set) var items: Array<API.Element> = [] {
+    
+    private(set) var allItems: Array<API.Element> = [] {
         didSet {
             filteredItems = filterItems(by: searchText)
         }
     }
+    
+    /// Filtered by search
     @Published private(set) var filteredItems: Array<API.Element> = []
 
     internal func start() {
@@ -56,7 +58,7 @@ class ElementsRepository: ObservableObject, Repository {
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.items = items
+                self.allItems = items
                 self.queue.async { self.fetchRemote(since: self.lastUpdated) }
             }
         } catch {
@@ -67,7 +69,7 @@ class ElementsRepository: ObservableObject, Repository {
     
     // MARK: Remote
     internal func calculateLastUpdate() -> String? {
-        let items = self.items
+        let items = self.allItems
         guard !items.isEmpty else { return nil }
         let since = items.sorted { $0.updatedAt > $1.updatedAt }.first?.updatedAt
         logger.log("Calculate last update: \(String(describing: since))")
@@ -83,12 +85,12 @@ class ElementsRepository: ObservableObject, Repository {
             case .success(let items):
                 self.logger.log("Loaded created and changed \(self.description): \(items.count)")
                 guard !items.isEmpty else { return }
-                var currentItems = self.items
+                var currentItems = self.allItems
                 self.queue.async {
                     let itemsId = items.reduce(into: Set<String>()) { $0.insert($1.id) }
                     currentItems = currentItems.filter { !itemsId.contains($0.id) } + items
                     DispatchQueue.main.async {
-                        self.items = currentItems
+                        self.allItems = currentItems
                     }
                     do {
                         self.logger.log("Store created and changed \(self.description): \(currentItems.count)")
@@ -111,26 +113,30 @@ extension ElementsRepository {
     }
     
     fileprivate func filterItems(by searchText: String) -> Array<API.Element> {
-        return items.filter { element in
+        let filtered = allItems.filter { element in
             searchText.isEmpty || (element.osmJson.name.localizedCaseInsensitiveContains(searchText))
         }.filter { $0.deletedAt.isEmpty }
+        return filtered
     }
 }
 
 // MARK: - Filter elements by geometry
 extension ElementsRepository {
-    func elements(from bounds: Bounds) -> Array<API.Element> {
-        return items.filter {
+    static func elements(elements: Array<API.Element>,
+                         within bounds: Bounds) -> Array<API.Element> {
+        let filtered = elements.filter {
             guard let coord = $0.coord else { return false }
             return coord.latitude > bounds.minlat &&
             coord.latitude < bounds.maxlat &&
             coord.longitude > bounds.minlon &&
             coord.longitude < bounds.maxlon
         }
+        return filtered
     }
     
-    func elements(from polygon: Polygon) -> Array<API.Element> {
-        let filtered = items.filter {
+    static func elements(elements: Array<API.Element>,
+                         within polygon: Polygon) -> Array<API.Element> {
+        let filtered = elements.filter {
             guard let coord = $0.coord else { return false }
             let contains = try? polygon.contains(coord.toPoint())
             guard let contains = contains else { return true }

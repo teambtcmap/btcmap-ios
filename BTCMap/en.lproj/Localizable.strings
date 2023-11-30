@@ -6,6 +6,9 @@
   
 */
 
+// ELEMENT LIST VIEW
+"nearby_merchants" = "Nearby Merchants";
+
 // ELEMENT VIEW
 "verify" = "Verify";
 "not_verified_by_supertaggers_short" = "Not verified";
@@ -17,6 +20,7 @@
 "share_prompt" = "We accept sats at";
 "edit_tags" = "Edit tags";
 "tags" = "Tags";
+"directions" = "Directions";
 
 "address" = "Address";
 "phone" = "Phone";

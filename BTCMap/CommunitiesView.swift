@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CommunitiesView: View {
     let locationManager = LocationManager()
-    @EnvironmentObject var areasRepo: AreasRepository
+    @EnvironmentObject var appState: AppState
+    var areasRepo: AreasRepository { appState.areasRepository }
     @State private var searchText = ""
 
     /// Returns communities with a distance value, which can then be sorted by proximity to current user location.
@@ -60,10 +61,27 @@ struct CommunitiesView: View {
                 let areaName = communityDetailViewModel.areaWithDistance.area.name ?? ""
                 NavigationLink(destination: CommunityDetailView(communityDetailViewModel: communityDetailViewModel).navigationBarTitle(areaName, displayMode: .large)) {
                     HStack {
-                        AsyncImage(url: item.area.iconUrl)
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                            .padding([.trailing], 10)
+                        AsyncImage(url: item.area.iconUrl) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image.resizable()
+                                     .aspectRatio(contentMode: .fill)
+                                     .frame(width: 40, height: 40)
+                                     .clipShape(Circle())
+                                     .padding([.trailing], 10)
+                            case .empty:
+                                ProgressView()
+                                     .frame(width: 40, height: 40)
+                                
+                            @unknown default:
+                                Image(systemName: "person.2.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(Circle())
+                                    .padding([.trailing], 10)
+                            }
+                        }
                         
                         VStack(alignment: .leading) {
                             Text(item.area.name ?? "")

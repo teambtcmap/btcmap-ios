@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -39,7 +39,7 @@
                     <blurEffect style="regular"/>
                 </visualEffectView>
                 <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rvd-Hg-0Rn" userLabel="UserLocationButton">
-                    <rect key="frame" x="312" y="742" width="48" height="48"/>
+                    <rect key="frame" x="312" y="662" width="48" height="48"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
@@ -61,7 +61,7 @@
                 <constraint firstAttribute="trailing" secondItem="AYQ-Gk-QVG" secondAttribute="trailing" id="YX6-pC-WKb"/>
                 <constraint firstItem="BCf-OM-PAc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aHM-Vn-WxK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rvd-Hg-0Rn" secondAttribute="trailing" constant="30" id="dgZ-pG-NYb"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rvd-Hg-0Rn" secondAttribute="bottom" constant="20" id="foG-Yz-VtB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rvd-Hg-0Rn" secondAttribute="bottom" constant="100" id="foG-Yz-VtB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="BCf-OM-PAc" secondAttribute="bottom" id="hd7-MI-6gg"/>
                 <constraint firstItem="BCf-OM-PAc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="is1-S0-0dS"/>
                 <constraint firstItem="AYQ-Gk-QVG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qvJ-sK-BuA"/>

@@ -11,7 +11,13 @@ struct ElementView: View {
     @Environment(\.openURL) var openURL
     @State private var showingOptions = false
     
+    let element: API.Element
     let elementViewModel: ElementViewModel
+    
+    init(element: API.Element) {
+        self.element = element
+        self.elementViewModel = ElementViewModel(element: element)
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,12 +30,13 @@ struct ElementView: View {
                         .lineLimit(2)
                         .minimumScaleFactor(0.6)
                         .padding()
+                        .foregroundColor(.BTCMap_WarmWhite)
                     Spacer()
                     Button(action: {
                         showingOptions = true
                     }) {
                         Image(systemName: "ellipsis")
-                            .foregroundColor(.white)
+                            .foregroundColor(.BTCMap_WarmWhite)
                     }
                     .rotationEffect(.degrees(90))
                     
@@ -81,6 +88,6 @@ struct ElementView: View {
 
 struct ElementView_Previews: PreviewProvider {
     static var previews: some View {
-        ElementView(elementViewModel: ElementViewModel(element: API.Element.mock! ))
+        ElementView(element: API.Element.mock!)
     }
 }

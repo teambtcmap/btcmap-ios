@@ -121,7 +121,7 @@ struct ElementViewModel {
         }
     }
     
-    // MARK: - Details (Tags)    
+    // MARK: - Details (Tags)
     var elementDetails: [ElementDetail] {
         var details = [ElementDetail]()
         
@@ -164,12 +164,28 @@ struct ElementViewModel {
         return details
     }
     
+    // MARK: - Address
+    var address: String? {
+        return element.osmJson.address.isEmpty ? nil : element.osmJson.address
+    }
+
+    
     var prettyPrintTags: String? {
         guard let tags = element.osmJson.tags,
               let data = try? JSONSerialization.data(withJSONObject: tags, options: .prettyPrinted),
               let string = String(data: data, encoding: .utf8) else { return nil }
         
         return string
+    }
+    
+    //MARK: Distance
+    func distanceFromCurrentLocation(location: CLLocationCoordinate2D) -> String? {
+        guard let currentLoc = LocationManager().location else {
+              return nil }
+        
+        //TODO: Change when we have a settings toggle between miles/km
+        let distanceInKm = MapCalculations.distanceInKilometers(coord1: location, coord2: currentLoc.coordinate)
+        return String(format: "%.2f km", distanceInKm)
     }
 }
 

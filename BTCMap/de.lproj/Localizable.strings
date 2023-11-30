@@ -6,6 +6,9 @@
   
 */
 
+// ELEMENT LIST VIEW
+"nearby_merchants" = "Nahegelegene Händler";
+
 // ELEMENT VIEW
 "verify" = "Überprüfen";
 "not_verified_by_supertaggers_short" = "Nicht überprüft";
@@ -15,6 +18,7 @@
 "edit_on_osm" = "Auf OSM bearbeiten";
 "edit_tags" = "Tags bearbeiten";
 "tags" = "Tags";
+"directions" = "Wegbeschreibung";
 
 "address" = "Adresse";
 "phone" = "Telefon";

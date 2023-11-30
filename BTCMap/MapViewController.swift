@@ -54,6 +54,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     var elementsRepo: ElementsRepository!
     var areasRepo: AreasRepository!
     private var locationManager = CLLocationManager()
+    private let logger = Logger(subsystem: "org.btcmap.app", category: "Map")
+    private var cancellables = Set<AnyCancellable>()
+    
+    // Elements
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] {
         guard let annotations = manager.annotations as? [ElementAnnotation] else { return [:] }
@@ -64,15 +68,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         }
     }
     
+    // Polygons
     private var communityPolygons: [CommunityPolygon] = []
     private var glowingOverlayRenderers: [GlowingPolygonRenderer] = []
     var onCommunityTapped: ((API.Area) -> Void)? = nil
     
-    private let logger = Logger(subsystem: "org.btcmap.app", category: "Map")
+    // Publishers
+    let selectedElementPublisher = PassthroughSubject<API.Element, Never>()
+    var deselectedElementPublisher = PassthroughSubject<API.Element, Never>()
     
-    private var cancellables = Set<AnyCancellable>()
+    // Flags
+    /// One-time to center the map on the user location on app start. Should remain false after the initial centering.
+    var shouldCenterOnUserLocationAppState = true
     
     private func setupMapStateObservers() {
+        // map state
         mapState.$centerCoordinate.sink(receiveValue: { [weak self] coord in
             guard let coord = coord else { return }
             self?.centerMapOnLocation(coord)
@@ -80,7 +90,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         .store(in: &cancellables)
         
         mapState.$bounds.sink(receiveValue: { [weak self] bounds in
-            guard let bounds = bounds else { return }
             self?.centerMapOnBounds(bounds)
         })
         .store(in: &cancellables)
@@ -94,6 +103,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             self?.changeMapVisibleObjects(visibleObjects)
         })
         .store(in: &cancellables)
+        
+        // element selection
+        selectedElementPublisher
+           .sink { [weak self] element in
+               guard let annotation = self?.elementAnnotations.first(where: { $0.0 == element.id }) else { return }
+               self?.mapView.selectAnnotation(annotation.1, animated: false)
+               
+               guard let coord = element.coord else { return }
+               self?.centerMapOnLocation(coord, visibleRegion: .upperHalf)
+           }
+           .store(in: &cancellables)
+
+        deselectedElementPublisher
+           .sink { [weak self] _ in
+               if let selectedAnnotation = self?.mapView.selectedAnnotations.first {
+                   self?.mapView.deselectAnnotation(selectedAnnotation, animated: true)
+               }
+           }
+           .store(in: &cancellables)
     }
     
     private lazy var manager: ClusterManager = { [unowned self] in
@@ -253,37 +281,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
             mapView.setVisibleMapRect(zoomRect, animated: true)
             return
         }
+        
         // 2. Element annotations
         else if let annotation = view.annotation as? ElementAnnotation {
-            
-            // deselect current annotationView if different
-            if let elementVC = presentedViewController as? UIHostingController<ElementView>,
-               elementVC.rootView.elementViewModel.element.id != annotation.element.id {
-                self.dismiss(animated: true)
-            }
-            
-            // show new annotationView
-            let elementViewModel = ElementViewModel(element: annotation.element)
-            let elementDetailHostedVC = UIHostingController(rootView: ElementView(elementViewModel: elementViewModel))
-            if let sheet = elementDetailHostedVC.sheetPresentationController {
-                sheet.delegate = self
-                sheet.prefersGrabberVisible = true
-                sheet.detents = [.medium(), .large()]
-                sheet.largestUndimmedDetentIdentifier = .medium
-                
-            }
-            present(elementDetailHostedVC, animated: true)
+            UIView.animate(withDuration: 0.3, animations: {
+                let scaleTransform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                let rotationTransform = CGAffineTransform(rotationAngle: -0.20)
+                view.transform = scaleTransform.concatenating(rotationTransform)
+            })
+            selectedElementPublisher.send(annotation.element)
         }
     }
-    
+
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        guard let annotation = view.annotation as? ElementAnnotation else { return }
-        guard let elementVC = presentedViewController as? UIHostingController<ElementView> else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            if elementVC.rootView.elementViewModel.element.id  == annotation.element.id {
-                self.dismiss(animated: true)
-            }
-        }
+        UIView.animate(withDuration: 0.3, animations: {
+            view.transform = CGAffineTransform.identity
+        })
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -302,6 +315,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        mapState.bounds = Bounds.fromMKCoordinateRegion(mapView.region)
         manager.reload(mapView: mapView)
     }
     
@@ -350,11 +364,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: true)
     }
-    
-    func centerMapOnLocation(_ coordinate: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+
+    func centerMapOnLocation(_ coordinate: CLLocationCoordinate2D, visibleRegion: MapVisibleRegion? = .full) {
+        let regionSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        var regionCenter = coordinate
+        
+        switch visibleRegion {
+        case .upperHalf:
+            let offsetLatitude = regionSpan.latitudeDelta / 3
+            regionCenter = CLLocationCoordinate2D(latitude: coordinate.latitude - offsetLatitude, longitude: coordinate.longitude)
+        case .full, .none:
+            break
+        }
+
+        let region = MKCoordinateRegion(center: regionCenter, span: regionSpan)
         mapView.setRegion(region, animated: true)
     }
+
     
     func centerMapOnBounds(_ bounds: Bounds) {
         mapView.setRegion(bounds.toMKCoordinateRegion(), animated: true)
@@ -392,7 +418,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        centerMapOnUserLocation()
+        guard shouldCenterOnUserLocationAppState else {
+            return }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.centerMapOnUserLocation()
+            self?.shouldCenterOnUserLocationAppState = false
+        }
     }
     
     
@@ -419,6 +451,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.allowsBackgroundLocationUpdates = false
+        locationManager.startUpdatingLocation()
         
         mapView.register(MarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "element")
         mapView.register(CountClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: "cluster")
@@ -438,4 +471,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     @IBAction func didTapUserLocationButton(_ sender: Any) {
         centerMapOnUserLocation()
     }
+}
+
+/// Used to set a rough estimate for the the visible region of the map
+enum MapVisibleRegion {
+    case upperHalf
+    case full
 }

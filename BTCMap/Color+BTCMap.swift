@@ -22,6 +22,7 @@ extension Color {
     static var BTCMap_DarkBeige: Color { Color(UIColor.BTCMap_DarkBeige) }
     static var BTCMap_DiscordDarkBlack: Color { Color(UIColor.BTCMap_DiscordDarkBlack) }
     static var BTCMap_DiscordLightBlack: Color { Color(UIColor.BTCMap_DiscordLightBlack) }
+    static var BTCMap_WarmWhite: Color { Color(UIColor.BTCMap_WarmWhite) }
 }
 
 
@@ -53,4 +54,5 @@ extension UIColor {
     static var BTCMap_DarkBeige: UIColor { return UIColor(hex: "#f9ba72")! }
     static var BTCMap_DiscordDarkBlack: UIColor { return UIColor(hex: "#282b30")! }
     static var BTCMap_DiscordLightBlack: UIColor { return UIColor(hex: "#36393e")! }
+    static var BTCMap_WarmWhite: UIColor { return UIColor(hex: "#FFF8E7")! }
 }
