@@ -122,6 +122,8 @@ extension API {
             
                 return date
             }
+            
+            // MARK: Init from Decoder
         }
         
         enum OsmType: String, Codable {
@@ -155,6 +157,20 @@ extension API {
             return CLLocationCoordinate2D(latitude: lat, longitude: lon)
         }
         
+        // MARK: Init from Decoder
+        init(from decoder: Decoder) throws {
+          let container = try decoder.container(keyedBy: CodingKeys.self)
+          
+          id = try container.decode(String.self, forKey: .id)
+          osmJson = try container.decode(OsmJson.self, forKey: .osmJson)
+          createdAt = try container.decode(String.self, forKey: .createdAt)
+          updatedAt = try container.decode(String.self, forKey: .updatedAt)
+          deletedAt = try container.decode(String.self, forKey: .deletedAt)
+          
+          // Custom decoding for tags
+          tags = try? container.decodeStringOnlyDictionary(forKey: .tags)
+        }
+        
         // MARK: Mocks
         static var mock: Element? {
             guard let fileURL = Bundle.main.url(forResource: "mock_element", withExtension: "json") else {
@@ -166,5 +182,36 @@ extension API {
                 return nil
             }
         }
+    }
+}
+
+extension KeyedDecodingContainer {
+    /// This is a fix to ignore all non `String` values in the `tags` dictionary. At some point an Int snuck in and it caused decoding failures
+    func decodeStringOnlyDictionary(forKey key: Key) throws -> [String: String] {
+        let container = try self.nestedContainer(keyedBy: DynamicCodingKey.self, forKey: key)
+        var dict = [String: String]()
+
+        for key in container.allKeys {
+            if let value = try? container.decode(String.self, forKey: key) {
+                dict[key.stringValue] = value
+            }
+            //NOTE: Non-string values are ignored
+        }
+
+        return dict
+    }
+}
+
+struct DynamicCodingKey: CodingKey {
+    var stringValue: String
+    var intValue: Int?
+
+    init?(stringValue: String) {
+        self.stringValue = stringValue
+    }
+
+    init?(intValue: Int) {
+        self.intValue = intValue
+        self.stringValue = "\(intValue)"
     }
 }
