@@ -84,7 +84,8 @@ extension API {
                     // separate decoding paths for "Polygon" and "MultiPolygon" types
                     switch type {
                     case "Polygon":
-                        guard let rawCoordinates = try? values.decode([[[Double]]].self, forKey: .coordinates) else {
+                        guard let rawCoordinates = try? values.decode([[[Double]]].self, forKey: .coordinates),
+                                !rawCoordinates.isEmpty else {
                             coordinates = nil; return }
                         
                         coordinates = [rawCoordinates[0].map {
