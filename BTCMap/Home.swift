@@ -115,7 +115,7 @@ struct Home: View {
                 // Bottom-right user location button is in the Map storyboard (legacy)
             }
             .navigationBarHidden(true)
-            .navigationBarTitle("")
+            .navigationBarTitle("BTC Map")
             .navigationBarTitleDisplayMode(.inline)
             .id(appState.homeViewId)
                         
