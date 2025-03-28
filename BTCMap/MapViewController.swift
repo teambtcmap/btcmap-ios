@@ -293,14 +293,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let annotation = view.annotation as? ElementAnnotation {
-            UIView.animate(withDuration: 0.125, animations: {
-                let scaleTransform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-                let rotationTransform = CGAffineTransform(rotationAngle: -0.20)
+        UIView.animate(withDuration: 0.125, animations: {
+            let scaleTransform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            let rotationTransform = CGAffineTransform(rotationAngle: -0.20)
 
-                view.transform = scaleTransform.concatenating(rotationTransform)
-            })
-        }
+            view.transform = scaleTransform.concatenating(rotationTransform)
+        })
     }
 
     func mapView(_ mapView: MKMapView, didDeselect annotation: any MKAnnotation) {
@@ -310,11 +308,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.125, animations: {
             view.transform = CGAffineTransform.identity
         })
-
-
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
