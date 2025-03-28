@@ -439,14 +439,7 @@ final class MapViewController: UIViewController, MKMapViewDelegate, UISheetPrese
     
     
     // MARK: - UISheetPresentationControllerDelegate
-    // NOTE: This is a bit of hack to allow SwiftUI Views to dismiss the presented hosted ElementView. Can implement a more elegant solution whebn MapVC is converted to SwiftUI
-    lazy var dismissElementDetail: () -> Void = { [weak self] in
-        self?.dismiss(animated: true)
-        if let annotation = self?.mapView.selectedAnnotations.first {
-            self?.mapView.deselectAnnotation(annotation, animated: true)
-        }
-    }
-    
+
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         if let annotation = mapView.selectedAnnotations.first {
             mapView.deselectAnnotation(annotation, animated: true)

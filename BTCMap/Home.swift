@@ -24,13 +24,13 @@ struct Home: View {
     }
     
     // MARK: - Sheets
-    @State private var activeSheet: ActiveSheet? = .mainList {
+    @State private var activeSheet: ActiveSheet = .mainList {
         didSet {
             if activeSheet == .mainList {
                 currentMainListDetent = PresentationDetent.fraction(0.1)
             }
 
-            isMainListSheetPresented = (activeSheet == .mainList)
+            isMainListSheetPresented = activeSheet == .mainList && !showingOptions
             isElementDetailSheetPresented = (activeSheet == .elementDetail)
             isCommunityDetailSheetPresented = (activeSheet == .communityDetail)
         }
@@ -39,7 +39,7 @@ struct Home: View {
     @State private var isMainListSheetPresented = true
     @State private var isElementDetailSheetPresented = false
     @State private var isCommunityDetailSheetPresented = false
-    
+    @State private var showingOptions = false
     @State private var currentMainListDetent: PresentationDetent = .fraction(0.1)
     
     
@@ -73,7 +73,7 @@ struct Home: View {
                             searchTextChanged(to: newValue)
                         }
                     
-                    OptionsView(dismissElementView: mapVCWrapper.mapViewController.dismissElementDetail)
+                    OptionsView(showingOptions: $showingOptions)
                         .padding(.trailing, 20)
                 }
                 .zIndex(100)
@@ -121,7 +121,7 @@ struct Home: View {
                         
             // Sheets
             .onAppear {
-//                activeSheet = .mainList
+                activeSheet = .mainList
             }
             .onReceive(viewModel.$selectedElement) { element in
                 if element != nil {
@@ -133,7 +133,10 @@ struct Home: View {
                     activeSheet = .mainList
                 }
             }
-            
+            .onChange(of: showingOptions, perform: { isItShowingOptions in
+                activeSheet = isItShowingOptions ? .nope : .mainList
+            })
+
             // Sheet for Main List
             .sheet(isPresented: $isMainListSheetPresented) {
                 ElementsListView() { element in 
@@ -187,7 +190,7 @@ struct Home: View {
 }
 
 enum ActiveSheet: Identifiable {
-    case mainList, elementDetail, communityDetail, none
+    case mainList, elementDetail, communityDetail, nope
 
     var id: Int {
         self.hashValue
