@@ -108,10 +108,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         selectedElementPublisher
            .sink { [weak self] element in
                guard let annotation = self?.elementAnnotations.first(where: { $0.0 == element.id }) else { return }
-               self?.mapView.selectAnnotation(annotation.1, animated: false)
+//               self?.mapView.selectAnnotation(annotation.1, animated: false)
                
                guard let coord = element.coord else { return }
-               self?.centerMapOnLocation(coord, visibleRegion: .upperHalf)
+//               self?.centerMapOnLocation(coord, visibleRegion: .upperHalf)
            }
            .store(in: &cancellables)
 
@@ -264,10 +264,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     // MARK: - MKMapViewDelegate
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
+
+    func mapView(_ mapView: MKMapView, didSelect annotation: any MKAnnotation) {
+
+
         // 1. Cluster annotations
-        if let cluster = view.annotation as? ClusterAnnotation {
+        if let cluster = annotation as? ClusterAnnotation {
             var zoomRect = MKMapRect.null
             for annotation in cluster.annotations {
                 let annotationPoint = MKMapPoint(annotation.coordinate)
@@ -283,13 +286,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         }
         
         // 2. Element annotations
-        else if let annotation = view.annotation as? ElementAnnotation {
-            UIView.animate(withDuration: 0.3, animations: {
+        else if let annotation = annotation as? ElementAnnotation {
+            selectedElementPublisher.send(annotation.element)
+        }
+
+
+    }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation as? ElementAnnotation {
+            UIView.animate(withDuration: 0.125, animations: {
                 let scaleTransform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                 let rotationTransform = CGAffineTransform(rotationAngle: -0.20)
+
                 view.transform = scaleTransform.concatenating(rotationTransform)
             })
-            selectedElementPublisher.send(annotation.element)
+
+        }
+
+    }
+
+    func mapView(_ mapView: MKMapView, didDeselect annotation: any MKAnnotation) {
+        if let annotation = annotation as? ElementAnnotation {
+            self.deselectedElementPublisher.send(annotation.element)
         }
     }
 
@@ -297,6 +315,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         UIView.animate(withDuration: 0.3, animations: {
             view.transform = CGAffineTransform.identity
         })
+
+
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -460,12 +480,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         
         // TODO: Disabling temporarily because MapKit makes this difficult to move from it's top right position, which overlaps search bar
         mapView.showsCompass = false
-        
+//        mapView.setVisibleMapRect(mapView.visibleMapRect, edgePadding: mapEdgePadding, animated: false)
+
         setupElements()
         setupMapStateObservers()
         setupTapGestureRecognizer()
     }
-    
+
+    var mapEdgePadding = UIEdgeInsets(top: 100, left: 0, bottom: 100, right: 0)
+
     // MARK: - User Location Button
     @IBOutlet weak var userLocationButton: UIButton!
     @IBAction func didTapUserLocationButton(_ sender: Any) {
