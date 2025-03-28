@@ -48,7 +48,7 @@ class CommunityPolygon {
     }
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate, ClusterManagerDelegate {
+final class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate, ClusterManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     var mapState: MapState!
     var elementsRepo: ElementsRepository!
@@ -60,16 +60,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     // Elements
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] {
-        guard let annotations = manager.annotations as? [ElementAnnotation] else {
-            return [:]
+        guard let annotations = manager.annotations as? [ElementAnnotation] else { return [:] }
+        return annotations.compactMap {
+            return [$0.element.id : $0]
+        }.reduce(into: [String: ElementAnnotation]()) { (result, dict) in
+            result.merge(dict) { (_, new) in new }
         }
-        return annotations
-            .compactMap {
-                return [$0.element.id : $0]
-            }
-            .reduce(into: [String: ElementAnnotation]()) { (result, dict) in
-                result.merge(dict) { (_, new) in new }
-            }
     }
     
     // Polygons
