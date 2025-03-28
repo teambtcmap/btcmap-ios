@@ -60,12 +60,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     // Elements
     private var elementsQueue = DispatchQueue(label: "org.btcmap.app.map.elements")
     private var elementAnnotations: [String: ElementAnnotation] {
-        guard let annotations = manager.annotations as? [ElementAnnotation] else { return [:] }
-        return annotations.compactMap {
-            return [$0.element.id : $0]
-        }.reduce(into: [String: ElementAnnotation]()) { (result, dict) in
-            result.merge(dict) { (_, new) in new }
+        guard let annotations = manager.annotations as? [ElementAnnotation] else {
+            return [:]
         }
+        return annotations
+            .compactMap {
+                return [$0.element.id : $0]
+            }
+            .reduce(into: [String: ElementAnnotation]()) { (result, dict) in
+                result.merge(dict) { (_, new) in new }
+            }
     }
     
     // Polygons
@@ -108,9 +112,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         selectedElementPublisher
            .sink { [weak self] element in
                guard let annotation = self?.elementAnnotations.first(where: { $0.0 == element.id }) else { return }
-//               self?.mapView.selectAnnotation(annotation.1, animated: false)
+               self?.mapView.selectAnnotation(annotation.1, animated: false)
                
-               guard let coord = element.coord else { return }
+//               guard let coord = element.coord else { return }
 //               self?.centerMapOnLocation(coord, visibleRegion: .upperHalf)
            }
            .store(in: &cancellables)
@@ -265,12 +269,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     // MARK: - MKMapViewDelegate
 
-
     func mapView(_ mapView: MKMapView, didSelect annotation: any MKAnnotation) {
 
-
-        // 1. Cluster annotations
         if let cluster = annotation as? ClusterAnnotation {
+            // 1. Cluster annotations
             var zoomRect = MKMapRect.null
             for annotation in cluster.annotations {
                 let annotationPoint = MKMapPoint(annotation.coordinate)
@@ -281,17 +283,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                     zoomRect = zoomRect.union(pointRect)
                 }
             }
-            mapView.setVisibleMapRect(zoomRect, animated: true)
-            return
-        }
-        
-        // 2. Element annotations
-        else if let annotation = annotation as? ElementAnnotation {
+
+            mapView.setVisibleMapRect(zoomRect, edgePadding: mapEdgePadding, animated: true)
+
+        } else if let annotation = annotation as? ElementAnnotation {
+            // 2. Element annotations
             selectedElementPublisher.send(annotation.element)
         }
-
-
     }
+
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let annotation = view.annotation as? ElementAnnotation {
             UIView.animate(withDuration: 0.125, animations: {
@@ -300,9 +300,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
 
                 view.transform = scaleTransform.concatenating(rotationTransform)
             })
-
         }
-
     }
 
     func mapView(_ mapView: MKMapView, didDeselect annotation: any MKAnnotation) {
@@ -480,14 +478,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         
         // TODO: Disabling temporarily because MapKit makes this difficult to move from it's top right position, which overlaps search bar
         mapView.showsCompass = false
-//        mapView.setVisibleMapRect(mapView.visibleMapRect, edgePadding: mapEdgePadding, animated: false)
 
         setupElements()
         setupMapStateObservers()
         setupTapGestureRecognizer()
     }
 
-    var mapEdgePadding = UIEdgeInsets(top: 100, left: 0, bottom: 100, right: 0)
+    var mapEdgePadding = UIEdgeInsets(top: 100, left: 50, bottom: 150, right: 50)
 
     // MARK: - User Location Button
     @IBOutlet weak var userLocationButton: UIButton!
