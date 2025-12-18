@@ -11,21 +11,21 @@ struct OptionsView: View {
     @Environment(\.openURL) var openURL
     @EnvironmentObject var areasRepo: AreasRepository
 
-    @State private var showingOptions = false
+    @Binding var showingOptions: Bool
+
+    @State private var showingConfDialog = false
     @State private var showingSettings = false
     @State private var showingCommunities = false
     @State private var showingDonate = false
     @State private var showingNotImplementedAlert = false
     
-    // NOTE: Hack to dismiss element sheet because that's in the MapVC which is still UIKit
-    var dismissElementView: (() -> Void)?
-    
     var body: some View {
         HStack {
             // MARK: - Communities Button
-            NavigationLink(destination: CommunitiesView(), isActive: $showingCommunities) {
+            NavigationLink(
+                destination: CommunitiesView(),
+                isActive: $showingCommunities) {
                 Button(action: {
-                    dismissElementView?()
                     showingCommunities = true
                 }) {
                     Image(systemName: "person.3.fill")
@@ -35,14 +35,14 @@ struct OptionsView: View {
             
             // MARK: - Options Button
             Button(action: {
-                dismissElementView?()
-                showingOptions = true
+                showingConfDialog = true
             }) {
                 Image(systemName: "ellipsis")
                     .foregroundColor(.white)
             }
             .rotationEffect(.degrees(90))
-            .confirmationDialog("options".localized, isPresented: $showingOptions, titleVisibility: .hidden) {
+            .confirmationDialog("options".localized, isPresented: $showingConfDialog, titleVisibility: .hidden) {
+
                 Button("communities".localized) {
                     showingCommunities = true
                 }
@@ -75,6 +75,10 @@ struct OptionsView: View {
                 Button("settings".localized) {
                     showingSettings = true
                 }
+
+                Button("cancel".localized, role: .cancel) {
+                    showingConfDialog = false
+                }
             }
             // TODO: Temp
             .alert("Not yet implemented.", isPresented: $showingNotImplementedAlert) {
@@ -85,12 +89,11 @@ struct OptionsView: View {
             NavigationLink(destination: SettingsView(), isActive: $showingSettings) { }
         }
         .background(Color.clear)
+        .onChange(
+            of: showingConfDialog || showingSettings || showingCommunities || showingDonate,
+            perform: { isItShowingOptions in
+                showingOptions = isItShowingOptions
+            })
     }
+
 }
-
-
-//struct OptionsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OptionsView()
-//    }
-//}

@@ -187,7 +187,9 @@
 				AD6914CC28E37F4600D9F34E /* BTCMap */,
 				AD6914CB28E37F4600D9F34E /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		AD6914CB28E37F4600D9F34E /* Products */ = {
 			isa = PBXGroup;

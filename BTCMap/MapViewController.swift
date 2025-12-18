@@ -48,7 +48,7 @@ class CommunityPolygon {
     }
 }
 
-class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate, ClusterManagerDelegate {
+final class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentationControllerDelegate, CLLocationManagerDelegate, ClusterManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     var mapState: MapState!
     var elementsRepo: ElementsRepository!
@@ -110,8 +110,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                guard let annotation = self?.elementAnnotations.first(where: { $0.0 == element.id }) else { return }
                self?.mapView.selectAnnotation(annotation.1, animated: false)
                
-               guard let coord = element.coord else { return }
-               self?.centerMapOnLocation(coord, visibleRegion: .upperHalf)
+//               guard let coord = element.coord else { return }
+//               self?.centerMapOnLocation(coord, visibleRegion: .upperHalf)
            }
            .store(in: &cancellables)
 
@@ -264,10 +264,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     }
     
     // MARK: - MKMapViewDelegate
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        // 1. Cluster annotations
-        if let cluster = view.annotation as? ClusterAnnotation {
+
+    func mapView(_ mapView: MKMapView, didSelect annotation: any MKAnnotation) {
+
+        if let cluster = annotation as? ClusterAnnotation {
+            // 1. Cluster annotations
             var zoomRect = MKMapRect.null
             for annotation in cluster.annotations {
                 let annotationPoint = MKMapPoint(annotation.coordinate)
@@ -278,23 +279,32 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
                     zoomRect = zoomRect.union(pointRect)
                 }
             }
-            mapView.setVisibleMapRect(zoomRect, animated: true)
-            return
-        }
-        
-        // 2. Element annotations
-        else if let annotation = view.annotation as? ElementAnnotation {
-            UIView.animate(withDuration: 0.3, animations: {
-                let scaleTransform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-                let rotationTransform = CGAffineTransform(rotationAngle: -0.20)
-                view.transform = scaleTransform.concatenating(rotationTransform)
-            })
+
+            mapView.setVisibleMapRect(zoomRect, edgePadding: mapEdgePadding, animated: true)
+
+        } else if let annotation = annotation as? ElementAnnotation {
+            // 2. Element annotations
             selectedElementPublisher.send(annotation.element)
         }
     }
 
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        UIView.animate(withDuration: 0.125, animations: {
+            let scaleTransform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            let rotationTransform = CGAffineTransform(rotationAngle: -0.20)
+
+            view.transform = scaleTransform.concatenating(rotationTransform)
+        })
+    }
+
+    func mapView(_ mapView: MKMapView, didDeselect annotation: any MKAnnotation) {
+        if let annotation = annotation as? ElementAnnotation {
+            self.deselectedElementPublisher.send(annotation.element)
+        }
+    }
+
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.125, animations: {
             view.transform = CGAffineTransform.identity
         })
     }
@@ -429,14 +439,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
     
     
     // MARK: - UISheetPresentationControllerDelegate
-    // NOTE: This is a bit of hack to allow SwiftUI Views to dismiss the presented hosted ElementView. Can implement a more elegant solution whebn MapVC is converted to SwiftUI
-    lazy var dismissElementDetail: () -> Void = { [weak self] in
-        self?.dismiss(animated: true)
-        if let annotation = self?.mapView.selectedAnnotations.first {
-            self?.mapView.deselectAnnotation(annotation, animated: true)
-        }
-    }
-    
+
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         if let annotation = mapView.selectedAnnotations.first {
             mapView.deselectAnnotation(annotation, animated: true)
@@ -460,12 +463,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, UISheetPresentatio
         
         // TODO: Disabling temporarily because MapKit makes this difficult to move from it's top right position, which overlaps search bar
         mapView.showsCompass = false
-        
+
         setupElements()
         setupMapStateObservers()
         setupTapGestureRecognizer()
     }
-    
+
+    var mapEdgePadding = UIEdgeInsets(top: 100, left: 50, bottom: 150, right: 50)
+
     // MARK: - User Location Button
     @IBOutlet weak var userLocationButton: UIButton!
     @IBAction func didTapUserLocationButton(_ sender: Any) {

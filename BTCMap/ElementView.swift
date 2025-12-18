@@ -18,7 +18,7 @@ struct ElementView: View {
         self.element = element
         self.elementViewModel = ElementViewModel(element: element)
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             ScrollView(.vertical, showsIndicators: false) {
