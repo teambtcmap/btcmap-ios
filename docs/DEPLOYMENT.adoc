@@ -1,0 +1,85 @@
+= Deployment
+:toc:
+:toclevels: 2
+
+This document describes how to ship new releases of BTC Map.
+
+== iOS
+
+=== Prerequisites
+
+* A Mac running a current version of Xcode.
+* An Apple ID with access to the BTC Map team on https://appstoreconnect.apple.com[App Store Connect] and https://developer.apple.com[developer.apple.com] (the team ID is set as `DEVELOPMENT_TEAM` in `BTCMap.xcodeproj/project.pbxproj`).
+* A clone of this repository on that Mac, with the working tree clean.
+
+=== 1. Bump the version
+
+Edit the BTCMap target in Xcode (or directly in `BTCMap.xcodeproj/project.pbxproj`) and bump:
+
+[cols="1,2,1"]
+|===
+| Setting | Meaning | Example
+
+| `MARKETING_VERSION`
+| User-visible version shown on the App Store
+| `1.3.1` &rarr; `1.3.2`
+
+| `CURRENT_PROJECT_VERSION`
+| Build number; *must* be strictly greater than the previous upload for the same `MARKETING_VERSION`
+| `18` &rarr; `19`
+|===
+
+Commit and push the bump on a release branch (or directly to `main` if that's the project convention).
+
+=== 2. Archive in Xcode
+
+. Open `BTCMap.xcodeproj`.
+. Select the *BTCMap* scheme.
+. Set the run destination to *Any iOS Device (arm64)*.
+. *Product &rarr; Archive*.
+
+The Organizer window opens automatically when the archive finishes.
+
+=== 3. Upload to App Store Connect
+
+In Organizer:
+
+. Select the new archive.
+. *Distribute App &rarr; App Store Connect &rarr; Upload*.
+. Accept Xcode's *Automatically manage signing*. If a Distribution certificate or App Store provisioning profile for `org.btcmap.app` does not yet exist on the team, Xcode creates them on the fly — no manual setup at developer.apple.com is required.
+. Wait for Apple to process the build (typically 5–30 minutes). The build will then appear under *TestFlight* and become selectable when adding a new App Store version.
+
+=== 4. Release
+
+In https://appstoreconnect.apple.com[App Store Connect] &rarr; *BTC Map*:
+
+* *TestFlight* — assign the new build to an internal or external tester group for pre-release testing.
+* *Distribution* — *Add Version*, attach the new build, fill in "What's New in This Version", and *Submit for Review*. Apple review typically completes within 24–48 hours.
+
+=== 5. Tag the release
+
+Once the version is approved (or shipped to TestFlight), tag the commit so the release is reproducible:
+
+[source,shell]
+----
+git tag -a v1.3.2 -m "Release 1.3.2"
+git push origin v1.3.2
+----
+
+=== Troubleshooting
+
+==== Signing fails with a team mismatch
+
+Xcode &rarr; *Settings &rarr; Accounts* must be signed in with an Apple ID that has access to the team referenced by `DEVELOPMENT_TEAM` in `project.pbxproj`. If you sign in with the wrong Apple ID, either switch accounts or — for a local build only — temporarily change `DEVELOPMENT_TEAM` in Xcode's *Signing & Capabilities* tab. *Do not commit that local change.*
+
+==== "Build number must be greater than the most recent build"
+
+App Store Connect rejects uploads whose `CURRENT_PROJECT_VERSION` is not strictly greater than any previous upload for the same `MARKETING_VERSION`. Increment `CURRENT_PROJECT_VERSION` and re-archive.
+
+==== Push notifications, in-app purchases, or other capabilities missing after an App Transfer
+
+If the app was transferred between teams, capabilities like APNs certificates and in-app purchase products do *not* automatically follow the transfer. Re-create them on the new team if needed. BTC Map currently uses none of these.
+
+=== Considering Xcode Cloud
+
+The BTC Map app on App Store Connect exposes an *Xcode Cloud* tab. With an Xcode Cloud workflow configured, every push to a tracked branch can be built, signed, and uploaded to TestFlight by Apple's CI — eliminating the need for a Mac with the signing certificate locally. This is the recommended long-term setup; document the workflow here once it is in place.
